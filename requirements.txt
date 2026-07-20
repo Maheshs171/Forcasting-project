@@ -1,0 +1,11 @@
+prophet>=1.1.6
+pmdarima>=2.0.4
+statsmodels>=0.14.4
+pandas>=2.2.3
+numpy>=2.1.0
+scikit-learn>=1.5.2
+pymssql>=2.3.2
+python-dotenv>=1.0.1
+holidays>=0.58
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0

@@ -1,0 +1,31 @@
+# Secrets — never commit real credentials
+.env
+config/connections.json
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+*.egg-info/
+
+# Node / frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Generated forecast artifacts (regeneratable — see README to reproduce)
+outputs/*.json
+outputs/*.html
+!outputs/.gitkeep
+
+# Raw row-level data exports (superseded by the live-DB pipeline; not for
+# a public repo since they contain order/shipping-adjacent fields)
+MLdata/RAW_*.csv
+
+# Local tool config
+.claude/
+
+# OS
+.DS_Store
+Thumbs.db
