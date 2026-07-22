@@ -67,6 +67,7 @@ def get_patients_monthly(start_year: int) -> dict:
         FROM dbo.{PATIENT_TABLE}
         WHERE [{PATIENT_DATE_COLUMN}] IS NOT NULL
           AND YEAR([{PATIENT_DATE_COLUMN}]) >= {start_year}
+          AND [{PATIENT_DATE_COLUMN}] <= GETDATE()
         GROUP BY YEAR([{PATIENT_DATE_COLUMN}]), MONTH([{PATIENT_DATE_COLUMN}])
         ORDER BY 1
     """
@@ -85,6 +86,7 @@ def get_encounters_monthly(start_year: int) -> dict:
         FROM dbo.{ENCOUNTER_TABLE}
         WHERE [{ENCOUNTER_DATE_COLUMN}] IS NOT NULL
           AND YEAR([{ENCOUNTER_DATE_COLUMN}]) >= {start_year}
+          AND [{ENCOUNTER_DATE_COLUMN}] <= GETDATE()
         GROUP BY YEAR([{ENCOUNTER_DATE_COLUMN}]), MONTH([{ENCOUNTER_DATE_COLUMN}])
         ORDER BY 1
     """
@@ -129,6 +131,7 @@ def get_contact_lenses_monthly(start_year: int) -> dict:
         ) eff
         WHERE effective_date IS NOT NULL
           AND effective_date >= '1950-01-01'
+          AND effective_date <= GETDATE()
           AND YEAR(effective_date) >= {start_year}
           AND (det.QUANTITY_TO_ORDER_OD IS NOT NULL OR det.QUANTITY_TO_ORDER_OS IS NOT NULL)
         GROUP BY YEAR(effective_date), MONTH(effective_date)
@@ -172,6 +175,7 @@ def get_collections_monthly(start_year: int) -> dict:
           AND [{PAYMENT_AMOUNT_COLUMN}] IS NOT NULL
           AND [{PAYMENT_AMOUNT_COLUMN}] > 0
           AND YEAR([{PAYMENT_DATE_COLUMN}]) >= {start_year}
+          AND [{PAYMENT_DATE_COLUMN}] <= GETDATE()
           {void_filter}
     """
     conn = connect()
@@ -225,6 +229,7 @@ def get_daily(metric: str, start_year: int) -> pd.DataFrame:
             SELECT CAST([{PATIENT_DATE_COLUMN}] AS DATE) AS ds, COUNT(*) AS y
             FROM dbo.{PATIENT_TABLE}
             WHERE [{PATIENT_DATE_COLUMN}] IS NOT NULL AND YEAR([{PATIENT_DATE_COLUMN}]) >= {start_year}
+              AND [{PATIENT_DATE_COLUMN}] <= GETDATE()
             GROUP BY CAST([{PATIENT_DATE_COLUMN}] AS DATE)
             ORDER BY 1
         """
@@ -233,6 +238,7 @@ def get_daily(metric: str, start_year: int) -> pd.DataFrame:
             SELECT CAST([{ENCOUNTER_DATE_COLUMN}] AS DATE) AS ds, COUNT(*) AS y
             FROM dbo.{ENCOUNTER_TABLE}
             WHERE [{ENCOUNTER_DATE_COLUMN}] IS NOT NULL AND YEAR([{ENCOUNTER_DATE_COLUMN}]) >= {start_year}
+              AND [{ENCOUNTER_DATE_COLUMN}] <= GETDATE()
             GROUP BY CAST([{ENCOUNTER_DATE_COLUMN}] AS DATE)
             ORDER BY 1
         """
@@ -242,7 +248,7 @@ def get_daily(metric: str, start_year: int) -> pd.DataFrame:
             SELECT CAST([{PAYMENT_DATE_COLUMN}] AS DATE) AS ds, SUM([{PAYMENT_AMOUNT_COLUMN}]) AS y
             FROM dbo.{PAYMENT_TABLE}
             WHERE [{PAYMENT_DATE_COLUMN}] IS NOT NULL AND [{PAYMENT_AMOUNT_COLUMN}] > 0
-              AND YEAR([{PAYMENT_DATE_COLUMN}]) >= {start_year} {void_filter}
+              AND YEAR([{PAYMENT_DATE_COLUMN}]) >= {start_year} AND [{PAYMENT_DATE_COLUMN}] <= GETDATE() {void_filter}
             GROUP BY CAST([{PAYMENT_DATE_COLUMN}] AS DATE)
             ORDER BY 1
         """

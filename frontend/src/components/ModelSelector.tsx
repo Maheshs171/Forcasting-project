@@ -8,6 +8,7 @@ const MODEL_COLORS: Record<string, string> = {
   naive: "border-slate-300 bg-slate-100 text-slate-600",
   xgboost: "border-amber-300 bg-amber-50 text-amber-700",
   sarimax: "border-emerald-300 bg-emerald-50 text-emerald-700",
+  ensemble: "border-indigo-300 bg-indigo-50 text-indigo-700",
 };
 
 export default function ModelSelector({

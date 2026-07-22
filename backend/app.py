@@ -32,6 +32,7 @@ from data.fetcher import FETCHERS
 from models.forecaster import ALL_FORECASTERS
 from predict import METRIC_LABELS, MONEY_METRICS
 from backend.jobs import manager
+from utils.eda import build_insights
 
 OUTPUTS_DIR = os.path.join(os.path.dirname(__file__), "..", "outputs")
 
@@ -284,6 +285,23 @@ def data_quality(metric: str, start_year: int = DEFAULT_START_YEAR):
         "cleaned_count": len(cleaned),
         "excluded_count": len(excluded),
     }
+
+
+@app.get("/api/data-insights/{metric}")
+def data_insights(metric: str, start_year: int = DEFAULT_START_YEAR):
+    """
+    Full exploratory-data-analysis report for the Data Explorer page:
+    distribution, outliers (with z-scores, not just excluded/kept), gaps in
+    the calendar, month-of-year seasonality, year-over-year growth,
+    autocorrelation, and (for collections) transaction-level outlier detail.
+    Hits the DB live — same fetchers the training pipeline itself uses.
+    """
+    if metric not in FETCHERS:
+        raise HTTPException(404, f"Unknown metric '{metric}'")
+    try:
+        return build_insights(metric, start_year, FETCHERS[metric])
+    except Exception as e:
+        raise HTTPException(503, f"Database unreachable: {e}")
 
 
 @app.get("/api/outputs")

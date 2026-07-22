@@ -5,6 +5,7 @@ const MODEL_COLORS: Record<string, string> = {
   naive: "bg-slate-100 text-slate-600 border-slate-200",
   xgboost: "bg-amber-50 text-amber-700 border-amber-200",
   sarimax: "bg-emerald-50 text-emerald-700 border-emerald-200",
+  ensemble: "bg-indigo-50 text-indigo-700 border-indigo-200",
 };
 
 const MODEL_NAMES: Record<string, string> = {
@@ -14,6 +15,7 @@ const MODEL_NAMES: Record<string, string> = {
   naive: "Seasonal Naive",
   xgboost: "XGBoost (multi-feature)",
   sarimax: "SARIMAX (multi-feature)",
+  ensemble: "Ensemble",
 };
 
 export function ModelBadge({ model }: { model: string }) {

@@ -4,7 +4,7 @@ import { fmtCompact } from "../lib/format";
 
 const MODEL_HEX: Record<string, string> = {
   sarima: "#7c3aed", ets: "#0891b2", prophet: "#db2777",
-  naive: "#64748b", xgboost: "#d97706", sarimax: "#059669",
+  naive: "#64748b", xgboost: "#d97706", sarimax: "#059669", ensemble: "#4f46e5",
 };
 
 export default function ModelOverlayChart({

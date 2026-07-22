@@ -382,3 +382,61 @@ ALL_FORECASTERS = {
     "xgboost": XGBoostForecaster,
     "sarimax": SARIMAXForecaster,
 }
+
+
+class EnsembleForecaster:
+    """
+    Blends two other candidates' forecasts with fixed inverse-error weights
+    (more accurate model gets more weight) — not "average everything," just
+    the two that actually proved themselves.
+
+    Not registered in ALL_FORECASTERS: which two models to blend is decided
+    dynamically per metric, only after the base 6 have already been
+    backtested (see validate.py's select_best_model). This class is then
+    constructed with that specific pair and run through the exact same
+    rolling backtest as everything else — an ensemble is only trusted here
+    if it demonstrably beats its own components on real held-out accuracy,
+    never assumed to help just because "combining models" sounds safer.
+    """
+
+    def __init__(self, model_a_key: str, weight_a: float, model_b_key: str, weight_b: float, country: str = "US"):
+        self.model_a_key = model_a_key
+        self.model_b_key = model_b_key
+        self.weight_a = weight_a
+        self.weight_b = weight_b
+        self.country = country
+        self.name = f"Ensemble ({MODEL_SHORT_NAMES.get(model_a_key, model_a_key)} + {MODEL_SHORT_NAMES.get(model_b_key, model_b_key)})"
+
+    def _build(self, key: str):
+        cls = ALL_FORECASTERS[key]
+        needs_country = key in ("prophet", "xgboost", "sarimax")
+        return cls(country=self.country) if needs_country else cls()
+
+    def fit_predict(self, df: pd.DataFrame, periods: int, metric: str = "", extra_signals: dict = None, **kwargs) -> ForecastResult:
+        result_a = self._build(self.model_a_key).fit_predict(df, periods=periods, metric=metric, extra_signals=extra_signals)
+        result_b = self._build(self.model_b_key).fit_predict(df, periods=periods, metric=metric, extra_signals=extra_signals)
+
+        fut_a = result_a.future.set_index("ds")
+        fut_b = result_b.future.set_index("ds")
+        common = fut_a.index.intersection(fut_b.index)
+        fut_a, fut_b = fut_a.loc[common], fut_b.loc[common]
+
+        yhat = self.weight_a * fut_a["yhat"].values + self.weight_b * fut_b["yhat"].values
+        lower = self.weight_a * fut_a["yhat_lower"].values + self.weight_b * fut_b["yhat_lower"].values
+        upper = self.weight_a * fut_a["yhat_upper"].values + self.weight_b * fut_b["yhat_upper"].values
+
+        blended = pd.DataFrame({
+            "ds": common,
+            "yhat": np.clip(yhat, 0, None),
+            "yhat_lower": np.clip(lower, 0, None),
+            "yhat_upper": np.clip(upper, 0, None),
+        }).reset_index(drop=True)
+
+        warns = list(result_a.warnings) + list(result_b.warnings)
+        return ForecastResult(model_name=self.name, metric=metric, historical=df, future=blended, warnings=warns)
+
+
+MODEL_SHORT_NAMES = {
+    "naive": "Naive", "ets": "ETS", "sarima": "SARIMA",
+    "prophet": "Prophet", "xgboost": "XGBoost", "sarimax": "SARIMAX",
+}

@@ -23,7 +23,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from config.settings import validate as validate_config, DEFAULT_START_YEAR, HOLIDAY_COUNTRY
 from data.fetcher import FETCHERS
-from models.forecaster import ALL_FORECASTERS
+from models.forecaster import ALL_FORECASTERS, EnsembleForecaster
 
 
 def is_flat_forecast(future_yhat: np.ndarray, historical_std: float, threshold: float = 0.15) -> bool:
@@ -114,6 +114,37 @@ def rolling_backtest(
     }
 
 
+def _finalize_score(report: dict, historical_std: float) -> None:
+    """
+    Shared scoring math for any backtest report (base candidate or
+    ensemble): near/long-term blended score, plain-language accuracy %,
+    and the flat-forecast penalty. Mutates `report` in place.
+    """
+    near = report["near_term_mape"] if report["near_term_mape"] is not None else report["overall_mape"]
+    longt = report["long_term_mape"] if report["long_term_mape"] is not None else report["overall_mape"]
+    score = 0.6 * (near or 0) + 0.4 * (longt or 0)
+
+    # Plain-language accuracy for non-technical readers: 100% minus the
+    # (unpenalized) error rate, floored at 0. Not a substitute for MAPE in
+    # the selection math below, just a friendlier way to display it.
+    report["accuracy_pct"] = float(np.clip(100 - score, 0, 100))
+
+    # A model that forecasts (near-)constant values every month has failed to
+    # capture the data's actual month-to-month pattern, even if that flatness
+    # happens to score well on MAPE against noisy data (e.g. auto-ARIMA
+    # collapsing to "just predict the mean" once AIC penalizes real dynamics
+    # as overfitting on a short series). A flat line is unusable for monthly
+    # business planning, so it's disqualified here rather than silently
+    # shipped just because it "won" a narrow accuracy metric.
+    flatness_ratio = (report["avg_forecast_std"] / historical_std) if historical_std > 0 else 1.0
+    report["flatness_ratio"] = flatness_ratio
+    if flatness_ratio < 0.15:
+        score *= 4.0
+        report["flat_forecast_penalty_applied"] = True
+
+    report["weighted_score"] = score
+
+
 def select_best_model(
     df: pd.DataFrame,
     metric_name: str,
@@ -131,8 +162,14 @@ def select_best_model(
     extra_signals: the other metrics' full history, only used by the
     multivariate candidates (XGBoost, SARIMAX) — see rolling_backtest for
     how it's kept leakage-free per fold.
+
+    An "ensemble" candidate (blend of the top 2 non-flat base models,
+    inverse-error weighted) is added after the base 6 and backtested the
+    exact same way — it only wins if it demonstrably beats its own
+    components on real held-out accuracy, not by assumption.
     """
     needs_country = {"prophet", "xgboost", "sarimax"}
+    historical_std = float(df["y"].std() or 0)
     results = {}
     for key, cls in ALL_FORECASTERS.items():
         if len(df) < cls.min_months + 6:  # need room for at least one backtest fold
@@ -157,31 +194,43 @@ def select_best_model(
             results[key] = {"skipped": "no valid backtest folds"}
             continue
 
-        near = report["near_term_mape"] if report["near_term_mape"] is not None else report["overall_mape"]
-        longt = report["long_term_mape"] if report["long_term_mape"] is not None else report["overall_mape"]
-        score = 0.6 * (near or 0) + 0.4 * (longt or 0)
-
-        # Plain-language accuracy for non-technical readers: 100% minus the
-        # (unpenalized) error rate, floored at 0. Not a substitute for MAPE in
-        # the selection math below, just a friendlier way to display it.
-        report["accuracy_pct"] = float(np.clip(100 - score, 0, 100))
-
-        # A model that forecasts (near-)constant values every month has failed to
-        # capture the data's actual month-to-month pattern, even if that flatness
-        # happens to score well on MAPE against noisy data (e.g. auto-ARIMA
-        # collapsing to "just predict the mean" once AIC penalizes real dynamics
-        # as overfitting on a short series). A flat line is unusable for monthly
-        # business planning, so it's disqualified here rather than silently
-        # shipped just because it "won" a narrow accuracy metric.
-        historical_std = float(df["y"].std() or 0)
-        flatness_ratio = (report["avg_forecast_std"] / historical_std) if historical_std > 0 else 1.0
-        report["flatness_ratio"] = flatness_ratio
-        if flatness_ratio < 0.15:
-            score *= 4.0
-            report["flat_forecast_penalty_applied"] = True
-
-        report["weighted_score"] = score
+        _finalize_score(report, historical_std)
         results[key] = report
+
+    # ── Ensemble: top 2 non-flat base models, inverse-error weighted ──────
+    eligible = [
+        k for k, r in results.items()
+        if "weighted_score" in r and not r.get("flat_forecast_penalty_applied")
+    ]
+    if len(eligible) >= 2:
+        top2 = sorted(eligible, key=lambda k: results[k]["weighted_score"])[:2]
+        key_a, key_b = top2
+        score_a = max(results[key_a]["weighted_score"], 0.01)
+        score_b = max(results[key_b]["weighted_score"], 0.01)
+        inv_a, inv_b = 1.0 / score_a, 1.0 / score_b
+        weight_a = inv_a / (inv_a + inv_b)
+        weight_b = 1.0 - weight_a
+
+        def ensemble_factory(key_a=key_a, key_b=key_b, weight_a=weight_a, weight_b=weight_b):
+            return EnsembleForecaster(key_a, weight_a, key_b, weight_b, country=country)
+
+        try:
+            ens_report = rolling_backtest(
+                df, ensemble_factory, horizon=min(horizon, 12), extra_signals=extra_signals,
+            )
+            if ens_report["n_folds"] > 0:
+                _finalize_score(ens_report, historical_std)
+                ens_report["components"] = {
+                    "model_a": key_a, "weight_a": round(weight_a, 4),
+                    "model_b": key_b, "weight_b": round(weight_b, 4),
+                }
+                results["ensemble"] = ens_report
+            else:
+                results["ensemble"] = {"skipped": "no valid backtest folds"}
+        except Exception as e:
+            results["ensemble"] = {"skipped": f"error during backtest: {e}"}
+    else:
+        results["ensemble"] = {"skipped": "fewer than 2 non-flat base models available to blend"}
 
     scored = {k: v for k, v in results.items() if "weighted_score" in v}
     best_key = min(scored, key=lambda k: scored[k]["weighted_score"]) if scored else "naive"
@@ -205,7 +254,11 @@ def print_report(report: dict):
         score = f"{r['weighted_score']:.1f}"
         flat = "  [flat forecast, penalized]" if r.get("flat_forecast_penalty_applied") else ""
         marker = "  <-- selected" if key == report["best_model"] else ""
-        print(f"{key:<14}{r['n_folds']:>7}{acc:>11}{near:>18}{longt:>18}{score:>10}{marker}{flat}")
+        comp = ""
+        if r.get("components"):
+            c = r["components"]
+            comp = f"  ({c['model_a']} x{c['weight_a']} + {c['model_b']} x{c['weight_b']})"
+        print(f"{key:<14}{r['n_folds']:>7}{acc:>11}{near:>18}{longt:>18}{score:>10}{marker}{flat}{comp}")
     print("-" * 70)
     print(f"  Winner: {report['best_model']}\n")
 

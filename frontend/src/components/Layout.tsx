@@ -1,7 +1,7 @@
 import { NavLink, Outlet } from "react-router-dom";
 import {
   LayoutDashboard, FlaskConical, Settings as SettingsIcon, Activity, Eye, Sparkles,
-  Users, Stethoscope, DollarSign, Contact,
+  Users, Stethoscope, DollarSign, Contact, Microscope,
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../lib/api";
@@ -16,6 +16,7 @@ const forecastNav = [
 ];
 
 const toolsNav = [
+  { to: "/explore", label: "Data Explorer", icon: Microscope, end: false },
   { to: "/train", label: "Training Pipeline", icon: FlaskConical, end: false },
   { to: "/settings", label: "Settings", icon: SettingsIcon, end: false },
 ];

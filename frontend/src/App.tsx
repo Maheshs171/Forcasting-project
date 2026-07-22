@@ -5,6 +5,7 @@ import Overview from "./pages/Overview";
 import MetricDashboard from "./pages/MetricDashboard";
 import Operations from "./pages/Operations";
 import Settings from "./pages/Settings";
+import DataExplorer from "./pages/DataExplorer";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,6 +25,7 @@ function App() {
             <Route index element={<Overview />} />
             <Route path="forecast/:metric" element={<MetricDashboard />} />
             <Route path="train" element={<Operations />} />
+            <Route path="explore" element={<DataExplorer />} />
             <Route path="settings" element={<Settings />} />
           </Route>
         </Routes>

@@ -3,11 +3,11 @@ import type { BacktestReport } from "../lib/api";
 
 const MODEL_HEX: Record<string, string> = {
   sarima: "#7c3aed", ets: "#0891b2", prophet: "#db2777",
-  naive: "#64748b", xgboost: "#d97706", sarimax: "#059669",
+  naive: "#64748b", xgboost: "#d97706", sarimax: "#059669", ensemble: "#4f46e5",
 };
 const MODEL_LABELS: Record<string, string> = {
   sarima: "SARIMA", ets: "ETS", prophet: "Prophet",
-  naive: "Seasonal Naive", xgboost: "XGBoost", sarimax: "SARIMAX",
+  naive: "Seasonal Naive", xgboost: "XGBoost", sarimax: "SARIMAX", ensemble: "Ensemble",
 };
 
 export default function BacktestBarChart({ report }: { report: BacktestReport }) {

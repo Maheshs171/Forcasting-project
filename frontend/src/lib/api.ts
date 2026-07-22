@@ -162,6 +162,67 @@ export interface DataQualityReport {
   excluded_count: number;
 }
 
+export interface SummaryStats {
+  n: number;
+  mean: number | null;
+  median: number | null;
+  std: number | null;
+  min: number | null;
+  max: number | null;
+  coefficient_of_variation: number | null;
+}
+export interface OutlierPoint {
+  month: string;
+  value: number | null;
+  robust_z_score: number | null;
+  excluded: boolean;
+  flagged_severe: boolean;
+}
+export interface HistogramBin { range_low: number | null; range_high: number | null; count: number }
+export interface SeasonalityPoint { month: string; index: number | null }
+export interface YoyRow {
+  year: number;
+  total: number | null;
+  avg_per_month: number | null;
+  months_present: number;
+  growth_pct_vs_prior_year: number | null;
+}
+export interface AutocorrPoint { lag: number; correlation: number | null }
+export interface Decomposition {
+  labels: string[];
+  observed: (number | null)[];
+  trend: (number | null)[];
+  seasonal: (number | null)[];
+  residual: (number | null)[];
+}
+export interface VolatilityPoint { month: string; coefficient_of_variation: number | null }
+export interface TransactionInsights {
+  total_count: number;
+  excluded_count: number;
+  excluded_total_amount: number;
+  amount_histogram: HistogramBin[];
+  top_excluded: { date: string; amount: number | null }[];
+  outlier_threshold: number;
+}
+export interface DataInsightsReport {
+  metric: string;
+  has_data: boolean;
+  notes: string[];
+  date_range?: { start: string; end: string };
+  summary_raw?: SummaryStats;
+  summary_cleaned?: SummaryStats;
+  gaps: string[];
+  outliers: OutlierPoint[];
+  outlier_threshold?: number;
+  histogram: HistogramBin[];
+  seasonality_index: SeasonalityPoint[];
+  yoy: YoyRow[];
+  autocorrelation: AutocorrPoint[];
+  decomposition: Decomposition | null;
+  volatility: VolatilityPoint[];
+  transactions?: TransactionInsights;
+}
+
 export interface ConnectionInfo {
   name: string;
   server: string;
@@ -212,6 +273,9 @@ export const api = {
 
   dataQuality: (metric: string, startYear?: number) =>
     client.get<DataQualityReport>(`/data-quality/${metric}`, { params: startYear ? { start_year: startYear } : {} }).then((r) => r.data),
+
+  dataInsights: (metric: string, startYear?: number) =>
+    client.get<DataInsightsReport>(`/data-insights/${metric}`, { params: startYear ? { start_year: startYear } : {} }).then((r) => r.data),
 
   connections: () => client.get<ConnectionInfo[]>("/connections").then((r) => r.data),
   addConnection: (body: { name: string; server: string; database: string; username: string; password: string; port: number; make_active: boolean }) =>

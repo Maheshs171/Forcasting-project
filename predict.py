@@ -40,7 +40,7 @@ import pandas as pd
 
 from config.settings import validate as validate_config, DEFAULT_START_YEAR, HOLIDAY_COUNTRY
 from data.fetcher import FETCHERS, get_daily
-from models.forecaster import ALL_FORECASTERS
+from models.forecaster import ALL_FORECASTERS, EnsembleForecaster
 from utils.pacing import project_month_end
 from utils.chart import save_chart
 from validate import select_best_model, is_flat_forecast
@@ -172,16 +172,20 @@ def run_metric(metric: str, args, ts: str, all_data: dict = None) -> dict:
         target = max(end_of_year, current_month_start + pd.DateOffset(months=args.months))
     periods = max(months_between(history["ds"].max(), target), 1)
 
-    def _fit(key):
-        cls = ALL_FORECASTERS[key]
-        needs_country = key in ("prophet", "xgboost", "sarimax")
-        fc = cls(country=args.country) if needs_country else cls()
-        return fc.fit_predict(history, periods=periods, metric=METRIC_LABELS[metric], extra_signals=extra_signals)
-
     # ── Backtest every candidate (real held-out accuracy per model) ──────
     print(f"  Backtesting candidate models...")
     backtest_report = select_best_model(history, metric, country=args.country, extra_signals=extra_signals)
     candidates = backtest_report["candidates"]
+
+    def _fit(key):
+        if key == "ensemble":
+            comp = candidates["ensemble"]["components"]
+            fc = EnsembleForecaster(comp["model_a"], comp["weight_a"], comp["model_b"], comp["weight_b"], country=args.country)
+        else:
+            cls = ALL_FORECASTERS[key]
+            needs_country = key in ("prophet", "xgboost", "sarimax")
+            fc = cls(country=args.country) if needs_country else cls()
+        return fc.fit_predict(history, periods=periods, metric=METRIC_LABELS[metric], extra_signals=extra_signals)
 
     # ── Current-month pacing (shared across every model) ─────────────────
     pacing = None
@@ -218,7 +222,7 @@ def run_metric(metric: str, args, ts: str, all_data: dict = None) -> dict:
         stats = _derive_stats(result, history, pacing, now, year_start, end_of_year, current_month_start)
         models_out[key] = {
             "model_key": key,
-            "model_name": MODEL_NAMES.get(key, key),
+            "model_name": MODEL_NAMES.get(key, result.model_name),
             "is_flat": flat,
             "accuracy_pct": candidates[key].get("accuracy_pct"),
             "near_term_mape": candidates[key].get("near_term_mape"),
@@ -349,7 +353,7 @@ def run(args, progress_cb=None):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Business forecasting: patients, encounters, collections, contact lenses")
     parser.add_argument("--metric", default=None, choices=list(FETCHERS.keys()))
-    parser.add_argument("--model", default=None, choices=list(ALL_FORECASTERS.keys()),
+    parser.add_argument("--model", default=None, choices=list(ALL_FORECASTERS.keys()) + ["ensemble"],
                          help="Force which model is marked 'recommended' (all models are still computed)")
     parser.add_argument("--months", type=int, default=12, help="Minimum months to forecast beyond now")
     parser.add_argument("--end-date", default=None, help="Forecast until this date, e.g. 2027-12-31")

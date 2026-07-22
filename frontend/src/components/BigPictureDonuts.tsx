@@ -9,10 +9,11 @@ const MODEL_HEX: Record<string, string> = {
   naive: "#64748b",
   xgboost: "#d97706",
   sarimax: "#059669",
+  ensemble: "#4f46e5",
 };
 const MODEL_LABELS: Record<string, string> = {
   sarima: "SARIMA", ets: "ETS", prophet: "Prophet", naive: "Seasonal Naive",
-  xgboost: "XGBoost", sarimax: "SARIMAX",
+  xgboost: "XGBoost", sarimax: "SARIMAX", ensemble: "Ensemble",
 };
 
 function DonutCard({ title, data, isMoney }: { title: string; data: { name: string; value: number; color: string }[]; isMoney?: boolean }) {
