@@ -28,7 +28,7 @@ from config.settings import (
     SQL_SERVER, SQL_DATABASE,
 )
 from config import connections as conn_registry
-from data.fetcher import FETCHERS
+from data.fetcher import FETCHERS, FETCHERS_BY_FREQUENCY
 from models.forecaster import ALL_FORECASTERS
 from predict import METRIC_LABELS, MONEY_METRICS
 from backend.jobs import manager
@@ -186,26 +186,34 @@ def config_defaults():
 # ── Latest outputs ────────────────────────────────────────────────────────
 
 @app.get("/api/forecast/{metric}")
-def latest_forecast(metric: str):
+def latest_forecast(metric: str, frequency: str = "month"):
     if metric not in FETCHERS:
         raise HTTPException(404, f"Unknown metric '{metric}'")
-    path = _latest_file(f"{metric}_*.json")
+    if frequency not in FETCHERS_BY_FREQUENCY:
+        raise HTTPException(400, f"Unknown frequency '{frequency}'. Valid: {list(FETCHERS_BY_FREQUENCY.keys())}")
+    # "month" files are "{metric}_{ts}.json" (timestamp starts with a digit);
+    # "week" files are "{metric}_week_{ts}.json" — the digit-anchored glob
+    # keeps a monthly lookup from matching a weekly file whose ts substring
+    # happens to satisfy a bare "{metric}_*.json" wildcard, and vice versa.
+    stem = f"{metric}_[0-9]*" if frequency == "month" else f"{metric}_{frequency}_*"
+    path = _latest_file(f"{stem}.json")
     data = _load_json(path)
     if data is None:
-        raise HTTPException(404, f"No forecast output yet for '{metric}'. Run a prediction first.")
+        adverb = {"month": "monthly", "week": "weekly", "day": "daily"}.get(frequency, frequency)
+        raise HTTPException(404, f"No {adverb} forecast output yet for '{metric}'. Run a prediction first.")
     data["_source_file"] = os.path.basename(path)
     data["_generated_at"] = datetime.fromtimestamp(os.path.getmtime(path)).isoformat()
-    chart = _latest_file(f"{metric}_*.html")
+    chart = _latest_file(f"{stem}.html")
     data["_chart_url"] = f"/charts/{os.path.basename(chart)}" if chart else None
     return data
 
 
 @app.get("/api/forecast")
-def all_latest_forecasts():
+def all_latest_forecasts(frequency: str = "month"):
     out = {}
     for metric in FETCHERS.keys():
         try:
-            out[metric] = latest_forecast(metric)
+            out[metric] = latest_forecast(metric, frequency=frequency)
         except HTTPException:
             out[metric] = None
     return out
@@ -221,7 +229,7 @@ def latest_summary():
 
 
 @app.get("/api/backtest")
-def backtest_report():
+def backtest_report(frequency: str = "month"):
     """
     Built from each metric's latest forecast file (predict.py already backtests
     every candidate and stores it there) rather than the standalone
@@ -230,16 +238,19 @@ def backtest_report():
     running a separate backtest. Falls back to that file for any metric with
     no forecast yet.
     """
+    if frequency not in FETCHERS_BY_FREQUENCY:
+        raise HTTPException(400, f"Unknown frequency '{frequency}'. Valid: {list(FETCHERS_BY_FREQUENCY.keys())}")
+    stem_for = lambda m: f"{m}_[0-9]*" if frequency == "month" else f"{m}_{frequency}_*"
     combined = {}
     newest_mtime = 0.0
     for m in FETCHERS.keys():
-        path = _latest_file(f"{m}_*.json")
+        path = _latest_file(f"{stem_for(m)}.json")
         data = _load_json(path)
         if data and "backtest" in data:
             combined[m] = {"candidates": data["backtest"], "best_model": data.get("best_model", data.get("model_used"))}
             newest_mtime = max(newest_mtime, os.path.getmtime(path))
 
-    fallback_path = os.path.join(OUTPUTS_DIR, "backtest_report.json")
+    fallback_path = os.path.join(OUTPUTS_DIR, "backtest_report.json" if frequency == "month" else f"backtest_report_{frequency}.json")
     fallback = _load_json(fallback_path)
     if fallback:
         for m, report in fallback.items():
@@ -288,18 +299,25 @@ def data_quality(metric: str, start_year: int = DEFAULT_START_YEAR):
 
 
 @app.get("/api/data-insights/{metric}")
-def data_insights(metric: str, start_year: int = DEFAULT_START_YEAR):
+def data_insights(metric: str, start_year: int = DEFAULT_START_YEAR, frequency: str = "month"):
     """
     Full exploratory-data-analysis report for the Data Explorer page:
     distribution, outliers (with z-scores, not just excluded/kept), gaps in
-    the calendar, month-of-year seasonality, year-over-year growth,
-    autocorrelation, and (for collections) transaction-level outlier detail.
-    Hits the DB live — same fetchers the training pipeline itself uses.
+    the calendar, seasonality, year-over-year growth, autocorrelation, and
+    (for collections) transaction-level outlier detail. Hits the DB live —
+    same fetchers the training pipeline itself uses.
+
+    frequency: "month" (default), "week", or "day" — lets the same data be
+    compared at either grain, so you can see which one actually suits the
+    business better before committing to it for forecasting.
     """
-    if metric not in FETCHERS:
+    if frequency not in FETCHERS_BY_FREQUENCY:
+        raise HTTPException(400, f"Unknown frequency '{frequency}'. Valid: {list(FETCHERS_BY_FREQUENCY.keys())}")
+    fetchers = FETCHERS_BY_FREQUENCY[frequency]
+    if metric not in fetchers:
         raise HTTPException(404, f"Unknown metric '{metric}'")
     try:
-        return build_insights(metric, start_year, FETCHERS[metric])
+        return build_insights(metric, start_year, fetchers[metric], freq=frequency)
     except Exception as e:
         raise HTTPException(503, f"Database unreachable: {e}")
 
@@ -329,14 +347,17 @@ def list_outputs():
 class RunPredictRequest(BaseModel):
     metric: Optional[str] = None
     model: Optional[str] = None
+    freq: str = "month"
     months: int = DEFAULT_FORECAST_MONTHS
     end_date: Optional[str] = None
+    history_end_date: Optional[str] = None
     start_year: int = DEFAULT_START_YEAR
     country: str = HOLIDAY_COUNTRY
 
 
 class RunValidateRequest(BaseModel):
     metric: Optional[str] = None
+    freq: str = "month"
     start_year: int = DEFAULT_START_YEAR
     country: str = HOLIDAY_COUNTRY
 
@@ -347,6 +368,8 @@ def run_predict(req: RunPredictRequest):
         raise HTTPException(400, f"Unknown metric '{req.metric}'")
     if req.model and req.model not in ALL_FORECASTERS:
         raise HTTPException(400, f"Unknown model '{req.model}'")
+    if req.freq not in FETCHERS_BY_FREQUENCY:
+        raise HTTPException(400, f"Unknown frequency '{req.freq}'. Valid: {list(FETCHERS_BY_FREQUENCY.keys())}")
     job = manager.submit("predict", req.model_dump())
     return _job_public(job)
 
@@ -355,6 +378,8 @@ def run_predict(req: RunPredictRequest):
 def run_validate(req: RunValidateRequest):
     if req.metric and req.metric not in FETCHERS:
         raise HTTPException(400, f"Unknown metric '{req.metric}'")
+    if req.freq not in FETCHERS_BY_FREQUENCY:
+        raise HTTPException(400, f"Unknown frequency '{req.freq}'. Valid: {list(FETCHERS_BY_FREQUENCY.keys())}")
     job = manager.submit("validate", req.model_dump())
     return _job_public(job)
 

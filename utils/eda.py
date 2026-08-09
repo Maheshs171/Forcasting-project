@@ -1,11 +1,12 @@
 """
 utils/eda.py
 ──────────────
-Full exploratory-data-analysis report for a metric's monthly series, built
+Full exploratory-data-analysis report for a metric's time series, built
 for the "Data Explorer" page — so a non-technical user can actually see
 what the raw data looks like (distribution, outliers, gaps, seasonality,
 noise) before/while models are trained on it, instead of trusting the
-pipeline blindly.
+pipeline blindly. Works for both monthly and weekly data (freq param) so
+the two can be visually compared side by side.
 
 Reuses the same fetchers and outlier logic the real training pipeline
 uses (data/fetcher.py, utils/outliers.py) so what's shown here is exactly
@@ -16,7 +17,7 @@ import numpy as np
 import pandas as pd
 
 from utils.outliers import _robust_z
-from config.settings import MONTH_OUTLIER_MAD_THRESHOLD, TXN_OUTLIER_MAD_THRESHOLD
+from config.settings import MONTH_OUTLIER_MAD_THRESHOLD, WEEK_OUTLIER_MAD_THRESHOLD, DAY_OUTLIER_MAD_THRESHOLD, TXN_OUTLIER_MAD_THRESHOLD
 
 
 def _f(x) -> float | None:
@@ -27,6 +28,31 @@ def _f(x) -> float | None:
     if np.isnan(x) or np.isinf(x):
         return None
     return x
+
+
+def _outlier_threshold(freq: str) -> float:
+    if freq == "day":
+        return DAY_OUTLIER_MAD_THRESHOLD
+    return WEEK_OUTLIER_MAD_THRESHOLD if freq == "week" else MONTH_OUTLIER_MAD_THRESHOLD
+
+
+def _label_fmt(freq: str) -> str:
+    # Weekly/daily periods need the day too — multiple weeks/days share a
+    # "month year" label, which would collide/overlap on any chart x-axis
+    # otherwise.
+    return "%b %d, %Y" if freq in ("week", "day") else "%b %Y"
+
+
+def _pandas_freq(freq: str) -> str:
+    # "W-MON" generates timestamps ON Mondays (verified empirically — pandas'
+    # plain "W"/"W-SUN" alias instead generates Sunday timestamps, which
+    # silently produces an all-NaN reindex against our Monday-start weekly
+    # data since none of the dates line up). Must match the Monday-start
+    # convention data/fetcher.py produces both via SQL and via
+    # .dt.to_period("W").dt.start_time for collections.
+    if freq == "day":
+        return "D"
+    return "W-MON" if freq == "week" else "MS"
 
 
 def _summary_stats(values: np.ndarray) -> dict:
@@ -46,14 +72,14 @@ def _summary_stats(values: np.ndarray) -> dict:
     }
 
 
-def _find_gaps(dates: pd.Series) -> list[str]:
-    """Calendar months between min/max that never appear in the series at all."""
+def _find_gaps(dates: pd.Series, freq: str) -> list[str]:
+    """Calendar periods between min/max that never appear in the series at all."""
     if len(dates) < 2:
         return []
-    full_range = pd.date_range(dates.min(), dates.max(), freq="MS")
+    full_range = pd.date_range(dates.min(), dates.max(), freq=_pandas_freq(freq))
     present = set(dates)
     missing = [d for d in full_range if d not in present]
-    return [d.strftime("%b %Y") for d in missing]
+    return [d.strftime(_label_fmt(freq)) for d in missing]
 
 
 def _histogram(values: np.ndarray, bins: int = 10) -> list[dict]:
@@ -68,7 +94,9 @@ def _histogram(values: np.ndarray, bins: int = 10) -> list[dict]:
 
 def _month_of_year_seasonality(df: pd.DataFrame) -> list[dict]:
     """Average value per calendar month, indexed to 100 = overall average.
-    >100 means that calendar month tends to run above average."""
+    >100 means that calendar month tends to run above average. Works
+    unchanged for weekly data too — it just averages every week that falls
+    in a given calendar month, still a meaningful comparison."""
     if df.empty:
         return []
     overall_mean = df["y"].mean()
@@ -99,7 +127,7 @@ def _yoy_table(df: pd.DataFrame) -> list[dict]:
     return rows
 
 
-def _autocorrelation(values: np.ndarray, max_lag: int = 12) -> list[dict]:
+def _autocorrelation(values: np.ndarray, max_lag: int) -> list[dict]:
     s = pd.Series(values, dtype=float)
     n = len(s)
     max_lag = min(max_lag, n - 2)
@@ -113,16 +141,22 @@ def _autocorrelation(values: np.ndarray, max_lag: int = 12) -> list[dict]:
     return out
 
 
-def _seasonal_decomposition(df: pd.DataFrame) -> dict | None:
-    """Additive trend/seasonal/residual split — needs >=24 months (2 full cycles)."""
-    if len(df) < 24:
+def _seasonal_decomposition(df: pd.DataFrame, freq: str) -> dict | None:
+    """Additive trend/seasonal/residual split. Monthly needs >=24 points (2
+    full 12-month cycles); weekly needs >=104 (2 full 52-week cycles) —
+    much more history, since a "year" is a much longer stretch of weeks.
+    Daily decomposes on a 7-day (day-of-week) cycle rather than the full
+    ~365-day annual one — the same cheap-and-dominant-pattern tradeoff used
+    for daily forecasting (see models/forecaster.py's _freq_params)."""
+    period = 7 if freq == "day" else (52 if freq == "week" else 12)
+    if len(df) < 2 * period:
         return None
     try:
         from statsmodels.tsa.seasonal import seasonal_decompose
-        s = df.set_index("ds")["y"].asfreq("MS")
+        s = df.set_index("ds")["y"].asfreq(_pandas_freq(freq))
         s = s.interpolate(limit_direction="both")
-        result = seasonal_decompose(s, model="additive", period=12, extrapolate_trend="freq")
-        labels = [d.strftime("%b %Y") for d in s.index]
+        result = seasonal_decompose(s, model="additive", period=period, extrapolate_trend="freq")
+        labels = [d.strftime(_label_fmt(freq)) for d in s.index]
         return {
             "labels": labels,
             "observed": [_f(v) for v in result.observed],
@@ -134,7 +168,7 @@ def _seasonal_decomposition(df: pd.DataFrame) -> dict | None:
         return None
 
 
-def _rolling_volatility(df: pd.DataFrame, window: int = 3) -> list[dict]:
+def _rolling_volatility(df: pd.DataFrame, freq: str, window: int = 3) -> list[dict]:
     if len(df) < window + 1:
         return []
     roll_mean = df["y"].rolling(window).mean()
@@ -144,14 +178,16 @@ def _rolling_volatility(df: pd.DataFrame, window: int = 3) -> list[dict]:
     for i in range(len(df)):
         if pd.isna(cv.iloc[i]):
             continue
-        out.append({"month": df["ds"].iloc[i].strftime("%b %Y"), "coefficient_of_variation": _f(cv.iloc[i])})
+        out.append({"month": df["ds"].iloc[i].strftime(_label_fmt(freq)), "coefficient_of_variation": _f(cv.iloc[i])})
     return out
 
 
-def build_insights(metric: str, start_year: int, fetch_fn) -> dict:
+def build_insights(metric: str, start_year: int, fetch_fn, freq: str = "month") -> dict:
     """
-    fetch_fn: the FETCHERS[metric] callable (injected so this stays
-    decoupled from data/fetcher.py's import surface).
+    fetch_fn: the FETCHERS[metric] (or FETCHERS_WEEKLY/FETCHERS_DAILY[metric])
+    callable, injected so this stays decoupled from data/fetcher.py's import
+    surface. freq: "month", "week", or "day" — must match what fetch_fn
+    itself aggregates to.
     """
     data = fetch_fn(start_year)
     raw_monthly: pd.DataFrame = data["raw_monthly"]
@@ -160,11 +196,15 @@ def build_insights(metric: str, start_year: int, fetch_fn) -> dict:
 
     if raw_monthly.empty:
         return {
-            "metric": metric, "has_data": False, "notes": notes,
+            "metric": metric, "frequency": freq, "has_data": False, "notes": notes,
             "summary": {}, "gaps": [], "outliers": [], "histogram": [],
             "seasonality_index": [], "yoy": [], "autocorrelation": [],
             "decomposition": None, "volatility": [],
         }
+
+    threshold = _outlier_threshold(freq)
+    label_fmt = _label_fmt(freq)
+    max_lag = 7 if freq == "day" else (52 if freq == "week" else 12)
 
     z = _robust_z(raw_monthly["y"].values)
     cleaned_months = set(cleaned["ds"]) if not cleaned.empty else set()
@@ -172,32 +212,33 @@ def build_insights(metric: str, start_year: int, fetch_fn) -> dict:
     for i, row in raw_monthly.reset_index(drop=True).iterrows():
         is_excluded = row["ds"] not in cleaned_months
         outliers.append({
-            "month": row["ds"].strftime("%b %Y"),
+            "month": row["ds"].strftime(label_fmt),
             "value": _f(row["y"]),
             "robust_z_score": _f(z[i]),
             "excluded": bool(is_excluded),
-            "flagged_severe": bool(abs(z[i]) > MONTH_OUTLIER_MAD_THRESHOLD),
+            "flagged_severe": bool(abs(z[i]) > threshold),
         })
 
     report = {
         "metric": metric,
+        "frequency": freq,
         "has_data": True,
         "notes": notes,
         "date_range": {
-            "start": raw_monthly["ds"].min().strftime("%b %Y"),
-            "end": raw_monthly["ds"].max().strftime("%b %Y"),
+            "start": raw_monthly["ds"].min().strftime(label_fmt),
+            "end": raw_monthly["ds"].max().strftime(label_fmt),
         },
         "summary_raw": _summary_stats(raw_monthly["y"].values),
         "summary_cleaned": _summary_stats(cleaned["y"].values) if not cleaned.empty else {},
-        "gaps": _find_gaps(raw_monthly["ds"]),
+        "gaps": _find_gaps(raw_monthly["ds"], freq),
         "outliers": outliers,
-        "outlier_threshold": MONTH_OUTLIER_MAD_THRESHOLD,
+        "outlier_threshold": threshold,
         "histogram": _histogram(raw_monthly["y"].values),
         "seasonality_index": _month_of_year_seasonality(cleaned if not cleaned.empty else raw_monthly),
         "yoy": _yoy_table(cleaned if not cleaned.empty else raw_monthly),
-        "autocorrelation": _autocorrelation((cleaned if not cleaned.empty else raw_monthly)["y"].values),
-        "decomposition": _seasonal_decomposition(cleaned if not cleaned.empty else raw_monthly),
-        "volatility": _rolling_volatility(cleaned if not cleaned.empty else raw_monthly),
+        "autocorrelation": _autocorrelation((cleaned if not cleaned.empty else raw_monthly)["y"].values, max_lag),
+        "decomposition": _seasonal_decomposition(cleaned if not cleaned.empty else raw_monthly, freq),
+        "volatility": _rolling_volatility(cleaned if not cleaned.empty else raw_monthly, freq),
     }
 
     # Transaction-level detail only exists for collections (individual payments).

@@ -4,8 +4,19 @@ statsmodels>=0.14.4
 pandas>=2.2.3
 numpy>=2.1.0
 scikit-learn>=1.5.2
+xgboost>=2.1.0
 pymssql>=2.3.2
 python-dotenv>=1.0.1
 holidays>=0.58
 fastapi>=0.115.0
 uvicorn[standard]>=0.32.0
+
+mlforecast>=1.1.0
+lightgbm>=4.7.0
+autots>=1.0.3
+
+# Optional: only needed to run azure_automl.py
+azure-ai-ml>=1.20.0
+azure-identity>=1.17.1
+mltable>=1.6.1
+mlflow>=2.15.1

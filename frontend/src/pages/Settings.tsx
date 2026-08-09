@@ -4,12 +4,12 @@ import { Database, Plus, CheckCircle2, XCircle, Trash2, Loader2, PlugZap } from 
 import { api } from "../lib/api";
 
 const inputCls =
-  "w-full rounded-lg bg-slate-50 border border-slate-200 px-3 py-2 text-[13px] text-slate-800 focus:outline-none focus:border-indigo-400 focus:bg-white transition-colors";
+  "w-full rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2 text-[13px] text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-400 focus:bg-white dark:focus:bg-slate-800 transition-colors";
 
 function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
     <label className="block space-y-1.5">
-      <span className="text-[11px] font-medium uppercase tracking-wider text-slate-400">{label}</span>
+      <span className="text-[11px] font-medium uppercase tracking-wider text-slate-400 dark:text-slate-500">{label}</span>
       {children}
     </label>
   );
@@ -57,8 +57,8 @@ export default function Settings() {
   return (
     <div className="max-w-4xl mx-auto space-y-7">
       <div>
-        <h1 className="text-[22px] font-semibold tracking-tight text-slate-900">Settings</h1>
-        <p className="text-[13px] text-slate-400 mt-1">
+        <h1 className="text-[22px] font-semibold tracking-tight text-slate-900 dark:text-slate-100">Settings</h1>
+        <p className="text-[13px] text-slate-400 dark:text-slate-500 mt-1">
           Connect this app to a different SQL Server / database. Table and column names are assumed the same
           across every connection — no other configuration is needed when you switch.
         </p>
@@ -67,8 +67,8 @@ export default function Settings() {
       <div className="glass rounded-2xl p-6">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <Database size={16} className="text-slate-400" />
-            <span className="text-[13.5px] font-semibold text-slate-900">Database connections</span>
+            <Database size={16} className="text-slate-400 dark:text-slate-500" />
+            <span className="text-[13.5px] font-semibold text-slate-900 dark:text-slate-100">Database connections</span>
           </div>
           <button
             onClick={() => setShowForm((s) => !s)}
@@ -79,24 +79,24 @@ export default function Settings() {
         </div>
 
         <div className="space-y-2 mb-2">
-          {!connections?.length && <div className="text-[12px] text-slate-400 italic py-4 text-center">No connections configured</div>}
+          {!connections?.length && <div className="text-[12px] text-slate-400 dark:text-slate-500 italic py-4 text-center">No connections configured</div>}
           {connections?.map((c) => (
             <div
               key={c.name}
               className={`flex items-center justify-between rounded-xl border px-4 py-3 ${
-                c.is_active ? "border-indigo-200 bg-indigo-50" : "border-slate-200"
+                c.is_active ? "border-indigo-200 dark:border-indigo-500/30 bg-indigo-50 dark:bg-indigo-500/10" : "border-slate-200 dark:border-slate-700"
               }`}
             >
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="text-[13px] font-semibold text-slate-800">{c.name}</span>
+                  <span className="text-[13px] font-semibold text-slate-800 dark:text-slate-200">{c.name}</span>
                   {c.is_active && (
-                    <span className="text-[10px] font-bold uppercase tracking-wide text-indigo-600 bg-indigo-100 rounded-full px-2 py-0.5">
+                    <span className="text-[10px] font-bold uppercase tracking-wide text-indigo-600 dark:text-indigo-400 bg-indigo-100 dark:bg-indigo-500/20 rounded-full px-2 py-0.5">
                       active
                     </span>
                   )}
                 </div>
-                <div className="text-[11.5px] text-slate-400 mt-0.5">
+                <div className="text-[11.5px] text-slate-400 dark:text-slate-500 mt-0.5">
                   {c.server} &middot; {c.database} &middot; port {c.port} &middot; user {c.username}
                 </div>
               </div>
@@ -104,14 +104,14 @@ export default function Settings() {
                 {!c.is_active && (
                   <button
                     onClick={() => activateMutation.mutate(c.name)}
-                    className="text-[12px] text-indigo-600 hover:text-indigo-700 font-medium px-2 py-1"
+                    className="text-[12px] text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium px-2 py-1"
                   >
                     Set active
                   </button>
                 )}
                 <button
                   onClick={() => deleteMutation.mutate(c.name)}
-                  className="text-slate-300 hover:text-red-500 p-1.5 transition-colors"
+                  className="text-slate-300 dark:text-slate-600 hover:text-red-500 dark:hover:text-red-400 p-1.5 transition-colors"
                 >
                   <Trash2 size={15} />
                 </button>
@@ -121,7 +121,7 @@ export default function Settings() {
         </div>
 
         {showForm && (
-          <div className="mt-4 pt-4 border-t border-slate-200 space-y-4">
+          <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700 space-y-4">
             <div className="grid grid-cols-2 gap-3">
               <Field label="Connection name">
                 <input className={inputCls} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="production" />
@@ -161,7 +161,7 @@ export default function Settings() {
             {testResult && (
               <div
                 className={`flex items-center gap-2 rounded-lg px-3 py-2 text-[12.5px] ${
-                  testResult.ok ? "bg-emerald-50 text-emerald-700" : "bg-red-50 text-red-700"
+                  testResult.ok ? "bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400" : "bg-red-50 dark:bg-red-500/10 text-red-700 dark:text-red-400"
                 }`}
               >
                 {testResult.ok ? <CheckCircle2 size={14} /> : <XCircle size={14} />}
@@ -173,7 +173,7 @@ export default function Settings() {
               <button
                 onClick={() => testMutation.mutate()}
                 disabled={!canTest || testMutation.isPending}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3.5 py-2 text-[12.5px] font-medium text-slate-600 hover:bg-slate-50 disabled:opacity-40 transition-colors"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 dark:border-slate-700 px-3.5 py-2 text-[12.5px] font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-40 transition-colors"
               >
                 {testMutation.isPending ? <Loader2 size={14} className="animate-spin" /> : <PlugZap size={14} />}
                 Test connection

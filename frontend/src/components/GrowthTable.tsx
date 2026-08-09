@@ -10,16 +10,16 @@ function GrowthRow({
   const has = pct !== null && pct !== undefined && !Number.isNaN(pct);
   const positive = has && pct! >= 0;
   return (
-    <tr className="border-t border-slate-100">
+    <tr className="border-t border-slate-100 dark:border-slate-800">
       <td className={`py-3 px-4 font-semibold text-white text-[12.5px]`} style={{ background: color }}>
         {label}
       </td>
-      <td className="py-3 px-4 text-[13px] text-slate-700 font-medium">{value}</td>
-      <td className="py-3 px-4 text-[12px] text-slate-400">{comparedTo}</td>
+      <td className="py-3 px-4 text-[13px] text-slate-700 dark:text-slate-300 font-medium">{value}</td>
+      <td className="py-3 px-4 text-[12px] text-slate-400 dark:text-slate-500">{comparedTo}</td>
       <td className="py-3 px-4 text-right">
         {rightOverride ?? (
           <span className={`inline-flex items-center rounded-md px-2 py-1 text-[12.5px] font-semibold ${
-            !has ? "bg-slate-100 text-slate-400" : positive ? "bg-emerald-50 text-emerald-700" : "bg-rose-50 text-rose-700"
+            !has ? "bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500" : positive ? "bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400" : "bg-rose-50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-400"
           }`}>
             {has ? `${positive ? "+" : ""}${pct!.toFixed(2)}%` : "n/a"}
           </span>
@@ -55,7 +55,7 @@ export default function GrowthTable({ data, isMoney }: { data: MetricForecast; i
               comparedTo={`range: ${fmt(n12.low)} – ${fmt(n12.high)} · ${n12.months_covered} months`}
               color="#4f46e5"
               rightOverride={
-                <span className="inline-flex items-center rounded-md px-2 py-1 text-[12.5px] font-semibold bg-indigo-50 text-indigo-700">
+                <span className="inline-flex items-center rounded-md px-2 py-1 text-[12.5px] font-semibold bg-indigo-50 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-400">
                   forecast
                 </span>
               }

@@ -40,22 +40,22 @@ export default function PipelineStepper({ job }: { job?: JobSummary }) {
               <div
                 className={`h-8 w-8 rounded-full flex items-center justify-center border-2 transition-colors ${
                   failed
-                    ? "border-red-400 bg-red-50 text-red-500"
+                    ? "border-red-400 bg-red-50 dark:bg-red-500/10 text-red-500"
                     : done
                     ? "border-emerald-500 bg-emerald-500 text-white"
                     : active
-                    ? "border-indigo-500 bg-indigo-50 text-indigo-600"
-                    : "border-slate-200 bg-white text-slate-300"
+                    ? "border-indigo-500 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400"
+                    : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-300 dark:text-slate-600"
                 }`}
               >
                 {done ? <Check size={15} /> : active ? <Loader2 size={14} className="animate-spin" /> : <Circle size={8} fill="currentColor" />}
               </div>
-              <span className={`text-[11px] text-center font-medium ${done || active ? "text-slate-700" : "text-slate-400"}`}>
+              <span className={`text-[11px] text-center font-medium ${done || active ? "text-slate-700 dark:text-slate-300" : "text-slate-400 dark:text-slate-600"}`}>
                 {step.label}
               </span>
             </div>
             {i < STEPS.length - 1 && (
-              <div className={`h-0.5 flex-1 -mt-5 ${done ? "bg-emerald-400" : "bg-slate-200"}`} />
+              <div className={`h-0.5 flex-1 -mt-5 ${done ? "bg-emerald-400" : "bg-slate-200 dark:bg-slate-700"}`} />
             )}
           </div>
         );

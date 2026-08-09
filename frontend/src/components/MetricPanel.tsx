@@ -22,13 +22,13 @@ export default function MetricPanel({ data, isMoney }: { data: MetricForecast; i
     >
       <div className="flex items-start justify-between flex-wrap gap-3">
         <div>
-          <h2 className="text-[16px] font-semibold text-slate-900 tracking-tight">{data.label}</h2>
+          <h2 className="text-[16px] font-semibold text-slate-900 dark:text-slate-100 tracking-tight">{data.label}</h2>
           <div className="flex items-center gap-2 mt-1.5 flex-wrap">
             <ModelBadge model={data.model_used} />
-            <span className="text-[11px] text-slate-400">
+            <span className="text-[11px] text-slate-400 dark:text-slate-500">
               {data.history_months} months of history &middot; {data.horizon_months} months forecast
             </span>
-            <span className="text-[11px] text-slate-400">&middot; generated {timeAgo(data._generated_at)}</span>
+            <span className="text-[11px] text-slate-400 dark:text-slate-500">&middot; generated {timeAgo(data._generated_at)}</span>
           </div>
         </div>
         {data._chart_url && (
@@ -36,7 +36,7 @@ export default function MetricPanel({ data, isMoney }: { data: MetricForecast; i
             href={data._chart_url}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-1.5 text-[11.5px] text-slate-400 hover:text-slate-500 transition-colors"
+            className="inline-flex items-center gap-1.5 text-[11.5px] text-slate-400 dark:text-slate-500 hover:text-slate-500 dark:hover:text-slate-300 transition-colors"
           >
             Standalone chart file <ExternalLink size={12} />
           </a>
@@ -78,7 +78,7 @@ export default function MetricPanel({ data, isMoney }: { data: MetricForecast; i
       <PacingBlock data={data} isMoney={isMoney} />
 
       <div>
-        <div className="text-[11px] uppercase tracking-wider text-slate-400 font-medium mb-2">
+        <div className="text-[11px] uppercase tracking-wider text-slate-400 dark:text-slate-500 font-medium mb-2">
           Historical + forecast trend
         </div>
         <TrendChart points={data.full_forecast} isMoney={isMoney} />
@@ -90,7 +90,7 @@ export default function MetricPanel({ data, isMoney }: { data: MetricForecast; i
         <div>
           <button
             onClick={() => setShowBacktest((s) => !s)}
-            className="flex items-center gap-1.5 text-[12px] text-slate-500 hover:text-slate-700 transition-colors"
+            className="flex items-center gap-1.5 text-[12px] text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"
           >
             <ChevronDown size={14} className={`transition-transform ${showBacktest ? "rotate-180" : ""}`} />
             Model backtest comparison

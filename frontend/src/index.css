@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Class-based dark mode: toggled via .dark on <html> (see index.html's
+   pre-paint script + ThemeToggle), not just prefers-color-scheme, so the
+   user's explicit choice always wins. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-bg: #f4f6fb;
   --color-surface: #ffffff;
@@ -11,6 +16,32 @@
   --color-warn: #d97706;
   --color-bad: #dc2626;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+}
+
+/* Recharts components read these via inline style={{fill: "var(--chart-tick)"}}
+   etc. — inline styles can't use Tailwind's dark: variant, so chart color
+   theming goes through plain CSS custom properties instead, flipped once
+   here rather than duplicated per chart. */
+:root {
+  --chart-surface: #ffffff;
+  --chart-grid: rgba(15, 23, 42, 0.06);
+  --chart-tick: rgba(15, 23, 42, 0.45);
+  --chart-axis-line: rgba(15, 23, 42, 0.1);
+  --chart-tooltip-bg: #ffffff;
+  --chart-tooltip-border: #e2e8f0;
+  --chart-tooltip-fg: #1e293b;
+  --chart-label-fg: #334155;
+}
+html.dark {
+  --chart-surface: #131a29;
+  --chart-grid: rgba(226, 232, 240, 0.08);
+  --chart-tick: rgba(226, 232, 240, 0.5);
+  --chart-axis-line: rgba(226, 232, 240, 0.15);
+  --chart-tooltip-bg: #1a2233;
+  --chart-tooltip-border: #2d3548;
+  --chart-tooltip-fg: #e2e8f0;
+  --chart-label-fg: #cbd5e1;
 }
 
 html, body, #root {
@@ -25,20 +56,34 @@ body {
   color: #1e293b;
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+html.dark body {
+  background: #0b0f1a;
+  color: #e2e8f0;
 }
 
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 8px; }
 ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+html.dark ::-webkit-scrollbar-thumb { background: #2a3244; }
+html.dark ::-webkit-scrollbar-thumb:hover { background: #3a4358; }
 
 .glass {
   background: #ffffff;
   border: 1px solid #e6eaf1;
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px -12px rgba(15, 23, 42, 0.08);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+html.dark .glass {
+  background: #131a29;
+  border: 1px solid #232c3f;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 8px 24px -12px rgba(0, 0, 0, 0.5);
 }
 
-.mono { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
 
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; }
@@ -49,3 +94,9 @@ body {
 @keyframes shimmer {
   100% { transform: translateX(100%); }
 }
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.fade-in { animation: fade-in 0.15s ease-out; }

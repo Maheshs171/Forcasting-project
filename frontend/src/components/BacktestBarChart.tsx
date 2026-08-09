@@ -4,10 +4,13 @@ import type { BacktestReport } from "../lib/api";
 const MODEL_HEX: Record<string, string> = {
   sarima: "#7c3aed", ets: "#0891b2", prophet: "#db2777",
   naive: "#64748b", xgboost: "#d97706", sarimax: "#059669", ensemble: "#4f46e5",
+  random_forest: "#84cc16", extra_trees: "#14b8a6", mlforecast: "#ea580c", autots: "#c026d3",
 };
 const MODEL_LABELS: Record<string, string> = {
   sarima: "SARIMA", ets: "ETS", prophet: "Prophet",
   naive: "Seasonal Naive", xgboost: "XGBoost", sarimax: "SARIMAX", ensemble: "Ensemble",
+  random_forest: "Random Forest", extra_trees: "Extra Trees", mlforecast: "mlforecast",
+  autots: "AutoTS",
 };
 
 export default function BacktestBarChart({ report }: { report: BacktestReport }) {
@@ -22,30 +25,30 @@ export default function BacktestBarChart({ report }: { report: BacktestReport })
     }))
     .sort((a, b) => b.accuracy - a.accuracy);
 
-  if (!data.length) return <div className="text-[12px] text-slate-400 italic py-6 text-center">No scored candidates</div>;
+  if (!data.length) return <div className="text-[12px] text-slate-400 dark:text-slate-500 italic py-6 text-center">No scored candidates</div>;
 
   return (
     <ResponsiveContainer width="100%" height={Math.max(160, data.length * 44)}>
       <BarChart data={data} layout="vertical" margin={{ top: 4, right: 40, left: 8, bottom: 4 }}>
-        <CartesianGrid stroke="rgba(15,23,42,0.06)" horizontal={false} />
-        <XAxis type="number" domain={[0, 100]} tick={{ fill: "rgba(15,23,42,0.45)", fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => `${v}%`} />
+        <CartesianGrid stroke="var(--chart-grid)" horizontal={false} />
+        <XAxis type="number" domain={[0, 100]} tick={{ fill: "var(--chart-tick)", fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => `${v}%`} />
         <YAxis
           type="category"
           dataKey="name"
-          tick={{ fill: "#334155", fontSize: 12, fontWeight: 500 }}
+          tick={{ fill: "var(--chart-label-fg)", fontSize: 12, fontWeight: 500 }}
           axisLine={false}
           tickLine={false}
           width={100}
         />
         <Tooltip
-          contentStyle={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 10, fontSize: 12 }}
+          contentStyle={{ background: "var(--chart-tooltip-bg)", border: "1px solid var(--chart-tooltip-border)", borderRadius: 10, fontSize: 12, color: "var(--chart-tooltip-fg)" }}
           formatter={(v) => [`${v}% accurate`, "Accuracy"]}
         />
         <Bar dataKey="accuracy" radius={[0, 6, 6, 0]} barSize={22}>
           {data.map((d) => (
             <Cell key={d.key} fill={d.isBest ? "#059669" : MODEL_HEX[d.key] ?? "#94a3b8"} fillOpacity={d.isBest ? 1 : 0.5} />
           ))}
-          <LabelList dataKey="accuracy" position="right" formatter={(v) => `${v}%`} style={{ fontSize: 11, fill: "#475569", fontWeight: 600 }} />
+          <LabelList dataKey="accuracy" position="right" formatter={(v) => `${v}%`} style={{ fontSize: 11, fill: "var(--chart-label-fg)", fontWeight: 600 }} />
         </Bar>
       </BarChart>
     </ResponsiveContainer>

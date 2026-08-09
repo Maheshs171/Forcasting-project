@@ -19,6 +19,9 @@ outputs/*.json
 outputs/*.html
 !outputs/.gitkeep
 
+# Local DB fallback cache — real business data snapshots, never commit
+data/cache/
+
 # Raw row-level data exports (superseded by the live-DB pipeline; not for
 # a public repo since they contain order/shipping-adjacent fields)
 MLdata/RAW_*.csv

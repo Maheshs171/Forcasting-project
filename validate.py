@@ -22,8 +22,10 @@ warnings.filterwarnings("ignore")
 sys.path.insert(0, os.path.dirname(__file__))
 
 from config.settings import validate as validate_config, DEFAULT_START_YEAR, HOLIDAY_COUNTRY
-from data.fetcher import FETCHERS
-from models.forecaster import ALL_FORECASTERS, EnsembleForecaster
+from data.fetcher import FETCHERS, FETCHERS_BY_FREQUENCY
+from models.forecaster import ALL_FORECASTERS, EnsembleForecaster, _freq_params
+
+FREQ_ADVERB = {"month": "monthly", "week": "weekly", "day": "daily"}
 
 
 def is_flat_forecast(future_yhat: np.ndarray, historical_std: float, threshold: float = 0.15) -> bool:
@@ -54,6 +56,7 @@ def rolling_backtest(
     min_train: int = 18,
     step: int = 3,
     extra_signals: dict = None,
+    freq: str = "month",
 ) -> dict:
     """
     Expanding-window backtest. Returns per-step-ahead MAPE (1..horizon)
@@ -82,7 +85,7 @@ def rolling_backtest(
             fold_signals = {name: s[s["ds"] <= cutoff_ds].reset_index(drop=True) for name, s in extra_signals.items()}
 
         try:
-            fc = forecaster_factory().fit_predict(train, periods=len(test), metric="backtest", extra_signals=fold_signals)
+            fc = forecaster_factory().fit_predict(train, periods=len(test), metric="backtest", extra_signals=fold_signals, freq=freq)
         except Exception:
             cutoff += step
             continue
@@ -151,12 +154,13 @@ def select_best_model(
     horizon: int = 12,
     country: str = "US",
     extra_signals: dict = None,
+    freq: str = "month",
 ) -> dict:
     """
     Backtests every candidate whose min-data requirement is met, scores
-    each with 60% weight on near-term (1-3mo) MAPE and 40% on longer-term
-    (4-12mo) MAPE — near-term matters most for "this month / next month"
-    business questions, but full-year accuracy still counts.
+    each with 60% weight on near-term MAPE and 40% on longer-term MAPE —
+    near-term matters most for "this period / next period" business
+    questions, but full-year accuracy still counts.
     Returns the backtest report for all candidates + the winner's name.
 
     extra_signals: the other metrics' full history, only used by the
@@ -164,16 +168,34 @@ def select_best_model(
     how it's kept leakage-free per fold.
 
     An "ensemble" candidate (blend of the top 2 non-flat base models,
-    inverse-error weighted) is added after the base 6 and backtested the
-    exact same way — it only wins if it demonstrably beats its own
-    components on real held-out accuracy, not by assumption.
+    inverse-error weighted) is added after the base candidates and
+    backtested the exact same way — it only wins if it demonstrably beats
+    its own components on real held-out accuracy, not by assumption.
+
+    freq: "month", "week", or "day" — every candidate's min-data floor is
+    scaled to the equivalent number of periods (e.g. a 24-month floor
+    becomes ~104 weeks, or ~730 days) so weekly/daily data isn't held to a
+    monthly-sized bar. Scaled by periods_per_year (calendar-time equivalence),
+    not seasonal_period (the model's own cyclical fitting length) — those
+    two diverge for daily, where the cheap-to-fit seasonal cycle is only 7
+    days but a trustworthy floor still needs real calendar years of data.
     """
-    needs_country = {"prophet", "xgboost", "sarimax"}
+    needs_country = {"prophet", "xgboost", "sarimax", "random_forest", "extra_trees"}
     historical_std = float(df["y"].std() or 0)
+    fp = _freq_params(freq)
+    period_scale = fp["periods_per_year"] / 12  # 1.0 for month, ~4.33 for week, ~30.4 for day
+    # rolling_backtest's own min_train/step defaults (18, 3) are sized for
+    # monthly data. Left unscaled, weekly/daily data — with far more raw
+    # periods per unit of calendar time — silently explode into hundreds of
+    # backtest folds (many trained on almost no history) instead of a
+    # comparable number to monthly. Harmless-but-slow for weekly (a live
+    # daily backtest with this bug took over an hour and had to be killed).
+    step = max(round(3 * period_scale), 1)
     results = {}
     for key, cls in ALL_FORECASTERS.items():
-        if len(df) < cls.min_months + 6:  # need room for at least one backtest fold
-            results[key] = {"skipped": f"needs {cls.min_months}+ months, have {len(df)}"}
+        min_periods = round(cls.min_months * period_scale)
+        if len(df) < min_periods + 6:  # need room for at least one backtest fold
+            results[key] = {"skipped": f"needs {min_periods}+ {freq}s, have {len(df)}"}
             continue
 
         is_multivariate = getattr(cls, "is_multivariate", False)
@@ -183,8 +205,9 @@ def select_best_model(
 
         try:
             report = rolling_backtest(
-                df, factory, horizon=min(horizon, 12),
+                df, factory, horizon=min(horizon, 12), min_train=min_periods, step=step,
                 extra_signals=extra_signals if is_multivariate else None,
+                freq=freq,
             )
         except Exception as e:
             results[key] = {"skipped": f"error during backtest: {e}"}
@@ -216,7 +239,8 @@ def select_best_model(
 
         try:
             ens_report = rolling_backtest(
-                df, ensemble_factory, horizon=min(horizon, 12), extra_signals=extra_signals,
+                df, ensemble_factory, horizon=min(horizon, 12), min_train=round(18 * period_scale), step=step,
+                extra_signals=extra_signals, freq=freq,
             )
             if ens_report["n_folds"] > 0:
                 _finalize_score(ens_report, historical_std)
@@ -265,38 +289,42 @@ def print_report(report: dict):
 
 def run(args, progress_cb=None):
     validate_config()
-    metrics = [args.metric] if args.metric else list(FETCHERS.keys())
+    freq = getattr(args, "freq", "month") or "month"
+    fetchers = FETCHERS_BY_FREQUENCY[freq]
+    metrics = [args.metric] if args.metric else list(fetchers.keys())
 
     # Fetch every metric's history once — the multivariate candidates
     # (XGBoost, SARIMAX) use the OTHER metrics as cross-signal features,
     # so all 4 need to be loaded regardless of which one is being scored.
-    print("Loading all metrics (needed for cross-metric features)...")
+    print(f"Loading all metrics ({FREQ_ADVERB.get(freq, freq)}, needed for cross-metric features)...")
     all_history = {}
-    for m in FETCHERS.keys():
-        data = FETCHERS[m](args.start_year)
+    for m in fetchers.keys():
+        data = fetchers[m](args.start_year)
         all_history[m] = data["history"]
         if m in metrics:
             for n in data["notes"]:
                 print(f"  ! {n}")
 
+    min_floor = round(18 * _freq_params(freq)["periods_per_year"] / 12)
     all_reports = {}
     for i, metric in enumerate(metrics):
         if progress_cb:
             progress_cb(i, len(metrics), metric)
         df = all_history[metric]
-        if len(df) < 18:
-            print(f"  Not enough clean history ({len(df)} months) to backtest {metric} — need 18+")
+        if len(df) < min_floor:
+            print(f"  Not enough clean history ({len(df)} {freq}s) to backtest {metric} — need {min_floor}+")
             continue
 
         extra_signals = {k: v for k, v in all_history.items() if k != metric}
-        report = select_best_model(df, metric, country=args.country, extra_signals=extra_signals)
+        report = select_best_model(df, metric, country=args.country, extra_signals=extra_signals, freq=freq)
         print_report(report)
         all_reports[metric] = report
 
     os.makedirs("outputs", exist_ok=True)
-    with open("outputs/backtest_report.json", "w") as f:
+    suffix = "" if freq == "month" else f"_{freq}"
+    with open(f"outputs/backtest_report{suffix}.json", "w") as f:
         json.dump(all_reports, f, indent=2, default=str)
-    print("Saved outputs/backtest_report.json")
+    print(f"Saved outputs/backtest_report{suffix}.json")
 
     if progress_cb:
         progress_cb(len(metrics), len(metrics), None)
@@ -309,4 +337,5 @@ if __name__ == "__main__":
     parser.add_argument("--metric", default=None, choices=list(FETCHERS.keys()))
     parser.add_argument("--start-year", type=int, default=DEFAULT_START_YEAR)
     parser.add_argument("--country", default=HOLIDAY_COUNTRY)
+    parser.add_argument("--freq", default="month", choices=["month", "week", "day"])
     run(parser.parse_args())

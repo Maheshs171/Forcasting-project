@@ -30,6 +30,18 @@ export interface ForecastPoint {
   high: number;
 }
 
+export interface HistoryPoint {
+  month: string;
+  label: string;
+  value: number;
+}
+
+export interface YoyHistoryPoint {
+  year: number;
+  month: number; // 1-12
+  value: number;
+}
+
 export interface BacktestCandidate {
   n_folds?: number;
   per_step_mape?: Record<string, number | null>;
@@ -86,11 +98,14 @@ export interface ModelForecast {
 export interface MetricForecast {
   metric: MetricKey;
   label: string;
+  frequency?: DataFrequency;
   model_used: string;
   best_model: string;
   history_months: number;
   horizon_months: number;
   data_quality_notes: string[];
+  history_full?: HistoryPoint[];
+  yoy_history?: YoyHistoryPoint[];
   this_month: {
     month: string;
     month_to_date_actual: number;
@@ -204,8 +219,11 @@ export interface TransactionInsights {
   top_excluded: { date: string; amount: number | null }[];
   outlier_threshold: number;
 }
+export type DataFrequency = "month" | "week" | "day";
+
 export interface DataInsightsReport {
   metric: string;
+  frequency?: DataFrequency;
   has_data: boolean;
   notes: string[];
   date_range?: { start: string; end: string };
@@ -240,25 +258,28 @@ export const api = {
   configDefaults: () =>
     client.get<{ start_year: number; months: number; country: string }>("/config/defaults").then((r) => r.data),
 
-  forecast: (metric: MetricKey) => client.get<MetricForecast>(`/forecast/${metric}`).then((r) => r.data),
-  allForecasts: () =>
-    client.get<Record<MetricKey, MetricForecast | null>>("/forecast").then((r) => r.data),
+  forecast: (metric: MetricKey, frequency: DataFrequency = "month") =>
+    client.get<MetricForecast>(`/forecast/${metric}`, { params: { frequency } }).then((r) => r.data),
+  allForecasts: (frequency: DataFrequency = "month") =>
+    client.get<Record<MetricKey, MetricForecast | null>>("/forecast", { params: { frequency } }).then((r) => r.data),
   summaryLatest: () =>
     client.get<{ data: Record<string, MetricForecast>; generated_at: string }>("/summary/latest").then((r) => r.data),
-  backtest: () =>
-    client.get<{ data: Record<string, BacktestReport>; generated_at: string }>("/backtest").then((r) => r.data),
+  backtest: (frequency: DataFrequency = "month") =>
+    client.get<{ data: Record<string, BacktestReport>; generated_at: string }>("/backtest", { params: { frequency } }).then((r) => r.data),
   outputs: () => client.get<OutputFile[]>("/outputs").then((r) => r.data),
 
   runPredict: (params: {
     metric?: string | null;
     model?: string | null;
+    freq?: DataFrequency;
     months?: number;
     end_date?: string | null;
+    history_end_date?: string | null;
     start_year?: number;
     country?: string;
   }) => client.post<JobSummary>("/jobs/predict", params).then((r) => r.data),
 
-  runValidate: (params: { metric?: string | null; start_year?: number; country?: string }) =>
+  runValidate: (params: { metric?: string | null; freq?: DataFrequency; start_year?: number; country?: string }) =>
     client.post<JobSummary>("/jobs/validate", params).then((r) => r.data),
 
   jobs: () => client.get<JobSummary[]>("/jobs").then((r) => r.data),
@@ -274,8 +295,12 @@ export const api = {
   dataQuality: (metric: string, startYear?: number) =>
     client.get<DataQualityReport>(`/data-quality/${metric}`, { params: startYear ? { start_year: startYear } : {} }).then((r) => r.data),
 
-  dataInsights: (metric: string, startYear?: number) =>
-    client.get<DataInsightsReport>(`/data-insights/${metric}`, { params: startYear ? { start_year: startYear } : {} }).then((r) => r.data),
+  dataInsights: (metric: string, startYear?: number, frequency: DataFrequency = "month") =>
+    client
+      .get<DataInsightsReport>(`/data-insights/${metric}`, {
+        params: { ...(startYear ? { start_year: startYear } : {}), frequency },
+      })
+      .then((r) => r.data),
 
   connections: () => client.get<ConnectionInfo[]>("/connections").then((r) => r.data),
   addConnection: (body: { name: string; server: string; database: string; username: string; password: string; port: number; make_active: boolean }) =>

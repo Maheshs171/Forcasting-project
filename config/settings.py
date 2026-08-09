@@ -50,6 +50,31 @@ MONTH_OUTLIER_MAD_THRESHOLD = float(os.getenv("MONTH_OUTLIER_MAD_THRESHOLD", "20
 # (e.g. fake/test payment entries) before they get aggregated into a month.
 TXN_OUTLIER_MAD_THRESHOLD   = float(os.getenv("TXN_OUTLIER_MAD_THRESHOLD", "18.0"))
 
+# Same idea as MONTH_OUTLIER_MAD_THRESHOLD but for weekly aggregates, which
+# are naturally noisier per-bucket than monthly totals. Starts equal to the
+# monthly threshold since there's no real weekly data yet to calibrate
+# against — expect this to need tuning once weekly history accumulates.
+WEEK_OUTLIER_MAD_THRESHOLD  = float(os.getenv("WEEK_OUTLIER_MAD_THRESHOLD", "20.0"))
+
+# Same idea again but for daily aggregates. Calibrated empirically against
+# real encounters daily history (2,131 days): at the monthly-inherited
+# threshold of 20, every single "anomaly" it flagged (85 of 2131 days) was a
+# real holiday or weekend with genuinely low-but-real activity (July 4th,
+# Thanksgiving, Memorial Day, ordinary Saturdays/Sundays) — none were data
+# artifacts. The z-score distribution's low tail caps at ~20.3 for this
+# metric's minimum observed value, with a clean gap above it (0 exclusions
+# at threshold 25+), so 30 comfortably clears every real-but-quiet day while
+# still catching genuine spikes (a migration/import dump would produce a far
+# larger value, and therefore a far larger z-score, than a quiet holiday).
+DAY_OUTLIER_MAD_THRESHOLD   = float(os.getenv("DAY_OUTLIER_MAD_THRESHOLD", "30.0"))
+
+# ── Azure ML (AutoML forecasting comparison) ───────────────────────────────
+# Only needed if you run azure_automl.py — the local pipeline never requires these.
+AML_SUBSCRIPTION_ID = os.getenv("AML_SUBSCRIPTION_ID")
+AML_RESOURCE_GROUP  = os.getenv("AML_RESOURCE_GROUP")
+AML_WORKSPACE_NAME  = os.getenv("AML_WORKSPACE_NAME")
+AML_COMPUTE_NAME    = os.getenv("AML_COMPUTE_NAME", "cpu-cluster")
+
 
 def get_connection_string() -> dict:
     """

@@ -20,31 +20,31 @@ export default function JobHistory({
   return (
     <div className="glass rounded-2xl p-5">
       <div className="flex items-center gap-2 mb-3">
-        <ListChecks size={15} className="text-slate-400" />
-        <span className="text-[13px] font-semibold text-slate-900">Run history</span>
+        <ListChecks size={15} className="text-slate-400 dark:text-slate-500" />
+        <span className="text-[13px] font-semibold text-slate-900 dark:text-slate-100">Run history</span>
       </div>
       <div className="space-y-1.5 max-h-[420px] overflow-y-auto pr-1">
-        {!jobs?.length && <div className="text-[12px] text-slate-400 italic py-6 text-center">No runs yet</div>}
+        {!jobs?.length && <div className="text-[12px] text-slate-400 dark:text-slate-500 italic py-6 text-center">No runs yet</div>}
         {jobs?.map((j: JobSummary) => (
           <button
             key={j.id}
             onClick={() => onSelect(j.id)}
             className={`w-full text-left rounded-lg px-3 py-2.5 transition-colors border ${
               selectedId === j.id
-                ? "bg-indigo-50 border-indigo-200"
-                : "border-transparent hover:bg-slate-50"
+                ? "bg-indigo-50 dark:bg-indigo-500/10 border-indigo-200 dark:border-indigo-500/30"
+                : "border-transparent hover:bg-slate-50 dark:hover:bg-slate-800/60"
             }`}
           >
             <div className="flex items-center justify-between gap-2">
-              <span className="text-[12.5px] font-medium text-slate-800 capitalize">
+              <span className="text-[12.5px] font-medium text-slate-800 dark:text-slate-200 capitalize">
                 {j.kind} {j.params.metric ? `· ${j.params.metric}` : "· all metrics"}
               </span>
               <StatusPill status={j.status} />
             </div>
             <div className="flex items-center justify-between mt-1">
-              <span className="text-[11px] text-slate-400">{timeAgo(j.created_at)}</span>
+              <span className="text-[11px] text-slate-400 dark:text-slate-500">{timeAgo(j.created_at)}</span>
               {j.status === "running" && j.progress.total > 0 && (
-                <span className="text-[11px] text-indigo-600 mono">
+                <span className="text-[11px] text-indigo-600 dark:text-indigo-400 mono">
                   {j.progress.current}/{j.progress.total}
                   {j.progress.label ? ` · ${j.progress.label}` : ""}
                 </span>

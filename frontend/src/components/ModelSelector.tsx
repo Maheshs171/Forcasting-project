@@ -9,6 +9,10 @@ const MODEL_COLORS: Record<string, string> = {
   xgboost: "border-amber-300 bg-amber-50 text-amber-700",
   sarimax: "border-emerald-300 bg-emerald-50 text-emerald-700",
   ensemble: "border-indigo-300 bg-indigo-50 text-indigo-700",
+  random_forest: "border-lime-300 bg-lime-50 text-lime-700",
+  extra_trees: "border-teal-300 bg-teal-50 text-teal-700",
+  mlforecast: "border-orange-300 bg-orange-50 text-orange-700",
+  autots: "border-fuchsia-300 bg-fuchsia-50 text-fuchsia-700",
 };
 
 export default function ModelSelector({
@@ -24,7 +28,7 @@ export default function ModelSelector({
 
   return (
     <div className="glass rounded-2xl p-4">
-      <div className="text-[11px] uppercase tracking-wider text-slate-400 font-medium mb-3 px-1">
+      <div className="text-[11px] uppercase tracking-wider text-slate-400 dark:text-slate-500 font-medium mb-3 px-1">
         Compare models — pick one to view its full forecast below
       </div>
       <div className="flex flex-wrap gap-2">
@@ -36,12 +40,12 @@ export default function ModelSelector({
               key={m.model_key}
               onClick={() => onSelect(m.model_key)}
               className={`flex items-center gap-2 rounded-xl border-2 px-3.5 py-2.5 text-left transition-all ${
-                isActive ? colorCls + " shadow-sm" : "border-slate-200 bg-white text-slate-500 hover:border-slate-300"
+                isActive ? colorCls + " shadow-sm dark:brightness-90" : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-600"
               }`}
             >
               <div>
                 <div className="flex items-center gap-1.5">
-                  <span className={`text-[12.5px] font-semibold ${isActive ? "" : "text-slate-700"}`}>{m.model_name}</span>
+                  <span className={`text-[12.5px] font-semibold ${isActive ? "" : "text-slate-700 dark:text-slate-300"}`}>{m.model_name}</span>
                   {m.is_recommended && <Star size={12} className="fill-current text-amber-500" />}
                   {m.is_flat && <AlertTriangle size={12} className="text-amber-500" />}
                 </div>

@@ -57,6 +57,15 @@ def build_feature_matrix(
     df["is_december"] = (df["month"] == 12).astype(int)
     df["is_summer"] = df["month"].isin([6, 7, 8]).astype(int)
     df["is_q4"] = (df["quarter"] == 4).astype(int)
+    # Day-of-week cyclical features — the dominant signal for daily data
+    # (e.g. clinic volume Mon vs. Sun). Harmless no-signal constants for
+    # monthly/weekly data (every row lands on the 1st / a fixed weekday), so
+    # left unconditional rather than threaded through as a freq branch.
+    dow = df["ds"].dt.dayofweek
+    df["dow"] = dow
+    df["dow_sin"] = np.sin(2 * np.pi * dow / 7)
+    df["dow_cos"] = np.cos(2 * np.pi * dow / 7)
+    df["is_weekend"] = dow.isin([5, 6]).astype(int)
 
     if include_self_lags:
         for lag in [1, 2, 3, 6, 12]:
@@ -96,17 +105,25 @@ def build_future_row(
     year_min: int,
     feature_cols: list[str],
     include_self_lags: bool = True,
+    offset_kwarg: str = "months",
 ) -> pd.DataFrame:
     """
     Builds one future feature row for iterative forecasting. Other metrics'
     future values aren't known, so their lag features are carried forward
     from the last known actual (held flat) — a standard, leakage-free
     simplification for exogenous inputs in iterative forecasting.
+
+    offset_kwarg: "months" or "weeks" — steps last_ds forward by the right
+    unit for the series' frequency. The self-lag windows below ([1,2,3,6,12])
+    keep the same numbers either way — for weekly data they're no longer
+    literally "a year ago", just shorter-horizon lagged predictors, which the
+    backtest is free to reward or reject on their own merit.
     """
-    next_ds = last_ds + pd.DateOffset(months=step)
+    next_ds = last_ds + pd.DateOffset(**{offset_kwarg: step})
     month, year = next_ds.month, next_ds.year
     quarter = (month - 1) // 3 + 1
 
+    dow = next_ds.dayofweek
     row = {
         "month": month, "quarter": quarter, "year": year, "year_idx": year - year_min,
         "month_sin": np.sin(2 * np.pi * month / 12), "month_cos": np.cos(2 * np.pi * month / 12),
@@ -114,6 +131,8 @@ def build_future_row(
         "holidays_count": holidays_in_month(year, month, holiday_set),
         "is_january": int(month == 1), "is_december": int(month == 12),
         "is_summer": int(month in [6, 7, 8]), "is_q4": int(quarter == 4),
+        "dow": dow, "dow_sin": np.sin(2 * np.pi * dow / 7), "dow_cos": np.cos(2 * np.pi * dow / 7),
+        "is_weekend": int(dow in (5, 6)),
     }
 
     if include_self_lags:
