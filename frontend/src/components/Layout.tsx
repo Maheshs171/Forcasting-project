@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import {
   LayoutDashboard, FlaskConical, Settings as SettingsIcon, Activity, Eye, Sparkles,
-  Users, Stethoscope, DollarSign, Contact, Microscope, Search, Sun, Moon, ChevronRight,
+  Users, Stethoscope, DollarSign, Contact, Microscope, Search, Sun, Moon, ChevronRight, Cloud,
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../lib/api";
@@ -21,6 +21,7 @@ const forecastNav = [
 const toolsNav = [
   { to: "/explore", label: "Data Explorer", icon: Microscope, end: false },
   { to: "/train", label: "Training Pipeline", icon: FlaskConical, end: false },
+  { to: "/azure", label: "Azure Ops", icon: Cloud, end: false },
   { to: "/settings", label: "Settings", icon: SettingsIcon, end: false },
 ];
 
@@ -28,6 +29,7 @@ const PAGE_TITLES: Record<string, string> = {
   "/": "Overview",
   "/explore": "Data Explorer",
   "/train": "Training Pipeline",
+  "/azure": "Azure Ops",
   "/settings": "Settings",
 };
 

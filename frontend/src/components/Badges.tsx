@@ -1,3 +1,5 @@
+import { prettifyModelKey } from "../lib/modelNames";
+
 const MODEL_COLORS: Record<string, string> = {
   sarima: "bg-violet-50 text-violet-700 border-violet-200",
   ets: "bg-cyan-50 text-cyan-700 border-cyan-200",
@@ -12,25 +14,11 @@ const MODEL_COLORS: Record<string, string> = {
   autots: "bg-fuchsia-50 text-fuchsia-700 border-fuchsia-200",
 };
 
-const MODEL_NAMES: Record<string, string> = {
-  sarima: "SARIMA",
-  ets: "ETS (Holt-Winters)",
-  prophet: "Prophet",
-  naive: "Seasonal Naive",
-  xgboost: "XGBoost (multi-feature)",
-  sarimax: "SARIMAX (multi-feature)",
-  ensemble: "Ensemble",
-  random_forest: "Random Forest (multi-feature)",
-  extra_trees: "Extra Trees (multi-feature)",
-  mlforecast: "mlforecast (LightGBM)",
-  autots: "AutoTS",
-};
-
 export function ModelBadge({ model }: { model: string }) {
   const cls = MODEL_COLORS[model] ?? "bg-slate-100 text-slate-600 border-slate-200";
   return (
     <span className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-[11px] font-semibold ${cls}`}>
-      {MODEL_NAMES[model] ?? model}
+      {prettifyModelKey(model)}
     </span>
   );
 }

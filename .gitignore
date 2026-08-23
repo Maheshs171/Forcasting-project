@@ -7,6 +7,7 @@ __pycache__/
 *.pyc
 venv/
 .venv/
+venv_azure/
 *.egg-info/
 
 # Node / frontend
@@ -18,9 +19,28 @@ frontend/.vite/
 outputs/*.json
 outputs/*.html
 !outputs/.gitkeep
+# Exceptions: the latest combined Azure report per frequency, tracked so the
+# "Run forecast from downloaded models" feature works right after a clone —
+# it reads one of these (leaderboard + downloaded-models list) to know what
+# to rebuild from models/azure_downloads/, without any Azure connection.
+!outputs/azure_automl_20260823_2300.json
+!outputs/azure_automl_week_20260823_2023.json
+!outputs/azure_automl_day_20260823_2037.json
 
 # Local DB fallback cache — real business data snapshots, never commit
 data/cache/
+
+# Downloaded Azure AutoML model artifacts (see azure_automl.py's
+# download_top_models) are intentionally tracked, NOT ignored — the "Run
+# forecast from downloaded models" feature needs them (+ a matching
+# outputs/azure_automl*.json, added as an explicit exception below) to work
+# for anyone who clones this repo without Azure ML access of their own.
+
+# Daily application/error log files (see utils/logging_setup.py) — local
+# debugging artifacts, regenerated every run, never commit
+logs/*.log
+logs/*.log.*
+!logs/.gitkeep
 
 # Raw row-level data exports (superseded by the live-DB pipeline; not for
 # a public repo since they contain order/shipping-adjacent fields)

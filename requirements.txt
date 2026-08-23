@@ -20,3 +20,11 @@ azure-ai-ml>=1.20.0
 azure-identity>=1.17.1
 mltable>=1.6.1
 mlflow>=2.15.1
+
+# NOTE: azure_automl.py's post-training forecast step (loading Azure's
+# trained models back to generate real predictions) needs
+# azureml-training-tabular, which is NOT installed here — it pins old
+# numpy/scikit-learn/scipy versions that would conflict with this
+# project's own stack above, and doesn't support Python 3.12+. It runs
+# instead in a separate venv_azure/ virtual environment (Python 3.11) —
+# see README's "Azure AutoML setup" section to create it.

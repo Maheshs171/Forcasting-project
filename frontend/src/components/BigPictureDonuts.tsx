@@ -1,26 +1,16 @@
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import type { MetricForecast } from "../lib/api";
+import { prettifyModelKey, modelColor } from "../lib/modelNames";
 
 const YEAR_COLORS = ["#7c3aed", "#db2777", "#0891b2"];
-const MODEL_HEX: Record<string, string> = {
-  sarima: "#7c3aed",
-  ets: "#0891b2",
-  prophet: "#db2777",
-  naive: "#64748b",
-  xgboost: "#d97706",
-  sarimax: "#059669",
-  ensemble: "#4f46e5",
-  random_forest: "#84cc16",
-  extra_trees: "#14b8a6",
-  mlforecast: "#ea580c",
-  autots: "#c026d3",
-};
-const MODEL_LABELS: Record<string, string> = {
-  sarima: "SARIMA", ets: "ETS", prophet: "Prophet", naive: "Seasonal Naive",
-  xgboost: "XGBoost", sarimax: "SARIMAX", ensemble: "Ensemble",
-  random_forest: "Random Forest", extra_trees: "Extra Trees", mlforecast: "mlforecast",
-  autots: "AutoTS",
-};
+
+// Azure AutoML backtest data can carry 15-25+ candidates (every trial it
+// tried), while the local pipeline's fixed model list tops out around 11 —
+// a donut legend with that many entries is unreadable regardless of naming,
+// so only the top N by accuracy get their own slice; the rest are folded
+// into one "Other" slice (still counted in the total, just not itemized —
+// the full ranked list is always available in the backtest table below).
+const MAX_DONUT_MODELS = 8;
 
 function DonutCard({ title, data, isMoney }: { title: string; data: { name: string; value: number; color: string }[]; isMoney?: boolean }) {
   const total = data.reduce((s, d) => s + d.value, 0);
@@ -74,13 +64,24 @@ export default function BigPictureDonuts({ data, isMoney, periodWord = "month" }
   ].filter((d) => d.value > 0);
 
   const backtest = data.backtest ?? {};
-  const modelData = Object.entries(backtest)
+  const rankedModels = Object.entries(backtest)
     .filter(([, c]) => c.weighted_score !== undefined && c.weighted_score! > 0)
     .map(([key, c]) => ({
-      name: `${MODEL_LABELS[key] ?? key}${key === data.model_used ? " (selected)" : ""}`,
+      name: `${prettifyModelKey(key)}${key === data.model_used ? " (selected)" : ""}`,
       value: 1 / c.weighted_score!,
-      color: MODEL_HEX[key] ?? "#94a3b8",
-    }));
+      color: modelColor(key),
+    }))
+    .sort((a, b) => b.value - a.value);
+
+  const modelData = rankedModels.slice(0, MAX_DONUT_MODELS);
+  const rest = rankedModels.slice(MAX_DONUT_MODELS);
+  if (rest.length > 0) {
+    modelData.push({
+      name: `Other (${rest.length} model${rest.length !== 1 ? "s" : ""})`,
+      value: rest.reduce((s, m) => s + m.value, 0),
+      color: "#94a3b8",
+    });
+  }
 
   return (
     <div className="glass rounded-2xl p-6">

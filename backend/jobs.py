@@ -1,7 +1,7 @@
 """
 backend/jobs.py
 ─────────────────
-In-process job runner for predict.py / validate.py. Jobs run one at a
+In-process job runner for predict.py / validate.py / azure_automl.py. Jobs run one at a
 time on a dedicated worker thread (SARIMA/Prophet fits are CPU-bound and
 this is a single-analyst tool, so serializing is simpler and safer than
 worrying about concurrent SQL connections / concurrent stdout capture).
@@ -25,12 +25,21 @@ sys.path.insert(0, "..")
 
 import predict
 import validate as validate_mod
+import azure_automl
+from utils.logging_setup import setup_logging
+
+# One daily log file per pipeline (logs/<name>.log + logs/<name>_errors.log) —
+# lets a specific day's predict/validate/Azure run be pulled up independently.
+_LOG_COMPONENT = {
+    "predict": "predict", "validate": "validate", "azure_train": "azure",
+    "azure_forecast_from_downloads": "azure",
+}
 
 
 @dataclass
 class Job:
     id: str
-    kind: str                      # "predict" | "validate"
+    kind: str                      # "predict" | "validate" | "azure_train" | "azure_forecast_from_downloads"
     params: dict
     status: str = "queued"         # queued | running | completed | failed
     logs: list = field(default_factory=list)
@@ -43,11 +52,13 @@ class Job:
 
 
 class _LineCapture(io.TextIOBase):
-    """Redirects writes to both the real stdout and a job's log list."""
+    """Redirects writes to the real stdout, a job's log list (for the
+    dashboard's live run console), and that pipeline's daily log file."""
 
-    def __init__(self, job: "Job", real_stdout):
+    def __init__(self, job: "Job", real_stdout, logger=None):
         self.job = job
         self.real_stdout = real_stdout
+        self.logger = logger
         self._buf = ""
 
     def write(self, s):
@@ -56,6 +67,8 @@ class _LineCapture(io.TextIOBase):
         while "\n" in self._buf:
             line, self._buf = self._buf.split("\n", 1)
             self.job.logs.append(line)
+            if self.logger and line.strip():
+                self.logger.info(line)
         return len(s)
 
     def flush(self):
@@ -92,8 +105,10 @@ class JobManager:
     def _execute(self, job: Job):
         job.status = "running"
         job.started_at = datetime.now().isoformat()
+        logger = setup_logging(_LOG_COMPONENT.get(job.kind, job.kind))
+        logger.info(f"job {job.id} started — kind={job.kind} params={job.params}")
         real_stdout = sys.stdout
-        sys.stdout = _LineCapture(job, real_stdout)
+        sys.stdout = _LineCapture(job, real_stdout, logger=logger)
 
         def progress_cb(current, total, label):
             job.progress = {"current": current, "total": total, "label": label}
@@ -104,14 +119,20 @@ class JobManager:
                 result = predict.run(args, progress_cb=progress_cb)
             elif job.kind == "validate":
                 result = validate_mod.run(args, progress_cb=progress_cb)
+            elif job.kind == "azure_train":
+                result = azure_automl.run(args, progress_cb=progress_cb)
+            elif job.kind == "azure_forecast_from_downloads":
+                result = azure_automl.run_from_downloads(args, progress_cb=progress_cb)
             else:
                 raise ValueError(f"Unknown job kind: {job.kind}")
             job.result = result
             job.status = "completed"
+            logger.info(f"job {job.id} completed")
         except Exception as e:
             job.error = f"{e}\n{traceback.format_exc()}"
             job.logs.append(f"ERROR: {e}")
             job.status = "failed"
+            logger.error(f"job {job.id} failed: {e}", exc_info=True)
         finally:
             sys.stdout = real_stdout
             job.finished_at = datetime.now().isoformat()

@@ -1,12 +1,7 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import type { ModelForecast } from "../lib/api";
 import { fmtCompact } from "../lib/format";
-
-const MODEL_HEX: Record<string, string> = {
-  sarima: "#7c3aed", ets: "#0891b2", prophet: "#db2777",
-  naive: "#64748b", xgboost: "#d97706", sarimax: "#059669", ensemble: "#4f46e5",
-  random_forest: "#84cc16", extra_trees: "#14b8a6", mlforecast: "#ea580c", autots: "#c026d3",
-};
+import { modelColor } from "../lib/modelNames";
 
 export default function ModelOverlayChart({
   models,
@@ -60,7 +55,7 @@ export default function ModelOverlayChart({
             type="monotone"
             dataKey={m.model_key}
             name={m.model_key}
-            stroke={MODEL_HEX[m.model_key] ?? "#94a3b8"}
+            stroke={modelColor(m.model_key)}
             strokeWidth={m.is_recommended ? 3 : 1.75}
             strokeDasharray={m.is_flat ? "4 3" : undefined}
             dot={false}

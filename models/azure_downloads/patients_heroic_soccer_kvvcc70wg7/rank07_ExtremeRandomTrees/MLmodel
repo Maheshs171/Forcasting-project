@@ -1,0 +1,25 @@
+artifact_path: outputs/mlflow-model
+flavors:
+  automl-forecasting:
+    forecasting_model_type: fc.model_type.sklearn
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: azureml.training.tabular.models.mlflow.timeseries
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.10.19
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: pickle
+    sklearn_version: 1.5.1
+metadata:
+  azureml.base_image: mcr.microsoft.com/azureml/curated/ai-ml-automl:41
+  azureml.engine: automl
+mlflow_version: 2.15.1
+model_size_bytes: 184207
+model_uuid: 1b778c1fe8be4d5d98e26e69b1c63639
+run_id: heroic_soccer_kvvcc70wg7_21
+utc_time_created: '2026-08-22 10:43:01.933529'

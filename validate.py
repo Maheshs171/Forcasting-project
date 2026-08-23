@@ -338,4 +338,6 @@ if __name__ == "__main__":
     parser.add_argument("--start-year", type=int, default=DEFAULT_START_YEAR)
     parser.add_argument("--country", default=HOLIDAY_COUNTRY)
     parser.add_argument("--freq", default="month", choices=["month", "week", "day"])
+    from utils.logging_setup import install_stdio_tee
+    install_stdio_tee("validate")
     run(parser.parse_args())

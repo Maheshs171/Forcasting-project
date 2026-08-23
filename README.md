@@ -71,6 +71,49 @@ metric depends on the actual data and will likely differ from QA.
 
 ---
 
+## Azure AutoML setup
+
+`azure_automl.py` submits AutoML forecasting jobs to Azure ML and — once
+a job finishes — loads its top trials back as real models to generate a
+full multi-model forecast report (same shape as the local dashboard).
+That last step needs `azureml-training-tabular`, which pins old,
+narrow-range dependency versions (numpy<=1.23.5, scikit-learn<=1.6,
+scipy<1.11) that would conflict with this project's own newer
+Prophet/XGBoost stack if installed into the same environment. It runs
+instead in a **separate virtual environment**, `venv_azure/`, invoked as
+a subprocess (see `azure_model_infer.py`) — the main backend never needs
+those old versions itself.
+
+One-time setup (`venv_azure/` needs **Python 3.11** specifically —
+`azureml-training-tabular` doesn't support 3.12/3.13):
+
+```powershell
+py -3.11 -m venv venv_azure
+venv_azure\Scripts\python.exe -m pip install -r venv_azure_requirements.txt
+```
+
+If `py -3.11` isn't found, install it first: `winget install --id Python.Python.3.11`
+(this adds Python 3.11 alongside whatever version you already use — it
+doesn't replace anything).
+
+Without `venv_azure/` set up, Azure training jobs still run and the
+leaderboard still populates — you just won't get the full forecast
+report (model cards, donuts, backtest table) for Azure runs, only for
+local ones. The Azure Ops page's "Full forecast dashboard" section will
+show a placeholder instead in that case.
+
+Two known gaps in `venv_azure`'s model coverage (both fail gracefully —
+that model is skipped and the rest of the top trials still populate the
+report):
+- **VotingEnsemble** trials that embed a Prophet sub-model fail to
+  unpickle (a `cmdstanpy` internal representation mismatch between
+  Azure's training-time version and what's installable now).
+- Anything requiring MSVC Build Tools to compile from source (only
+  matters if `venv_azure_requirements.txt`'s pinned wheels stop being
+  available for a given Python version).
+
+---
+
 ## Run it
 
 ```powershell

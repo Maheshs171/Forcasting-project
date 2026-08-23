@@ -1,24 +1,13 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, LabelList } from "recharts";
 import type { BacktestReport } from "../lib/api";
-
-const MODEL_HEX: Record<string, string> = {
-  sarima: "#7c3aed", ets: "#0891b2", prophet: "#db2777",
-  naive: "#64748b", xgboost: "#d97706", sarimax: "#059669", ensemble: "#4f46e5",
-  random_forest: "#84cc16", extra_trees: "#14b8a6", mlforecast: "#ea580c", autots: "#c026d3",
-};
-const MODEL_LABELS: Record<string, string> = {
-  sarima: "SARIMA", ets: "ETS", prophet: "Prophet",
-  naive: "Seasonal Naive", xgboost: "XGBoost", sarimax: "SARIMAX", ensemble: "Ensemble",
-  random_forest: "Random Forest", extra_trees: "Extra Trees", mlforecast: "mlforecast",
-  autots: "AutoTS",
-};
+import { prettifyModelKey, modelColor } from "../lib/modelNames";
 
 export default function BacktestBarChart({ report }: { report: BacktestReport }) {
   const data = Object.entries(report.candidates)
     .filter(([, c]) => c.accuracy_pct !== undefined)
     .map(([key, c]) => ({
       key,
-      name: MODEL_LABELS[key] ?? key,
+      name: prettifyModelKey(key),
       accuracy: Math.round(c.accuracy_pct!),
       isBest: key === report.best_model,
       flat: !!c.flat_forecast_penalty_applied,
@@ -46,7 +35,7 @@ export default function BacktestBarChart({ report }: { report: BacktestReport })
         />
         <Bar dataKey="accuracy" radius={[0, 6, 6, 0]} barSize={22}>
           {data.map((d) => (
-            <Cell key={d.key} fill={d.isBest ? "#059669" : MODEL_HEX[d.key] ?? "#94a3b8"} fillOpacity={d.isBest ? 1 : 0.5} />
+            <Cell key={d.key} fill={d.isBest ? "#059669" : modelColor(d.key)} fillOpacity={d.isBest ? 1 : 0.5} />
           ))}
           <LabelList dataKey="accuracy" position="right" formatter={(v) => `${v}%`} style={{ fontSize: 11, fill: "var(--chart-label-fg)", fontWeight: 600 }} />
         </Bar>

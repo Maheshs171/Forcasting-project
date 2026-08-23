@@ -12,20 +12,31 @@ Run:
 (from the v1/ project root, so `predict`/`validate`/`config` import cleanly)
 """
 
-import sys, os, json, glob, re
+import sys, os, json, glob, re, time
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from datetime import datetime
 from typing import Optional
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
+
+from utils.logging_setup import install_stdio_tee, setup_logging
+
+# Installed before any pipeline module runs, so every print() anywhere in
+# the app (predict.py/validate.py/azure_automl.py print progress; data/
+# fetcher.py prints DB-unreachable warnings even when called directly from
+# an endpoint, not through a job) also lands in logs/backend.log —
+# per-pipeline jobs additionally get their own daily log (backend/jobs.py).
+logger = install_stdio_tee("backend")
 
 from config.settings import (
     DEFAULT_START_YEAR, DEFAULT_FORECAST_MONTHS, HOLIDAY_COUNTRY,
     SQL_SERVER, SQL_DATABASE,
+    AML_SUBSCRIPTION_ID, AML_RESOURCE_GROUP, AML_WORKSPACE_NAME, AML_COMPUTE_NAME,
 )
 from config import connections as conn_registry
 from data.fetcher import FETCHERS, FETCHERS_BY_FREQUENCY
@@ -45,6 +56,31 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    """Process-level access log — every request, its status code, and how
+    long it took, into logs/backend.log (4xx/5xx also mirrored to
+    logs/backend_errors.log since that handler filters on level)."""
+    start = time.perf_counter()
+    response = await call_next(request)
+    duration_ms = (time.perf_counter() - start) * 1000
+    level = logger.warning if response.status_code >= 500 else logger.info
+    level(f"{request.method} {request.url.path} -> {response.status_code} ({duration_ms:.0f}ms)")
+    return response
+
+
+@app.exception_handler(Exception)
+async def log_unhandled_exception(request: Request, exc: Exception):
+    """Any exception that isn't an intentional HTTPException would
+    otherwise just be a stack trace on someone's terminal — this makes
+    sure it's captured in logs/backend_errors.log with the full
+    traceback, since that's exactly what you need later to debug an
+    issue you only heard about after the fact."""
+    logger.error(f"Unhandled exception on {request.method} {request.url.path}", exc_info=True)
+    return JSONResponse(status_code=500, content={"detail": "Internal server error"})
+
 
 if os.path.isdir(OUTPUTS_DIR):
     app.mount("/charts", StaticFiles(directory=OUTPUTS_DIR), name="charts")
@@ -263,6 +299,89 @@ def backtest_report(frequency: str = "month"):
     return {"data": combined, "generated_at": datetime.fromtimestamp(newest_mtime).isoformat() if newest_mtime else None}
 
 
+@app.get("/api/azure/status")
+def azure_status():
+    """
+    Whether Azure ML is configured (.env has the workspace settings) —
+    lets the frontend disable/explain the "Train on Azure" button instead
+    of letting the job fail on submit. Does not open a network connection
+    (that only happens once a training job actually runs), so this is
+    always fast.
+    """
+    missing = [
+        name for name, val in [
+            ("AML_SUBSCRIPTION_ID", AML_SUBSCRIPTION_ID),
+            ("AML_RESOURCE_GROUP", AML_RESOURCE_GROUP),
+            ("AML_WORKSPACE_NAME", AML_WORKSPACE_NAME),
+        ] if not val
+    ]
+    return {
+        "configured": not missing,
+        "missing": missing,
+        "workspace_name": AML_WORKSPACE_NAME,
+        "resource_group": AML_RESOURCE_GROUP,
+        "compute_name": AML_COMPUTE_NAME,
+    }
+
+
+@app.get("/api/azure/latest")
+def azure_automl_latest(frequency: str = "month"):
+    """
+    Latest Azure AutoML comparison report (written by azure_automl.py to
+    outputs/azure_automl[_<freq>]_<timestamp>.json — one leaderboard per
+    metric, every algorithm Azure tried, ranked by normalized RMSE).
+    Enriches each metric with the locally-backtested winner at the SAME
+    frequency (from that metric's latest predict.py output) so the
+    frontend can render local-vs-Azure side by side without a second
+    round trip.
+    """
+    if frequency not in FETCHERS_BY_FREQUENCY:
+        raise HTTPException(400, f"Unknown frequency '{frequency}'. Valid: {list(FETCHERS_BY_FREQUENCY.keys())}")
+    stem = "azure_automl_[0-9]*" if frequency == "month" else f"azure_automl_{frequency}_*"
+    path = _latest_file(f"{stem}.json")
+    data = _load_json(path)
+    if data is None:
+        adverb = {"month": "monthly", "week": "weekly", "day": "daily"}.get(frequency, frequency)
+        raise HTTPException(404, f"No {adverb} Azure AutoML report yet. Run azure_automl.py first.")
+
+    local_stem = lambda m: f"{m}_[0-9]*" if frequency == "month" else f"{m}_{frequency}_*"
+    enriched = {}
+    for metric, result in data.items():
+        local_path = _latest_file(f"{local_stem(metric)}.json")
+        local = _load_json(local_path)
+        local_model = local.get("model_used") if local else None
+        local_accuracy = local.get("models", {}).get(local_model, {}).get("accuracy_pct") if local else None
+
+        leaderboard = result.get("leaderboard", [])
+        best = leaderboard[0] if leaderboard else None
+
+        enriched[metric] = {
+            "metric": metric,
+            "label": METRIC_LABELS.get(metric, metric),
+            "frequency": result.get("frequency", frequency),
+            "job_name": result.get("job_name"),
+            "status": result.get("status"),
+            "studio_url": result.get("studio_url"),
+            "leaderboard": leaderboard,
+            "best_azure": best,
+            "local_model": local_model,
+            "local_accuracy_pct": local_accuracy,
+            # Full this-month/next-month/by-end-of-year/YTD forecast generated
+            # from Azure's winning model (azure_automl.py's build_forecast_detail)
+            # — same MetricForecast shape the local dashboard uses, so the
+            # frontend can render it with the same chart components. Absent on
+            # older report files, or if that model couldn't be loaded for
+            # inference (e.g. azureml-training-tabular isn't installed).
+            "forecast_detail": result.get("forecast_detail"),
+            # Top N trials downloaded to local disk (azure_automl.py's
+            # download_top_models) — each with its local filesystem path.
+            # Empty on older report files, or if downloads failed.
+            "downloaded_models": result.get("downloaded_models", []),
+        }
+
+    return {"data": enriched, "generated_at": datetime.fromtimestamp(os.path.getmtime(path)).isoformat()}
+
+
 @app.get("/api/data-quality/{metric}")
 def data_quality(metric: str, start_year: int = DEFAULT_START_YEAR):
     """
@@ -275,6 +394,7 @@ def data_quality(metric: str, start_year: int = DEFAULT_START_YEAR):
     try:
         data = FETCHERS[metric](start_year)
     except Exception as e:
+        logger.error(f"DB unreachable for metric '{metric}': {e}", exc_info=True)
         raise HTTPException(503, f"Database unreachable: {e}")
     raw = data["raw_monthly"]
     cleaned = data["history"]
@@ -319,6 +439,7 @@ def data_insights(metric: str, start_year: int = DEFAULT_START_YEAR, frequency: 
     try:
         return build_insights(metric, start_year, fetchers[metric], freq=frequency)
     except Exception as e:
+        logger.error(f"DB unreachable for metric '{metric}': {e}", exc_info=True)
         raise HTTPException(503, f"Database unreachable: {e}")
 
 
@@ -362,6 +483,17 @@ class RunValidateRequest(BaseModel):
     country: str = HOLIDAY_COUNTRY
 
 
+class RunAzureTrainRequest(BaseModel):
+    metric: Optional[str] = None  # "all" (default), a single metric key, or a comma-separated list
+    freq: str = "month"
+    start_year: int = DEFAULT_START_YEAR
+    horizon: int = DEFAULT_FORECAST_MONTHS
+    max_trials: int = 25
+    max_concurrent_trials: int = 1
+    timeout_minutes: int = 90
+    trial_timeout_minutes: int = 20
+
+
 @app.post("/api/jobs/predict")
 def run_predict(req: RunPredictRequest):
     if req.metric and req.metric not in FETCHERS:
@@ -381,6 +513,70 @@ def run_validate(req: RunValidateRequest):
     if req.freq not in FETCHERS_BY_FREQUENCY:
         raise HTTPException(400, f"Unknown frequency '{req.freq}'. Valid: {list(FETCHERS_BY_FREQUENCY.keys())}")
     job = manager.submit("validate", req.model_dump())
+    return _job_public(job)
+
+
+class RunAzureFromDownloadsRequest(BaseModel):
+    metric: Optional[str] = None  # "all" (default), a single metric key, or a comma-separated list
+    freq: str = "month"
+    start_year: int = DEFAULT_START_YEAR
+    horizon: int = DEFAULT_FORECAST_MONTHS
+
+
+@app.post("/api/jobs/azure-forecast-from-downloads")
+def run_azure_forecast_from_downloads(req: RunAzureFromDownloadsRequest):
+    """
+    Regenerates the Azure forecast report purely from ALREADY-DOWNLOADED
+    local model artifacts (models/azure_downloads/ + a previous training
+    run's saved leaderboard in outputs/) — no Azure connection, no
+    credentials, no new training job. This is what lets someone who was
+    handed a copy of models/azure_downloads/ + outputs/ + data/cache/
+    (e.g. a teammate without Azure access) regenerate the dashboard from
+    already fine-tuned models on their own machine, typically in seconds
+    rather than the 20-90+ minutes a real training run takes.
+    """
+    if req.freq not in FETCHERS_BY_FREQUENCY:
+        raise HTTPException(400, f"Unknown frequency '{req.freq}'. Valid: {list(FETCHERS_BY_FREQUENCY.keys())}")
+    metric_arg = req.metric or "all"
+    if metric_arg != "all":
+        unknown = [m.strip() for m in metric_arg.split(",") if m.strip() not in FETCHERS]
+        if unknown:
+            raise HTTPException(400, f"Unknown metric(s): {unknown}. Valid: {list(FETCHERS.keys())}")
+    job = manager.submit("azure_forecast_from_downloads", req.model_dump())
+    return _job_public(job)
+
+
+@app.post("/api/jobs/azure-train")
+def run_azure_train(req: RunAzureTrainRequest):
+    """
+    Kicks off the full Azure AutoML pipeline as a background job: fetch
+    each requested metric's cleaned history from the DB (reusing the exact
+    same fetchers/outlier-filtering as the local pipeline), upload it as
+    an MLTable, auto-start the configured compute if it's stopped, submit
+    an AutoML forecasting job per metric, wait for training, and pull back
+    the full leaderboard — same flow as `python azure_automl.py`, just
+    triggered from the dashboard with live progress/logs instead of a
+    terminal. Long-running (each metric can take 20-90+ minutes), so this
+    only returns the job handle; poll /api/jobs/{id} for progress and
+    GET /api/azure/latest once it completes.
+    """
+    missing = [
+        name for name, val in [
+            ("AML_SUBSCRIPTION_ID", AML_SUBSCRIPTION_ID),
+            ("AML_RESOURCE_GROUP", AML_RESOURCE_GROUP),
+            ("AML_WORKSPACE_NAME", AML_WORKSPACE_NAME),
+        ] if not val
+    ]
+    if missing:
+        raise HTTPException(400, f"Azure ML is not configured in .env — missing: {missing}")
+    if req.freq not in FETCHERS_BY_FREQUENCY:
+        raise HTTPException(400, f"Unknown frequency '{req.freq}'. Valid: {list(FETCHERS_BY_FREQUENCY.keys())}")
+    metric_arg = req.metric or "all"
+    if metric_arg != "all":
+        unknown = [m.strip() for m in metric_arg.split(",") if m.strip() not in FETCHERS]
+        if unknown:
+            raise HTTPException(400, f"Unknown metric(s): {unknown}. Valid: {list(FETCHERS.keys())}")
+    job = manager.submit("azure_train", req.model_dump())
     return _job_public(job)
 
 

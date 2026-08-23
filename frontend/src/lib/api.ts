@@ -241,6 +241,53 @@ export interface DataInsightsReport {
   transactions?: TransactionInsights;
 }
 
+export interface AzureLeaderboardRow {
+  algorithm: string;
+  iteration: number;
+  normalized_rmse: number;
+  r2_score: number | null;
+  mape: number | null;
+  accuracy_pct_equivalent: number | null;
+  run_id: string;
+}
+
+export interface AzureMetricReport {
+  metric: string;
+  label: string;
+  frequency: DataFrequency;
+  job_name: string | null;
+  status: string | null;
+  studio_url: string | null;
+  leaderboard: AzureLeaderboardRow[];
+  best_azure: AzureLeaderboardRow | null;
+  local_model: string | null;
+  local_accuracy_pct: number | null;
+  // Full this-month/next-month/by-end-of-year/YTD forecast generated from
+  // Azure's winning model — same MetricForecast shape the local dashboard
+  // uses. Null if the run predates this feature, or the model couldn't be
+  // loaded for inference (see azure_automl.py's build_forecast_detail).
+  forecast_detail: MetricForecast | null;
+  // Top trials downloaded to local disk (on the machine running the
+  // backend), each with its own path — empty on older runs.
+  downloaded_models: DownloadedModel[];
+}
+
+export interface DownloadedModel {
+  rank: number;
+  algorithm: string;
+  run_id: string;
+  normalized_rmse: number;
+  local_path: string;
+}
+
+export interface AzureStatus {
+  configured: boolean;
+  missing: string[];
+  workspace_name: string | null;
+  resource_group: string | null;
+  compute_name: string | null;
+}
+
 export interface ConnectionInfo {
   name: string;
   server: string;
@@ -267,6 +314,28 @@ export const api = {
   backtest: (frequency: DataFrequency = "month") =>
     client.get<{ data: Record<string, BacktestReport>; generated_at: string }>("/backtest", { params: { frequency } }).then((r) => r.data),
   outputs: () => client.get<OutputFile[]>("/outputs").then((r) => r.data),
+  azureLatest: (frequency: DataFrequency = "month") =>
+    client
+      .get<{ data: Record<string, AzureMetricReport>; generated_at: string }>("/azure/latest", { params: { frequency } })
+      .then((r) => r.data),
+  azureStatus: () => client.get<AzureStatus>("/azure/status").then((r) => r.data),
+  runAzureTrain: (params: {
+    metric?: string | null;
+    freq?: DataFrequency;
+    start_year?: number;
+    horizon?: number;
+    max_trials?: number;
+    max_concurrent_trials?: number;
+    timeout_minutes?: number;
+    trial_timeout_minutes?: number;
+  }) => client.post<JobSummary>("/jobs/azure-train", params).then((r) => r.data),
+
+  runAzureForecastFromDownloads: (params: {
+    metric?: string | null;
+    freq?: DataFrequency;
+    start_year?: number;
+    horizon?: number;
+  }) => client.post<JobSummary>("/jobs/azure-forecast-from-downloads", params).then((r) => r.data),
 
   runPredict: (params: {
     metric?: string | null;

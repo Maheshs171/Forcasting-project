@@ -1,0 +1,6208 @@
+{
+  "encounters": {
+    "metric": "encounters",
+    "job_name": "quiet_jelly_7bzmwqgctv",
+    "status": "Completed",
+    "studio_url": "https://ml.azure.com/runs/quiet_jelly_7bzmwqgctv?wsid=/subscriptions/26cadedf-7782-440a-9367-6d9c87a78aac/resourcegroups/prediction/workspaces/predictioncentralus",
+    "frequency": "month",
+    "leaderboard": [
+      {
+        "algorithm": "VotingEnsemble",
+        "iteration": 24,
+        "normalized_rmse": 0.11973873936797237,
+        "r2_score": 0.3991123375391704,
+        "mape": 5.383925984441453,
+        "accuracy_pct_equivalent": 94.61607401555855,
+        "run_id": "quiet_jelly_7bzmwqgctv_24"
+      },
+      {
+        "algorithm": "RandomForest",
+        "iteration": 13,
+        "normalized_rmse": 0.1414720890094263,
+        "r2_score": 0.14559538477659378,
+        "mape": 6.4186829953975195,
+        "accuracy_pct_equivalent": 93.58131700460248,
+        "run_id": "quiet_jelly_7bzmwqgctv_13"
+      },
+      {
+        "algorithm": "ExtremeRandomTrees",
+        "iteration": 18,
+        "normalized_rmse": 0.1488139477328311,
+        "r2_score": 0.04705184529417052,
+        "mape": 6.7653363625021585,
+        "accuracy_pct_equivalent": 93.23466363749785,
+        "run_id": "quiet_jelly_7bzmwqgctv_18"
+      },
+      {
+        "algorithm": "ExtremeRandomTrees",
+        "iteration": 21,
+        "normalized_rmse": 0.15166922529157045,
+        "r2_score": 0.07296751514149717,
+        "mape": 6.666997930261355,
+        "accuracy_pct_equivalent": 93.33300206973864,
+        "run_id": "quiet_jelly_7bzmwqgctv_21"
+      },
+      {
+        "algorithm": "ExtremeRandomTrees",
+        "iteration": 22,
+        "normalized_rmse": 0.15262041327933723,
+        "r2_score": 0.0572885775815579,
+        "mape": 6.582329717430571,
+        "accuracy_pct_equivalent": 93.41767028256943,
+        "run_id": "quiet_jelly_7bzmwqgctv_22"
+      },
+      {
+        "algorithm": "ExtremeRandomTrees",
+        "iteration": 20,
+        "normalized_rmse": 0.15271262743752062,
+        "r2_score": 0.05507848223938232,
+        "mape": 6.734319063655748,
+        "accuracy_pct_equivalent": 93.26568093634425,
+        "run_id": "quiet_jelly_7bzmwqgctv_20"
+      },
+      {
+        "algorithm": "RandomForest",
+        "iteration": 19,
+        "normalized_rmse": 0.1577166664239178,
+        "r2_score": -0.01603558527818405,
+        "mape": 6.808005079780221,
+        "accuracy_pct_equivalent": 93.19199492021978,
+        "run_id": "quiet_jelly_7bzmwqgctv_19"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 14,
+        "normalized_rmse": 0.16177048195082389,
+        "r2_score": -0.07761678096338823,
+        "mape": 7.110922674370407,
+        "accuracy_pct_equivalent": 92.88907732562959,
+        "run_id": "quiet_jelly_7bzmwqgctv_14"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 9,
+        "normalized_rmse": 0.16185185150660794,
+        "r2_score": -0.07841239027943459,
+        "mape": 7.115427277241383,
+        "accuracy_pct_equivalent": 92.88457272275862,
+        "run_id": "quiet_jelly_7bzmwqgctv_9"
+      },
+      {
+        "algorithm": "Average",
+        "iteration": 2,
+        "normalized_rmse": 0.1641048731658109,
+        "r2_score": -0.05330420506002649,
+        "mape": 7.607736305326595,
+        "accuracy_pct_equivalent": 92.3922636946734,
+        "run_id": "quiet_jelly_7bzmwqgctv_2"
+      },
+      {
+        "algorithm": "AutoArima",
+        "iteration": 5,
+        "normalized_rmse": 0.1642796874449916,
+        "r2_score": -0.057884660920997824,
+        "mape": 7.545663212425798,
+        "accuracy_pct_equivalent": 92.4543367875742,
+        "run_id": "quiet_jelly_7bzmwqgctv_5"
+      },
+      {
+        "algorithm": "LightGBM",
+        "iteration": 7,
+        "normalized_rmse": 0.1654186704190514,
+        "r2_score": -0.07299547876183436,
+        "mape": 7.6424160151282505,
+        "accuracy_pct_equivalent": 92.35758398487175,
+        "run_id": "quiet_jelly_7bzmwqgctv_7"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 16,
+        "normalized_rmse": 0.17098438713926972,
+        "r2_score": -0.18706045236127003,
+        "mape": 7.55319773698331,
+        "accuracy_pct_equivalent": 92.44680226301669,
+        "run_id": "quiet_jelly_7bzmwqgctv_16"
+      },
+      {
+        "algorithm": "SeasonalNaive",
+        "iteration": 1,
+        "normalized_rmse": 0.17194213765060298,
+        "r2_score": -0.16987185931134738,
+        "mape": 7.541475342396585,
+        "accuracy_pct_equivalent": 92.45852465760342,
+        "run_id": "quiet_jelly_7bzmwqgctv_1"
+      },
+      {
+        "algorithm": "SeasonalAverage",
+        "iteration": 3,
+        "normalized_rmse": 0.17318221617933963,
+        "r2_score": -0.1670734458249649,
+        "mape": 7.442331674236618,
+        "accuracy_pct_equivalent": 92.55766832576339,
+        "run_id": "quiet_jelly_7bzmwqgctv_3"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 15,
+        "normalized_rmse": 0.1733772523350517,
+        "r2_score": -0.20616511197574142,
+        "mape": 7.625466658896298,
+        "accuracy_pct_equivalent": 92.3745333411037,
+        "run_id": "quiet_jelly_7bzmwqgctv_15"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 17,
+        "normalized_rmse": 0.17339267303353312,
+        "r2_score": -0.20627690191181153,
+        "mape": 7.626957852939801,
+        "accuracy_pct_equivalent": 92.3730421470602,
+        "run_id": "quiet_jelly_7bzmwqgctv_17"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 10,
+        "normalized_rmse": 0.17342189445410564,
+        "r2_score": -0.2064963040306637,
+        "mape": 7.6295771476304255,
+        "accuracy_pct_equivalent": 92.37042285236957,
+        "run_id": "quiet_jelly_7bzmwqgctv_10"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 12,
+        "normalized_rmse": 0.17342716000835673,
+        "r2_score": -0.20664193738042083,
+        "mape": 7.6289892999336075,
+        "accuracy_pct_equivalent": 92.37101070006639,
+        "run_id": "quiet_jelly_7bzmwqgctv_12"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 11,
+        "normalized_rmse": 0.17362698929081768,
+        "r2_score": -0.2086702732034754,
+        "mape": 7.643638637248157,
+        "accuracy_pct_equivalent": 92.35636136275184,
+        "run_id": "quiet_jelly_7bzmwqgctv_11"
+      },
+      {
+        "algorithm": "DecisionTree",
+        "iteration": 23,
+        "normalized_rmse": 0.1826453585202963,
+        "r2_score": -0.32395148352664,
+        "mape": 7.740473883011887,
+        "accuracy_pct_equivalent": 92.25952611698811,
+        "run_id": "quiet_jelly_7bzmwqgctv_23"
+      },
+      {
+        "algorithm": "ExponentialSmoothing",
+        "iteration": 4,
+        "normalized_rmse": 0.18271056178017164,
+        "r2_score": -0.246636176339814,
+        "mape": 8.293288899633247,
+        "accuracy_pct_equivalent": 91.70671110036676,
+        "run_id": "quiet_jelly_7bzmwqgctv_4"
+      },
+      {
+        "algorithm": "XGBoostRegressor",
+        "iteration": 8,
+        "normalized_rmse": 0.1891282946915096,
+        "r2_score": -0.421985399723053,
+        "mape": 7.875078675895433,
+        "accuracy_pct_equivalent": 92.12492132410456,
+        "run_id": "quiet_jelly_7bzmwqgctv_8"
+      },
+      {
+        "algorithm": "Naive",
+        "iteration": 0,
+        "normalized_rmse": 0.19923777569631668,
+        "r2_score": -0.5638706913817497,
+        "mape": 8.26226252925952,
+        "accuracy_pct_equivalent": 91.73773747074048,
+        "run_id": "quiet_jelly_7bzmwqgctv_0"
+      },
+      {
+        "algorithm": "ProphetModel",
+        "iteration": 6,
+        "normalized_rmse": 0.23405281660432792,
+        "r2_score": -0.49854085395357417,
+        "mape": 9.789188083997363,
+        "accuracy_pct_equivalent": 90.21081191600264,
+        "run_id": "quiet_jelly_7bzmwqgctv_6"
+      }
+    ],
+    "forecast_detail": {
+      "metric": "encounters",
+      "label": "Clinical encounters",
+      "frequency": "month",
+      "model_used": "random_forest",
+      "best_model": "random_forest",
+      "history_months": 54,
+      "horizon_months": 12,
+      "data_quality_notes": [
+        "encounters: excluded Jul 2026 (298) as a data anomaly (robust z-score outlier, likely a migration/import artifact rather than real activity)"
+      ],
+      "history_full": [
+        {
+          "month": "2024-07",
+          "label": "Jul 2024",
+          "value": 1573.0
+        },
+        {
+          "month": "2024-08",
+          "label": "Aug 2024",
+          "value": 1463.0
+        },
+        {
+          "month": "2024-09",
+          "label": "Sep 2024",
+          "value": 1471.0
+        },
+        {
+          "month": "2024-10",
+          "label": "Oct 2024",
+          "value": 1661.0
+        },
+        {
+          "month": "2024-11",
+          "label": "Nov 2024",
+          "value": 1447.0
+        },
+        {
+          "month": "2024-12",
+          "label": "Dec 2024",
+          "value": 1406.0
+        },
+        {
+          "month": "2025-01",
+          "label": "Jan 2025",
+          "value": 1328.0
+        },
+        {
+          "month": "2025-02",
+          "label": "Feb 2025",
+          "value": 1332.0
+        },
+        {
+          "month": "2025-03",
+          "label": "Mar 2025",
+          "value": 1427.0
+        },
+        {
+          "month": "2025-04",
+          "label": "Apr 2025",
+          "value": 1714.0
+        },
+        {
+          "month": "2025-05",
+          "label": "May 2025",
+          "value": 1554.0
+        },
+        {
+          "month": "2025-06",
+          "label": "Jun 2025",
+          "value": 1651.0
+        },
+        {
+          "month": "2025-07",
+          "label": "Jul 2025",
+          "value": 1625.0
+        },
+        {
+          "month": "2025-08",
+          "label": "Aug 2025",
+          "value": 1360.0
+        },
+        {
+          "month": "2025-09",
+          "label": "Sep 2025",
+          "value": 1622.0
+        },
+        {
+          "month": "2025-10",
+          "label": "Oct 2025",
+          "value": 1711.0
+        },
+        {
+          "month": "2025-11",
+          "label": "Nov 2025",
+          "value": 1383.0
+        },
+        {
+          "month": "2025-12",
+          "label": "Dec 2025",
+          "value": 1433.0
+        },
+        {
+          "month": "2026-01",
+          "label": "Jan 2026",
+          "value": 1512.0
+        },
+        {
+          "month": "2026-02",
+          "label": "Feb 2026",
+          "value": 1475.0
+        },
+        {
+          "month": "2026-03",
+          "label": "Mar 2026",
+          "value": 1577.0
+        },
+        {
+          "month": "2026-04",
+          "label": "Apr 2026",
+          "value": 1505.0
+        },
+        {
+          "month": "2026-05",
+          "label": "May 2026",
+          "value": 1686.0
+        },
+        {
+          "month": "2026-06",
+          "label": "Jun 2026",
+          "value": 1617.0
+        }
+      ],
+      "yoy_history": [
+        {
+          "year": 2022,
+          "month": 1,
+          "value": 1346.0
+        },
+        {
+          "year": 2022,
+          "month": 2,
+          "value": 1367.0
+        },
+        {
+          "year": 2022,
+          "month": 3,
+          "value": 1680.0
+        },
+        {
+          "year": 2022,
+          "month": 4,
+          "value": 1388.0
+        },
+        {
+          "year": 2022,
+          "month": 5,
+          "value": 1371.0
+        },
+        {
+          "year": 2022,
+          "month": 6,
+          "value": 1497.0
+        },
+        {
+          "year": 2022,
+          "month": 7,
+          "value": 1610.0
+        },
+        {
+          "year": 2022,
+          "month": 8,
+          "value": 1667.0
+        },
+        {
+          "year": 2022,
+          "month": 9,
+          "value": 1471.0
+        },
+        {
+          "year": 2022,
+          "month": 10,
+          "value": 1527.0
+        },
+        {
+          "year": 2022,
+          "month": 11,
+          "value": 1542.0
+        },
+        {
+          "year": 2022,
+          "month": 12,
+          "value": 1386.0
+        },
+        {
+          "year": 2023,
+          "month": 1,
+          "value": 1299.0
+        },
+        {
+          "year": 2023,
+          "month": 2,
+          "value": 1687.0
+        },
+        {
+          "year": 2023,
+          "month": 3,
+          "value": 1829.0
+        },
+        {
+          "year": 2023,
+          "month": 4,
+          "value": 1509.0
+        },
+        {
+          "year": 2023,
+          "month": 5,
+          "value": 1640.0
+        },
+        {
+          "year": 2023,
+          "month": 6,
+          "value": 1782.0
+        },
+        {
+          "year": 2023,
+          "month": 7,
+          "value": 1602.0
+        },
+        {
+          "year": 2023,
+          "month": 8,
+          "value": 1667.0
+        },
+        {
+          "year": 2023,
+          "month": 9,
+          "value": 1625.0
+        },
+        {
+          "year": 2023,
+          "month": 10,
+          "value": 1691.0
+        },
+        {
+          "year": 2023,
+          "month": 11,
+          "value": 1620.0
+        },
+        {
+          "year": 2023,
+          "month": 12,
+          "value": 1452.0
+        },
+        {
+          "year": 2024,
+          "month": 1,
+          "value": 1144.0
+        },
+        {
+          "year": 2024,
+          "month": 2,
+          "value": 1047.0
+        },
+        {
+          "year": 2024,
+          "month": 3,
+          "value": 1289.0
+        },
+        {
+          "year": 2024,
+          "month": 4,
+          "value": 1717.0
+        },
+        {
+          "year": 2024,
+          "month": 5,
+          "value": 1599.0
+        },
+        {
+          "year": 2024,
+          "month": 6,
+          "value": 1445.0
+        },
+        {
+          "year": 2024,
+          "month": 7,
+          "value": 1573.0
+        },
+        {
+          "year": 2024,
+          "month": 8,
+          "value": 1463.0
+        },
+        {
+          "year": 2024,
+          "month": 9,
+          "value": 1471.0
+        },
+        {
+          "year": 2024,
+          "month": 10,
+          "value": 1661.0
+        },
+        {
+          "year": 2024,
+          "month": 11,
+          "value": 1447.0
+        },
+        {
+          "year": 2024,
+          "month": 12,
+          "value": 1406.0
+        },
+        {
+          "year": 2025,
+          "month": 1,
+          "value": 1328.0
+        },
+        {
+          "year": 2025,
+          "month": 2,
+          "value": 1332.0
+        },
+        {
+          "year": 2025,
+          "month": 3,
+          "value": 1427.0
+        },
+        {
+          "year": 2025,
+          "month": 4,
+          "value": 1714.0
+        },
+        {
+          "year": 2025,
+          "month": 5,
+          "value": 1554.0
+        },
+        {
+          "year": 2025,
+          "month": 6,
+          "value": 1651.0
+        },
+        {
+          "year": 2025,
+          "month": 7,
+          "value": 1625.0
+        },
+        {
+          "year": 2025,
+          "month": 8,
+          "value": 1360.0
+        },
+        {
+          "year": 2025,
+          "month": 9,
+          "value": 1622.0
+        },
+        {
+          "year": 2025,
+          "month": 10,
+          "value": 1711.0
+        },
+        {
+          "year": 2025,
+          "month": 11,
+          "value": 1383.0
+        },
+        {
+          "year": 2025,
+          "month": 12,
+          "value": 1433.0
+        },
+        {
+          "year": 2026,
+          "month": 1,
+          "value": 1512.0
+        },
+        {
+          "year": 2026,
+          "month": 2,
+          "value": 1475.0
+        },
+        {
+          "year": 2026,
+          "month": 3,
+          "value": 1577.0
+        },
+        {
+          "year": 2026,
+          "month": 4,
+          "value": 1505.0
+        },
+        {
+          "year": 2026,
+          "month": 5,
+          "value": 1686.0
+        },
+        {
+          "year": 2026,
+          "month": 6,
+          "value": 1617.0
+        }
+      ],
+      "this_month": {
+        "month": "2026-08",
+        "month_to_date_actual": 0.0,
+        "projected_total": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "as_of_day": 23,
+        "history_months_used": 0
+      },
+      "models": {
+        "random_forest": {
+          "model_name": "RandomForest",
+          "is_flat": false,
+          "accuracy_pct": 93.58131700460248,
+          "near_term_mape": 6.4186829953975195,
+          "long_term_mape": 6.4186829953975195,
+          "next_month": {
+            "month": "2026-09",
+            "projected_total": 1603.92
+          },
+          "by_end_of_year": {
+            "year": 2026,
+            "actual_so_far": 9372.0,
+            "current_month_estimate": 0.0,
+            "remaining_months_forecast": 6132.639999999999,
+            "total_estimate": 15504.64,
+            "low": 14584.743999999999,
+            "high": 16424.536
+          },
+          "next_12_months": {
+            "months_covered": 11,
+            "total_estimate": 15090.32,
+            "low": 12826.771999999999,
+            "high": 17353.868
+          },
+          "growth": {
+            "last_month_actual": null,
+            "mtd_growth_pct": null,
+            "same_period_last_year_total": 11991.0,
+            "ytd_growth_pct": -21.841381035776834,
+            "last_year_total": 18140.0,
+            "full_year_growth_pct": -14.527894156560093
+          },
+          "full_forecast": [
+            {
+              "month": "2026-07",
+              "label": "Jul 2026",
+              "predicted": 1588.88,
+              "low": 1350.548,
+              "high": 1827.212
+            },
+            {
+              "month": "2026-08",
+              "label": "Aug 2026",
+              "predicted": 1428.12,
+              "low": 1213.9019999999998,
+              "high": 1642.3379999999997
+            },
+            {
+              "month": "2026-09",
+              "label": "Sep 2026",
+              "predicted": 1603.92,
+              "low": 1363.332,
+              "high": 1844.508
+            },
+            {
+              "month": "2026-10",
+              "label": "Oct 2026",
+              "predicted": 1611.44,
+              "low": 1369.724,
+              "high": 1853.156
+            },
+            {
+              "month": "2026-11",
+              "label": "Nov 2026",
+              "predicted": 1440.68,
+              "low": 1224.578,
+              "high": 1656.782
+            },
+            {
+              "month": "2026-12",
+              "label": "Dec 2026",
+              "predicted": 1476.6,
+              "low": 1255.11,
+              "high": 1698.0899999999997
+            },
+            {
+              "month": "2027-01",
+              "label": "Jan 2027",
+              "predicted": 1387.72,
+              "low": 1179.562,
+              "high": 1595.878
+            },
+            {
+              "month": "2027-02",
+              "label": "Feb 2027",
+              "predicted": 1353.96,
+              "low": 1150.866,
+              "high": 1557.0539999999999
+            },
+            {
+              "month": "2027-03",
+              "label": "Mar 2027",
+              "predicted": 1528.52,
+              "low": 1299.242,
+              "high": 1757.7979999999998
+            },
+            {
+              "month": "2027-04",
+              "label": "Apr 2027",
+              "predicted": 1529.24,
+              "low": 1299.854,
+              "high": 1758.626
+            },
+            {
+              "month": "2027-05",
+              "label": "May 2027",
+              "predicted": 1563.84,
+              "low": 1329.264,
+              "high": 1798.4159999999997
+            },
+            {
+              "month": "2027-06",
+              "label": "Jun 2027",
+              "predicted": 1594.4,
+              "low": 1355.24,
+              "high": 1833.56
+            }
+          ],
+          "model_key": "random_forest",
+          "is_recommended": true
+        },
+        "extreme_random_trees": {
+          "model_name": "ExtremeRandomTrees",
+          "is_flat": false,
+          "accuracy_pct": 93.23466363749785,
+          "near_term_mape": 6.7653363625021585,
+          "long_term_mape": 6.7653363625021585,
+          "next_month": {
+            "month": "2026-09",
+            "projected_total": 1574.32
+          },
+          "by_end_of_year": {
+            "year": 2026,
+            "actual_so_far": 9372.0,
+            "current_month_estimate": 0.0,
+            "remaining_months_forecast": 6152.24,
+            "total_estimate": 15524.24,
+            "low": 14601.403999999999,
+            "high": 16447.076
+          },
+          "next_12_months": {
+            "months_covered": 11,
+            "total_estimate": 15318.64,
+            "low": 13020.844,
+            "high": 17616.435999999998
+          },
+          "growth": {
+            "last_month_actual": null,
+            "mtd_growth_pct": null,
+            "same_period_last_year_total": 11991.0,
+            "ytd_growth_pct": -21.841381035776834,
+            "last_year_total": 18140.0,
+            "full_year_growth_pct": -14.419845644983464
+          },
+          "full_forecast": [
+            {
+              "month": "2026-07",
+              "label": "Jul 2026",
+              "predicted": 1607.28,
+              "low": 1366.1879999999999,
+              "high": 1848.3719999999998
+            },
+            {
+              "month": "2026-08",
+              "label": "Aug 2026",
+              "predicted": 1461.64,
+              "low": 1242.394,
+              "high": 1680.886
+            },
+            {
+              "month": "2026-09",
+              "label": "Sep 2026",
+              "predicted": 1574.32,
+              "low": 1338.1719999999998,
+              "high": 1810.4679999999998
+            },
+            {
+              "month": "2026-10",
+              "label": "Oct 2026",
+              "predicted": 1622.04,
+              "low": 1378.734,
+              "high": 1865.3459999999998
+            },
+            {
+              "month": "2026-11",
+              "label": "Nov 2026",
+              "predicted": 1445.12,
+              "low": 1228.3519999999999,
+              "high": 1661.8879999999997
+            },
+            {
+              "month": "2026-12",
+              "label": "Dec 2026",
+              "predicted": 1510.76,
+              "low": 1284.146,
+              "high": 1737.3739999999998
+            },
+            {
+              "month": "2027-01",
+              "label": "Jan 2027",
+              "predicted": 1391.12,
+              "low": 1182.4519999999998,
+              "high": 1599.7879999999998
+            },
+            {
+              "month": "2027-02",
+              "label": "Feb 2027",
+              "predicted": 1426.96,
+              "low": 1212.916,
+              "high": 1641.004
+            },
+            {
+              "month": "2027-03",
+              "label": "Mar 2027",
+              "predicted": 1616.36,
+              "low": 1373.906,
+              "high": 1858.8139999999999
+            },
+            {
+              "month": "2027-04",
+              "label": "Apr 2027",
+              "predicted": 1540.0,
+              "low": 1309.0,
+              "high": 1770.9999999999998
+            },
+            {
+              "month": "2027-05",
+              "label": "May 2027",
+              "predicted": 1549.24,
+              "low": 1316.854,
+              "high": 1781.626
+            },
+            {
+              "month": "2027-06",
+              "label": "Jun 2027",
+              "predicted": 1642.72,
+              "low": 1396.312,
+              "high": 1889.128
+            }
+          ],
+          "model_key": "extreme_random_trees",
+          "is_recommended": false
+        },
+        "extreme_random_trees_2": {
+          "model_name": "ExtremeRandomTrees",
+          "is_flat": false,
+          "accuracy_pct": 93.33300206973864,
+          "near_term_mape": 6.666997930261355,
+          "long_term_mape": 6.666997930261355,
+          "next_month": {
+            "month": "2026-09",
+            "projected_total": 1617.84
+          },
+          "by_end_of_year": {
+            "year": 2026,
+            "actual_so_far": 9372.0,
+            "current_month_estimate": 0.0,
+            "remaining_months_forecast": 6162.16,
+            "total_estimate": 15534.16,
+            "low": 14609.836,
+            "high": 16458.484
+          },
+          "next_12_months": {
+            "months_covered": 11,
+            "total_estimate": 15342.4,
+            "low": 13041.039999999999,
+            "high": 17643.76
+          },
+          "growth": {
+            "last_month_actual": null,
+            "mtd_growth_pct": null,
+            "same_period_last_year_total": 11991.0,
+            "ytd_growth_pct": -21.841381035776834,
+            "last_year_total": 18140.0,
+            "full_year_growth_pct": -14.3651598676957
+          },
+          "full_forecast": [
+            {
+              "month": "2026-07",
+              "label": "Jul 2026",
+              "predicted": 1621.08,
+              "low": 1377.918,
+              "high": 1864.2419999999997
+            },
+            {
+              "month": "2026-08",
+              "label": "Aug 2026",
+              "predicted": 1445.92,
+              "low": 1229.032,
+              "high": 1662.808
+            },
+            {
+              "month": "2026-09",
+              "label": "Sep 2026",
+              "predicted": 1617.84,
+              "low": 1375.164,
+              "high": 1860.5159999999998
+            },
+            {
+              "month": "2026-10",
+              "label": "Oct 2026",
+              "predicted": 1640.44,
+              "low": 1394.374,
+              "high": 1886.5059999999999
+            },
+            {
+              "month": "2026-11",
+              "label": "Nov 2026",
+              "predicted": 1425.96,
+              "low": 1212.066,
+              "high": 1639.8539999999998
+            },
+            {
+              "month": "2026-12",
+              "label": "Dec 2026",
+              "predicted": 1477.92,
+              "low": 1256.232,
+              "high": 1699.608
+            },
+            {
+              "month": "2027-01",
+              "label": "Jan 2027",
+              "predicted": 1407.96,
+              "low": 1196.766,
+              "high": 1619.154
+            },
+            {
+              "month": "2027-02",
+              "label": "Feb 2027",
+              "predicted": 1425.44,
+              "low": 1211.624,
+              "high": 1639.2559999999999
+            },
+            {
+              "month": "2027-03",
+              "label": "Mar 2027",
+              "predicted": 1599.16,
+              "low": 1359.286,
+              "high": 1839.0339999999999
+            },
+            {
+              "month": "2027-04",
+              "label": "Apr 2027",
+              "predicted": 1521.36,
+              "low": 1293.156,
+              "high": 1749.5639999999999
+            },
+            {
+              "month": "2027-05",
+              "label": "May 2027",
+              "predicted": 1598.24,
+              "low": 1358.504,
+              "high": 1837.9759999999999
+            },
+            {
+              "month": "2027-06",
+              "label": "Jun 2027",
+              "predicted": 1628.08,
+              "low": 1383.868,
+              "high": 1872.2919999999997
+            }
+          ],
+          "model_key": "extreme_random_trees_2",
+          "is_recommended": false
+        },
+        "extreme_random_trees_3": {
+          "model_name": "ExtremeRandomTrees",
+          "is_flat": false,
+          "accuracy_pct": 93.41767028256943,
+          "near_term_mape": 6.582329717430571,
+          "long_term_mape": 6.582329717430571,
+          "next_month": {
+            "month": "2026-09",
+            "projected_total": 1610.9
+          },
+          "by_end_of_year": {
+            "year": 2026,
+            "actual_so_far": 9372.0,
+            "current_month_estimate": 0.0,
+            "remaining_months_forecast": 6132.3,
+            "total_estimate": 15504.3,
+            "low": 14584.455,
+            "high": 16424.145
+          },
+          "next_12_months": {
+            "months_covered": 11,
+            "total_estimate": 15324.7,
+            "low": 13025.995,
+            "high": 17623.405
+          },
+          "growth": {
+            "last_month_actual": null,
+            "mtd_growth_pct": null,
+            "same_period_last_year_total": 11991.0,
+            "ytd_growth_pct": -21.841381035776834,
+            "last_year_total": 18140.0,
+            "full_year_growth_pct": -14.529768467475195
+          },
+          "full_forecast": [
+            {
+              "month": "2026-07",
+              "label": "Jul 2026",
+              "predicted": 1595.3,
+              "low": 1356.0049999999999,
+              "high": 1834.5949999999998
+            },
+            {
+              "month": "2026-08",
+              "label": "Aug 2026",
+              "predicted": 1439.0,
+              "low": 1223.1499999999999,
+              "high": 1654.85
+            },
+            {
+              "month": "2026-09",
+              "label": "Sep 2026",
+              "predicted": 1610.9,
+              "low": 1369.265,
+              "high": 1852.5349999999999
+            },
+            {
+              "month": "2026-10",
+              "label": "Oct 2026",
+              "predicted": 1647.2,
+              "low": 1400.12,
+              "high": 1894.28
+            },
+            {
+              "month": "2026-11",
+              "label": "Nov 2026",
+              "predicted": 1422.5,
+              "low": 1209.125,
+              "high": 1635.8749999999998
+            },
+            {
+              "month": "2026-12",
+              "label": "Dec 2026",
+              "predicted": 1451.7,
+              "low": 1233.945,
+              "high": 1669.455
+            },
+            {
+              "month": "2027-01",
+              "label": "Jan 2027",
+              "predicted": 1457.9,
+              "low": 1239.2150000000001,
+              "high": 1676.585
+            },
+            {
+              "month": "2027-02",
+              "label": "Feb 2027",
+              "predicted": 1398.4,
+              "low": 1188.64,
+              "high": 1608.16
+            },
+            {
+              "month": "2027-03",
+              "label": "Mar 2027",
+              "predicted": 1558.2,
+              "low": 1324.47,
+              "high": 1791.9299999999998
+            },
+            {
+              "month": "2027-04",
+              "label": "Apr 2027",
+              "predicted": 1559.3,
+              "low": 1325.405,
+              "high": 1793.1949999999997
+            },
+            {
+              "month": "2027-05",
+              "label": "May 2027",
+              "predicted": 1647.2,
+              "low": 1400.12,
+              "high": 1894.28
+            },
+            {
+              "month": "2027-06",
+              "label": "Jun 2027",
+              "predicted": 1571.4,
+              "low": 1335.69,
+              "high": 1807.11
+            }
+          ],
+          "model_key": "extreme_random_trees_3",
+          "is_recommended": false
+        },
+        "extreme_random_trees_4": {
+          "model_name": "ExtremeRandomTrees",
+          "is_flat": false,
+          "accuracy_pct": 93.26568093634425,
+          "near_term_mape": 6.734319063655748,
+          "long_term_mape": 6.734319063655748,
+          "next_month": {
+            "month": "2026-09",
+            "projected_total": 1610.3
+          },
+          "by_end_of_year": {
+            "year": 2026,
+            "actual_so_far": 9372.0,
+            "current_month_estimate": 0.0,
+            "remaining_months_forecast": 6157.299999999999,
+            "total_estimate": 15529.3,
+            "low": 14605.704999999998,
+            "high": 16452.895
+          },
+          "next_12_months": {
+            "months_covered": 11,
+            "total_estimate": 15234.380000000001,
+            "low": 12949.222999999998,
+            "high": 17519.536999999997
+          },
+          "growth": {
+            "last_month_actual": null,
+            "mtd_growth_pct": null,
+            "same_period_last_year_total": 11991.0,
+            "ytd_growth_pct": -21.841381035776834,
+            "last_year_total": 18140.0,
+            "full_year_growth_pct": -14.391951488423377
+          },
+          "full_forecast": [
+            {
+              "month": "2026-07",
+              "label": "Jul 2026",
+              "predicted": 1621.4,
+              "low": 1378.19,
+              "high": 1864.61
+            },
+            {
+              "month": "2026-08",
+              "label": "Aug 2026",
+              "predicted": 1413.54,
+              "low": 1201.509,
+              "high": 1625.571
+            },
+            {
+              "month": "2026-09",
+              "label": "Sep 2026",
+              "predicted": 1610.3,
+              "low": 1368.7549999999999,
+              "high": 1851.8449999999998
+            },
+            {
+              "month": "2026-10",
+              "label": "Oct 2026",
+              "predicted": 1639.96,
+              "low": 1393.966,
+              "high": 1885.954
+            },
+            {
+              "month": "2026-11",
+              "label": "Nov 2026",
+              "predicted": 1446.48,
+              "low": 1229.508,
+              "high": 1663.452
+            },
+            {
+              "month": "2026-12",
+              "label": "Dec 2026",
+              "predicted": 1460.56,
+              "low": 1241.4759999999999,
+              "high": 1679.6439999999998
+            },
+            {
+              "month": "2027-01",
+              "label": "Jan 2027",
+              "predicted": 1422.14,
+              "low": 1208.819,
+              "high": 1635.461
+            },
+            {
+              "month": "2027-02",
+              "label": "Feb 2027",
+              "predicted": 1324.66,
+              "low": 1125.961,
+              "high": 1523.359
+            },
+            {
+              "month": "2027-03",
+              "label": "Mar 2027",
+              "predicted": 1593.24,
+              "low": 1354.254,
+              "high": 1832.2259999999999
+            },
+            {
+              "month": "2027-04",
+              "label": "Apr 2027",
+              "predicted": 1488.68,
+              "low": 1265.378,
+              "high": 1711.982
+            },
+            {
+              "month": "2027-05",
+              "label": "May 2027",
+              "predicted": 1621.9,
+              "low": 1378.615,
+              "high": 1865.185
+            },
+            {
+              "month": "2027-06",
+              "label": "Jun 2027",
+              "predicted": 1626.46,
+              "low": 1382.491,
+              "high": 1870.4289999999999
+            }
+          ],
+          "model_key": "extreme_random_trees_4",
+          "is_recommended": false
+        }
+      },
+      "next_month": {
+        "month": "2026-09",
+        "projected_total": 1603.92
+      },
+      "by_end_of_year": {
+        "year": 2026,
+        "actual_so_far": 9372.0,
+        "current_month_estimate": 0.0,
+        "remaining_months_forecast": 6132.639999999999,
+        "total_estimate": 15504.64,
+        "low": 14584.743999999999,
+        "high": 16424.536
+      },
+      "next_12_months": {
+        "months_covered": 11,
+        "total_estimate": 15090.32,
+        "low": 12826.771999999999,
+        "high": 17353.868
+      },
+      "growth": {
+        "last_month_actual": null,
+        "mtd_growth_pct": null,
+        "same_period_last_year_total": 11991.0,
+        "ytd_growth_pct": -21.841381035776834,
+        "last_year_total": 18140.0,
+        "full_year_growth_pct": -14.527894156560093
+      },
+      "full_forecast": [
+        {
+          "month": "2026-07",
+          "label": "Jul 2026",
+          "predicted": 1588.88,
+          "low": 1350.548,
+          "high": 1827.212
+        },
+        {
+          "month": "2026-08",
+          "label": "Aug 2026",
+          "predicted": 1428.12,
+          "low": 1213.9019999999998,
+          "high": 1642.3379999999997
+        },
+        {
+          "month": "2026-09",
+          "label": "Sep 2026",
+          "predicted": 1603.92,
+          "low": 1363.332,
+          "high": 1844.508
+        },
+        {
+          "month": "2026-10",
+          "label": "Oct 2026",
+          "predicted": 1611.44,
+          "low": 1369.724,
+          "high": 1853.156
+        },
+        {
+          "month": "2026-11",
+          "label": "Nov 2026",
+          "predicted": 1440.68,
+          "low": 1224.578,
+          "high": 1656.782
+        },
+        {
+          "month": "2026-12",
+          "label": "Dec 2026",
+          "predicted": 1476.6,
+          "low": 1255.11,
+          "high": 1698.0899999999997
+        },
+        {
+          "month": "2027-01",
+          "label": "Jan 2027",
+          "predicted": 1387.72,
+          "low": 1179.562,
+          "high": 1595.878
+        },
+        {
+          "month": "2027-02",
+          "label": "Feb 2027",
+          "predicted": 1353.96,
+          "low": 1150.866,
+          "high": 1557.0539999999999
+        },
+        {
+          "month": "2027-03",
+          "label": "Mar 2027",
+          "predicted": 1528.52,
+          "low": 1299.242,
+          "high": 1757.7979999999998
+        },
+        {
+          "month": "2027-04",
+          "label": "Apr 2027",
+          "predicted": 1529.24,
+          "low": 1299.854,
+          "high": 1758.626
+        },
+        {
+          "month": "2027-05",
+          "label": "May 2027",
+          "predicted": 1563.84,
+          "low": 1329.264,
+          "high": 1798.4159999999997
+        },
+        {
+          "month": "2027-06",
+          "label": "Jun 2027",
+          "predicted": 1594.4,
+          "low": 1355.24,
+          "high": 1833.56
+        }
+      ],
+      "backtest": {
+        "voting_ensemble": {
+          "accuracy_pct": 94.61607401555855,
+          "weighted_score": 5.383925984441453,
+          "near_term_mape": 5.383925984441453,
+          "long_term_mape": 5.383925984441453
+        },
+        "random_forest": {
+          "accuracy_pct": 93.58131700460248,
+          "weighted_score": 6.4186829953975195,
+          "near_term_mape": 6.4186829953975195,
+          "long_term_mape": 6.4186829953975195
+        },
+        "extreme_random_trees": {
+          "accuracy_pct": 93.23466363749785,
+          "weighted_score": 6.7653363625021585,
+          "near_term_mape": 6.7653363625021585,
+          "long_term_mape": 6.7653363625021585
+        },
+        "extreme_random_trees_2": {
+          "accuracy_pct": 93.33300206973864,
+          "weighted_score": 6.666997930261355,
+          "near_term_mape": 6.666997930261355,
+          "long_term_mape": 6.666997930261355
+        },
+        "extreme_random_trees_3": {
+          "accuracy_pct": 93.41767028256943,
+          "weighted_score": 6.582329717430571,
+          "near_term_mape": 6.582329717430571,
+          "long_term_mape": 6.582329717430571
+        },
+        "extreme_random_trees_4": {
+          "accuracy_pct": 93.26568093634425,
+          "weighted_score": 6.734319063655748,
+          "near_term_mape": 6.734319063655748,
+          "long_term_mape": 6.734319063655748
+        },
+        "random_forest_2": {
+          "accuracy_pct": 93.19199492021978,
+          "weighted_score": 6.808005079780221,
+          "near_term_mape": 6.808005079780221,
+          "long_term_mape": 6.808005079780221
+        },
+        "elastic_net": {
+          "accuracy_pct": 92.88907732562959,
+          "weighted_score": 7.110922674370407,
+          "near_term_mape": 7.110922674370407,
+          "long_term_mape": 7.110922674370407
+        },
+        "elastic_net_2": {
+          "accuracy_pct": 92.88457272275862,
+          "weighted_score": 7.115427277241383,
+          "near_term_mape": 7.115427277241383,
+          "long_term_mape": 7.115427277241383
+        },
+        "average": {
+          "accuracy_pct": 92.3922636946734,
+          "weighted_score": 7.607736305326595,
+          "near_term_mape": 7.607736305326595,
+          "long_term_mape": 7.607736305326595
+        },
+        "auto_arima": {
+          "accuracy_pct": 92.4543367875742,
+          "weighted_score": 7.545663212425798,
+          "near_term_mape": 7.545663212425798,
+          "long_term_mape": 7.545663212425798
+        },
+        "light_gbm": {
+          "accuracy_pct": 92.35758398487175,
+          "weighted_score": 7.6424160151282505,
+          "near_term_mape": 7.6424160151282505,
+          "long_term_mape": 7.6424160151282505
+        },
+        "elastic_net_3": {
+          "accuracy_pct": 92.44680226301669,
+          "weighted_score": 7.55319773698331,
+          "near_term_mape": 7.55319773698331,
+          "long_term_mape": 7.55319773698331
+        },
+        "seasonal_naive": {
+          "accuracy_pct": 92.45852465760342,
+          "weighted_score": 7.541475342396585,
+          "near_term_mape": 7.541475342396585,
+          "long_term_mape": 7.541475342396585
+        },
+        "seasonal_average": {
+          "accuracy_pct": 92.55766832576339,
+          "weighted_score": 7.442331674236618,
+          "near_term_mape": 7.442331674236618,
+          "long_term_mape": 7.442331674236618
+        },
+        "elastic_net_4": {
+          "accuracy_pct": 92.3745333411037,
+          "weighted_score": 7.625466658896298,
+          "near_term_mape": 7.625466658896298,
+          "long_term_mape": 7.625466658896298
+        },
+        "elastic_net_5": {
+          "accuracy_pct": 92.3730421470602,
+          "weighted_score": 7.626957852939801,
+          "near_term_mape": 7.626957852939801,
+          "long_term_mape": 7.626957852939801
+        },
+        "elastic_net_6": {
+          "accuracy_pct": 92.37042285236957,
+          "weighted_score": 7.6295771476304255,
+          "near_term_mape": 7.6295771476304255,
+          "long_term_mape": 7.6295771476304255
+        },
+        "elastic_net_7": {
+          "accuracy_pct": 92.37101070006639,
+          "weighted_score": 7.6289892999336075,
+          "near_term_mape": 7.6289892999336075,
+          "long_term_mape": 7.6289892999336075
+        },
+        "elastic_net_8": {
+          "accuracy_pct": 92.35636136275184,
+          "weighted_score": 7.643638637248157,
+          "near_term_mape": 7.643638637248157,
+          "long_term_mape": 7.643638637248157
+        },
+        "decision_tree": {
+          "accuracy_pct": 92.25952611698811,
+          "weighted_score": 7.740473883011887,
+          "near_term_mape": 7.740473883011887,
+          "long_term_mape": 7.740473883011887
+        },
+        "exponential_smoothing": {
+          "accuracy_pct": 91.70671110036676,
+          "weighted_score": 8.293288899633247,
+          "near_term_mape": 8.293288899633247,
+          "long_term_mape": 8.293288899633247
+        },
+        "xg_boost_regressor": {
+          "accuracy_pct": 92.12492132410456,
+          "weighted_score": 7.875078675895433,
+          "near_term_mape": 7.875078675895433,
+          "long_term_mape": 7.875078675895433
+        },
+        "naive": {
+          "accuracy_pct": 91.73773747074048,
+          "weighted_score": 8.26226252925952,
+          "near_term_mape": 8.26226252925952,
+          "long_term_mape": 8.26226252925952
+        },
+        "prophet_model": {
+          "accuracy_pct": 90.21081191600264,
+          "weighted_score": 9.789188083997363,
+          "near_term_mape": 9.789188083997363,
+          "long_term_mape": 9.789188083997363
+        }
+      }
+    },
+    "downloaded_models": [
+      {
+        "rank": 1,
+        "algorithm": "VotingEnsemble",
+        "run_id": "quiet_jelly_7bzmwqgctv_24",
+        "normalized_rmse": 0.11973873936797237,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\encounters_quiet_jelly_7bzmwqgctv\\rank01_VotingEnsemble"
+      },
+      {
+        "rank": 2,
+        "algorithm": "RandomForest",
+        "run_id": "quiet_jelly_7bzmwqgctv_13",
+        "normalized_rmse": 0.1414720890094263,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\encounters_quiet_jelly_7bzmwqgctv\\rank02_RandomForest"
+      },
+      {
+        "rank": 3,
+        "algorithm": "ExtremeRandomTrees",
+        "run_id": "quiet_jelly_7bzmwqgctv_18",
+        "normalized_rmse": 0.1488139477328311,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\encounters_quiet_jelly_7bzmwqgctv\\rank03_ExtremeRandomTrees"
+      },
+      {
+        "rank": 4,
+        "algorithm": "ExtremeRandomTrees",
+        "run_id": "quiet_jelly_7bzmwqgctv_21",
+        "normalized_rmse": 0.15166922529157045,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\encounters_quiet_jelly_7bzmwqgctv\\rank04_ExtremeRandomTrees"
+      },
+      {
+        "rank": 5,
+        "algorithm": "ExtremeRandomTrees",
+        "run_id": "quiet_jelly_7bzmwqgctv_22",
+        "normalized_rmse": 0.15262041327933723,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\encounters_quiet_jelly_7bzmwqgctv\\rank05_ExtremeRandomTrees"
+      },
+      {
+        "rank": 6,
+        "algorithm": "ExtremeRandomTrees",
+        "run_id": "quiet_jelly_7bzmwqgctv_20",
+        "normalized_rmse": 0.15271262743752062,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\encounters_quiet_jelly_7bzmwqgctv\\rank06_ExtremeRandomTrees"
+      },
+      {
+        "rank": 7,
+        "algorithm": "RandomForest",
+        "run_id": "quiet_jelly_7bzmwqgctv_19",
+        "normalized_rmse": 0.1577166664239178,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\encounters_quiet_jelly_7bzmwqgctv\\rank07_RandomForest"
+      }
+    ]
+  },
+  "collections": {
+    "metric": "collections",
+    "job_name": "honest_diamond_07spjg1mk7",
+    "status": "Completed",
+    "studio_url": "https://ml.azure.com/runs/honest_diamond_07spjg1mk7?wsid=/subscriptions/26cadedf-7782-440a-9367-6d9c87a78aac/resourcegroups/prediction/workspaces/predictioncentralus",
+    "frequency": "month",
+    "leaderboard": [
+      {
+        "algorithm": "VotingEnsemble",
+        "iteration": 24,
+        "normalized_rmse": 0.08068359972274294,
+        "r2_score": 0.5334920629429847,
+        "mape": 4.0675489159299705,
+        "accuracy_pct_equivalent": 95.93245108407002,
+        "run_id": "honest_diamond_07spjg1mk7_24"
+      },
+      {
+        "algorithm": "ExtremeRandomTrees",
+        "iteration": 20,
+        "normalized_rmse": 0.1324046685280191,
+        "r2_score": -0.29409853440287403,
+        "mape": 6.4140091387977,
+        "accuracy_pct_equivalent": 93.5859908612023,
+        "run_id": "honest_diamond_07spjg1mk7_20"
+      },
+      {
+        "algorithm": "SeasonalAverage",
+        "iteration": 3,
+        "normalized_rmse": 0.13447158364943412,
+        "r2_score": -0.28546092426551223,
+        "mape": 6.3416256248341,
+        "accuracy_pct_equivalent": 93.6583743751659,
+        "run_id": "honest_diamond_07spjg1mk7_3"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 11,
+        "normalized_rmse": 0.1373208458775883,
+        "r2_score": -0.36318635766479096,
+        "mape": 6.535754568730232,
+        "accuracy_pct_equivalent": 93.46424543126977,
+        "run_id": "honest_diamond_07spjg1mk7_11"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 10,
+        "normalized_rmse": 0.13752728867035102,
+        "r2_score": -0.3671853505568373,
+        "mape": 6.552611371436258,
+        "accuracy_pct_equivalent": 93.44738862856374,
+        "run_id": "honest_diamond_07spjg1mk7_10"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 17,
+        "normalized_rmse": 0.1378099840518477,
+        "r2_score": -0.37301331223283907,
+        "mape": 6.565430618869987,
+        "accuracy_pct_equivalent": 93.43456938113002,
+        "run_id": "honest_diamond_07spjg1mk7_17"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 12,
+        "normalized_rmse": 0.1378845036832557,
+        "r2_score": -0.37456125225757547,
+        "mape": 6.568226286874439,
+        "accuracy_pct_equivalent": 93.43177371312557,
+        "run_id": "honest_diamond_07spjg1mk7_12"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 16,
+        "normalized_rmse": 0.1379326743475907,
+        "r2_score": -0.37556345164462845,
+        "mape": 6.570577664963132,
+        "accuracy_pct_equivalent": 93.42942233503686,
+        "run_id": "honest_diamond_07spjg1mk7_16"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 15,
+        "normalized_rmse": 0.13795367829551236,
+        "r2_score": -0.3759824854975977,
+        "mape": 6.571878770157669,
+        "accuracy_pct_equivalent": 93.42812122984233,
+        "run_id": "honest_diamond_07spjg1mk7_15"
+      },
+      {
+        "algorithm": "ExtremeRandomTrees",
+        "iteration": 18,
+        "normalized_rmse": 0.1408107705160301,
+        "r2_score": -0.43172731129964526,
+        "mape": 6.8024960109013195,
+        "accuracy_pct_equivalent": 93.19750398909868,
+        "run_id": "honest_diamond_07spjg1mk7_18"
+      },
+      {
+        "algorithm": "SeasonalNaive",
+        "iteration": 1,
+        "normalized_rmse": 0.14266942377206848,
+        "r2_score": -0.36558110127048643,
+        "mape": 6.5265304613221415,
+        "accuracy_pct_equivalent": 93.47346953867786,
+        "run_id": "honest_diamond_07spjg1mk7_1"
+      },
+      {
+        "algorithm": "RandomForest",
+        "iteration": 13,
+        "normalized_rmse": 0.1469559150398006,
+        "r2_score": -0.5328158276610199,
+        "mape": 7.0183722434488045,
+        "accuracy_pct_equivalent": 92.98162775655119,
+        "run_id": "honest_diamond_07spjg1mk7_13"
+      },
+      {
+        "algorithm": "ExtremeRandomTrees",
+        "iteration": 21,
+        "normalized_rmse": 0.15115932664471793,
+        "r2_score": -0.5922720086375793,
+        "mape": 7.229996339097053,
+        "accuracy_pct_equivalent": 92.77000366090294,
+        "run_id": "honest_diamond_07spjg1mk7_21"
+      },
+      {
+        "algorithm": "ExtremeRandomTrees",
+        "iteration": 22,
+        "normalized_rmse": 0.15234894273530514,
+        "r2_score": -0.5966820699540751,
+        "mape": 6.967672343113082,
+        "accuracy_pct_equivalent": 93.03232765688692,
+        "run_id": "honest_diamond_07spjg1mk7_22"
+      },
+      {
+        "algorithm": "RandomForest",
+        "iteration": 19,
+        "normalized_rmse": 0.1524607161737817,
+        "r2_score": -0.6575735457321457,
+        "mape": 6.242019122396981,
+        "accuracy_pct_equivalent": 93.75798087760302,
+        "run_id": "honest_diamond_07spjg1mk7_19"
+      },
+      {
+        "algorithm": "ExponentialSmoothing",
+        "iteration": 4,
+        "normalized_rmse": 0.1549506229942348,
+        "r2_score": -0.5837320611194923,
+        "mape": 7.463778996579583,
+        "accuracy_pct_equivalent": 92.53622100342042,
+        "run_id": "honest_diamond_07spjg1mk7_4"
+      },
+      {
+        "algorithm": "XGBoostRegressor",
+        "iteration": 8,
+        "normalized_rmse": 0.16624844700128166,
+        "r2_score": -0.9052697578677792,
+        "mape": 7.104881185411282,
+        "accuracy_pct_equivalent": 92.89511881458871,
+        "run_id": "honest_diamond_07spjg1mk7_8"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 14,
+        "normalized_rmse": 0.17393571238582325,
+        "r2_score": -0.9730286243960261,
+        "mape": 8.677317545410848,
+        "accuracy_pct_equivalent": 91.32268245458916,
+        "run_id": "honest_diamond_07spjg1mk7_14"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 9,
+        "normalized_rmse": 0.17402098918384695,
+        "r2_score": -0.9741010545974362,
+        "mape": 8.678288344812241,
+        "accuracy_pct_equivalent": 91.32171165518776,
+        "run_id": "honest_diamond_07spjg1mk7_9"
+      },
+      {
+        "algorithm": "Naive",
+        "iteration": 0,
+        "normalized_rmse": 0.19178779907832008,
+        "r2_score": -0.8158939645683029,
+        "mape": 9.536385568582556,
+        "accuracy_pct_equivalent": 90.46361443141744,
+        "run_id": "honest_diamond_07spjg1mk7_0"
+      },
+      {
+        "algorithm": "LightGBM",
+        "iteration": 7,
+        "normalized_rmse": 0.19298570440867296,
+        "r2_score": -1.0,
+        "mape": 8.870697092978155,
+        "accuracy_pct_equivalent": 91.12930290702184,
+        "run_id": "honest_diamond_07spjg1mk7_7"
+      },
+      {
+        "algorithm": "Average",
+        "iteration": 2,
+        "normalized_rmse": 0.1929857069375813,
+        "r2_score": -1.0,
+        "mape": 8.870697215901393,
+        "accuracy_pct_equivalent": 91.12930278409861,
+        "run_id": "honest_diamond_07spjg1mk7_2"
+      },
+      {
+        "algorithm": "AutoArima",
+        "iteration": 5,
+        "normalized_rmse": 0.1990430771774553,
+        "r2_score": -1.0,
+        "mape": 8.87600543842062,
+        "accuracy_pct_equivalent": 91.12399456157938,
+        "run_id": "honest_diamond_07spjg1mk7_5"
+      },
+      {
+        "algorithm": "DecisionTree",
+        "iteration": 23,
+        "normalized_rmse": 0.20323852433519413,
+        "r2_score": -1.0,
+        "mape": 8.680541226117041,
+        "accuracy_pct_equivalent": 91.31945877388296,
+        "run_id": "honest_diamond_07spjg1mk7_23"
+      },
+      {
+        "algorithm": "ProphetModel",
+        "iteration": 6,
+        "normalized_rmse": 0.23163038263600938,
+        "r2_score": -0.7343751996151385,
+        "mape": 10.215416098963525,
+        "accuracy_pct_equivalent": 89.78458390103647,
+        "run_id": "honest_diamond_07spjg1mk7_6"
+      }
+    ],
+    "forecast_detail": {
+      "metric": "collections",
+      "label": "Collections ($)",
+      "frequency": "month",
+      "model_used": "voting_ensemble",
+      "best_model": "voting_ensemble",
+      "history_months": 46,
+      "horizon_months": 12,
+      "data_quality_notes": [
+        "collections: excluded Jan 2022 (18) as a data anomaly (robust z-score outlier, likely a migration/import artifact rather than real activity)",
+        "collections: excluded Feb 2022 (72) as a data anomaly (robust z-score outlier, likely a migration/import artifact rather than real activity)",
+        "collections: excluded Mar 2022 (150) as a data anomaly (robust z-score outlier, likely a migration/import artifact rather than real activity)",
+        "collections: excluded May 2022 (446) as a data anomaly (robust z-score outlier, likely a migration/import artifact rather than real activity)",
+        "collections: excluded Aug 2022 (200) as a data anomaly (robust z-score outlier, likely a migration/import artifact rather than real activity)",
+        "collections: excluded Jul 2026 (107,541) as a data anomaly (robust z-score outlier, likely a migration/import artifact rather than real activity)"
+      ],
+      "history_full": [
+        {
+          "month": "2024-07",
+          "label": "Jul 2024",
+          "value": 508723.75
+        },
+        {
+          "month": "2024-08",
+          "label": "Aug 2024",
+          "value": 514553.48
+        },
+        {
+          "month": "2024-09",
+          "label": "Sep 2024",
+          "value": 497202.94
+        },
+        {
+          "month": "2024-10",
+          "label": "Oct 2024",
+          "value": 549732.47
+        },
+        {
+          "month": "2024-11",
+          "label": "Nov 2024",
+          "value": 452952.42
+        },
+        {
+          "month": "2024-12",
+          "label": "Dec 2024",
+          "value": 486650.72
+        },
+        {
+          "month": "2025-01",
+          "label": "Jan 2025",
+          "value": 480937.17
+        },
+        {
+          "month": "2025-02",
+          "label": "Feb 2025",
+          "value": 443880.26
+        },
+        {
+          "month": "2025-03",
+          "label": "Mar 2025",
+          "value": 467516.25
+        },
+        {
+          "month": "2025-04",
+          "label": "Apr 2025",
+          "value": 550322.52
+        },
+        {
+          "month": "2025-05",
+          "label": "May 2025",
+          "value": 526033.84
+        },
+        {
+          "month": "2025-06",
+          "label": "Jun 2025",
+          "value": 474470.96
+        },
+        {
+          "month": "2025-07",
+          "label": "Jul 2025",
+          "value": 503553.29
+        },
+        {
+          "month": "2025-08",
+          "label": "Aug 2025",
+          "value": 470629.62
+        },
+        {
+          "month": "2025-09",
+          "label": "Sep 2025",
+          "value": 526177.37
+        },
+        {
+          "month": "2025-10",
+          "label": "Oct 2025",
+          "value": 549755.54
+        },
+        {
+          "month": "2025-11",
+          "label": "Nov 2025",
+          "value": 450908.52999999997
+        },
+        {
+          "month": "2025-12",
+          "label": "Dec 2025",
+          "value": 518012.43
+        },
+        {
+          "month": "2026-01",
+          "label": "Jan 2026",
+          "value": 507511.43
+        },
+        {
+          "month": "2026-02",
+          "label": "Feb 2026",
+          "value": 450374.04
+        },
+        {
+          "month": "2026-03",
+          "label": "Mar 2026",
+          "value": 510578.04
+        },
+        {
+          "month": "2026-04",
+          "label": "Apr 2026",
+          "value": 523541.04
+        },
+        {
+          "month": "2026-05",
+          "label": "May 2026",
+          "value": 550520.22
+        },
+        {
+          "month": "2026-06",
+          "label": "Jun 2026",
+          "value": 571468.08
+        }
+      ],
+      "yoy_history": [
+        {
+          "year": 2022,
+          "month": 9,
+          "value": 281944.83
+        },
+        {
+          "year": 2022,
+          "month": 10,
+          "value": 391439.73
+        },
+        {
+          "year": 2022,
+          "month": 11,
+          "value": 396795.44
+        },
+        {
+          "year": 2022,
+          "month": 12,
+          "value": 434215.87
+        },
+        {
+          "year": 2023,
+          "month": 1,
+          "value": 414448.04
+        },
+        {
+          "year": 2023,
+          "month": 2,
+          "value": 479345.41
+        },
+        {
+          "year": 2023,
+          "month": 3,
+          "value": 542746.48
+        },
+        {
+          "year": 2023,
+          "month": 4,
+          "value": 425984.6
+        },
+        {
+          "year": 2023,
+          "month": 5,
+          "value": 502276.56
+        },
+        {
+          "year": 2023,
+          "month": 6,
+          "value": 477770.33
+        },
+        {
+          "year": 2023,
+          "month": 7,
+          "value": 400834.73
+        },
+        {
+          "year": 2023,
+          "month": 8,
+          "value": 493758.06
+        },
+        {
+          "year": 2023,
+          "month": 9,
+          "value": 437185.47
+        },
+        {
+          "year": 2023,
+          "month": 10,
+          "value": 492909.09
+        },
+        {
+          "year": 2023,
+          "month": 11,
+          "value": 464403.37
+        },
+        {
+          "year": 2023,
+          "month": 12,
+          "value": 448255.08
+        },
+        {
+          "year": 2024,
+          "month": 1,
+          "value": 401214.15
+        },
+        {
+          "year": 2024,
+          "month": 2,
+          "value": 318022.06
+        },
+        {
+          "year": 2024,
+          "month": 3,
+          "value": 431246.23
+        },
+        {
+          "year": 2024,
+          "month": 4,
+          "value": 482841.83
+        },
+        {
+          "year": 2024,
+          "month": 5,
+          "value": 491729.7
+        },
+        {
+          "year": 2024,
+          "month": 6,
+          "value": 511515.58
+        },
+        {
+          "year": 2024,
+          "month": 7,
+          "value": 508723.75
+        },
+        {
+          "year": 2024,
+          "month": 8,
+          "value": 514553.48
+        },
+        {
+          "year": 2024,
+          "month": 9,
+          "value": 497202.94
+        },
+        {
+          "year": 2024,
+          "month": 10,
+          "value": 549732.47
+        },
+        {
+          "year": 2024,
+          "month": 11,
+          "value": 452952.42
+        },
+        {
+          "year": 2024,
+          "month": 12,
+          "value": 486650.72
+        },
+        {
+          "year": 2025,
+          "month": 1,
+          "value": 480937.17
+        },
+        {
+          "year": 2025,
+          "month": 2,
+          "value": 443880.26
+        },
+        {
+          "year": 2025,
+          "month": 3,
+          "value": 467516.25
+        },
+        {
+          "year": 2025,
+          "month": 4,
+          "value": 550322.52
+        },
+        {
+          "year": 2025,
+          "month": 5,
+          "value": 526033.84
+        },
+        {
+          "year": 2025,
+          "month": 6,
+          "value": 474470.96
+        },
+        {
+          "year": 2025,
+          "month": 7,
+          "value": 503553.29
+        },
+        {
+          "year": 2025,
+          "month": 8,
+          "value": 470629.62
+        },
+        {
+          "year": 2025,
+          "month": 9,
+          "value": 526177.37
+        },
+        {
+          "year": 2025,
+          "month": 10,
+          "value": 549755.54
+        },
+        {
+          "year": 2025,
+          "month": 11,
+          "value": 450908.52999999997
+        },
+        {
+          "year": 2025,
+          "month": 12,
+          "value": 518012.43
+        },
+        {
+          "year": 2026,
+          "month": 1,
+          "value": 507511.43
+        },
+        {
+          "year": 2026,
+          "month": 2,
+          "value": 450374.04
+        },
+        {
+          "year": 2026,
+          "month": 3,
+          "value": 510578.04
+        },
+        {
+          "year": 2026,
+          "month": 4,
+          "value": 523541.04
+        },
+        {
+          "year": 2026,
+          "month": 5,
+          "value": 550520.22
+        },
+        {
+          "year": 2026,
+          "month": 6,
+          "value": 571468.08
+        }
+      ],
+      "this_month": {
+        "month": "2026-08",
+        "month_to_date_actual": 0.0,
+        "projected_total": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "as_of_day": 23,
+        "history_months_used": 0
+      },
+      "models": {
+        "voting_ensemble": {
+          "model_name": "VotingEnsemble",
+          "is_flat": false,
+          "accuracy_pct": 95.93245108407002,
+          "near_term_mape": 4.0675489159299705,
+          "long_term_mape": 4.0675489159299705,
+          "next_month": {
+            "month": "2026-09",
+            "projected_total": 517232.6408272672
+          },
+          "by_end_of_year": {
+            "year": 2026,
+            "actual_so_far": 3113992.85,
+            "current_month_estimate": 0.0,
+            "remaining_months_forecast": 2078150.9840384016,
+            "total_estimate": 5192143.834038402,
+            "low": 4880421.186432641,
+            "high": 5503866.481644162
+          },
+          "next_12_months": {
+            "months_covered": 11,
+            "total_estimate": 5265404.006673596,
+            "low": 4475593.405672556,
+            "high": 6055214.607674634
+          },
+          "growth": {
+            "last_month_actual": null,
+            "mtd_growth_pct": null,
+            "same_period_last_year_total": 3917343.91,
+            "ytd_growth_pct": -20.507544868584183,
+            "last_year_total": 5962197.78,
+            "full_year_growth_pct": -12.915605526282931
+          },
+          "full_forecast": [
+            {
+              "month": "2026-07",
+              "label": "Jul 2026",
+              "predicted": 501580.630705082,
+              "low": 426343.5360993197,
+              "high": 576817.7253108443
+            },
+            {
+              "month": "2026-08",
+              "label": "Aug 2026",
+              "predicted": 481092.1626145489,
+              "low": 408928.3382223666,
+              "high": 553255.9870067312
+            },
+            {
+              "month": "2026-09",
+              "label": "Sep 2026",
+              "predicted": 517232.6408272672,
+              "low": 439647.74470317713,
+              "high": 594817.5369513573
+            },
+            {
+              "month": "2026-10",
+              "label": "Oct 2026",
+              "predicted": 526019.4851842336,
+              "low": 447116.5624065986,
+              "high": 604922.4079618687
+            },
+            {
+              "month": "2026-11",
+              "label": "Nov 2026",
+              "predicted": 495527.82706703397,
+              "low": 421198.65300697886,
+              "high": 569857.001127089
+            },
+            {
+              "month": "2026-12",
+              "label": "Dec 2026",
+              "predicted": 539371.0309598667,
+              "low": 458465.3763158867,
+              "high": 620276.6856038467
+            },
+            {
+              "month": "2027-01",
+              "label": "Jan 2027",
+              "predicted": 507232.55313706986,
+              "low": 431147.67016650934,
+              "high": 583317.4361076303
+            },
+            {
+              "month": "2027-02",
+              "label": "Feb 2027",
+              "predicted": 518650.60741352016,
+              "low": 440853.0163014921,
+              "high": 596448.1985255481
+            },
+            {
+              "month": "2027-03",
+              "label": "Mar 2027",
+              "predicted": 533830.4440966636,
+              "low": 453755.87748216407,
+              "high": 613905.0107111632
+            },
+            {
+              "month": "2027-04",
+              "label": "Apr 2027",
+              "predicted": 534813.5046564642,
+              "low": 454591.47895799455,
+              "high": 615035.5303549338
+            },
+            {
+              "month": "2027-05",
+              "label": "May 2027",
+              "predicted": 531142.8367260456,
+              "low": 451471.41121713875,
+              "high": 610814.2622349524
+            },
+            {
+              "month": "2027-06",
+              "label": "Jun 2027",
+              "predicted": 561583.0766054306,
+              "low": 477345.615114616,
+              "high": 645820.5380962451
+            }
+          ],
+          "model_key": "voting_ensemble",
+          "is_recommended": true
+        },
+        "extreme_random_trees": {
+          "model_name": "ExtremeRandomTrees",
+          "is_flat": false,
+          "accuracy_pct": 93.5859908612023,
+          "near_term_mape": 6.4140091387977,
+          "long_term_mape": 6.4140091387977,
+          "next_month": {
+            "month": "2026-09",
+            "projected_total": 536645.2167999997
+          },
+          "by_end_of_year": {
+            "year": 2026,
+            "actual_so_far": 3113992.85,
+            "current_month_estimate": 0.0,
+            "remaining_months_forecast": 2095540.6781999988,
+            "total_estimate": 5209533.528199999,
+            "low": 4895202.426469999,
+            "high": 5523864.629929999
+          },
+          "next_12_months": {
+            "months_covered": 11,
+            "total_estimate": 5177866.044399997,
+            "low": 4401186.137739997,
+            "high": 5954545.951059996
+          },
+          "growth": {
+            "last_month_actual": null,
+            "mtd_growth_pct": null,
+            "same_period_last_year_total": 3917343.91,
+            "ytd_growth_pct": -20.507544868584183,
+            "last_year_total": 5962197.78,
+            "full_year_growth_pct": -12.62393968755598
+          },
+          "full_forecast": [
+            {
+              "month": "2026-07",
+              "label": "Jul 2026",
+              "predicted": 519492.2675999997,
+              "low": 441568.4274599997,
+              "high": 597416.1077399995
+            },
+            {
+              "month": "2026-08",
+              "label": "Aug 2026",
+              "predicted": 497827.2362,
+              "low": 423153.15076999995,
+              "high": 572501.3216299999
+            },
+            {
+              "month": "2026-09",
+              "label": "Sep 2026",
+              "predicted": 536645.2167999997,
+              "low": 456148.43427999975,
+              "high": 617141.9993199996
+            },
+            {
+              "month": "2026-10",
+              "label": "Oct 2026",
+              "predicted": 533192.1253999998,
+              "low": 453213.3065899998,
+              "high": 613170.9442099998
+            },
+            {
+              "month": "2026-11",
+              "label": "Nov 2026",
+              "predicted": 493325.9235999999,
+              "low": 419327.0350599999,
+              "high": 567324.8121399998
+            },
+            {
+              "month": "2026-12",
+              "label": "Dec 2026",
+              "predicted": 532377.4123999996,
+              "low": 452520.8005399996,
+              "high": 612234.0242599994
+            },
+            {
+              "month": "2027-01",
+              "label": "Jan 2027",
+              "predicted": 490772.6031999996,
+              "low": 417156.71271999966,
+              "high": 564388.4936799995
+            },
+            {
+              "month": "2027-02",
+              "label": "Feb 2027",
+              "predicted": 464225.2587999999,
+              "low": 394591.4699799999,
+              "high": 533859.0476199999
+            },
+            {
+              "month": "2027-03",
+              "label": "Mar 2027",
+              "predicted": 514744.22799999977,
+              "low": 437532.5937999998,
+              "high": 591955.8621999997
+            },
+            {
+              "month": "2027-04",
+              "label": "Apr 2027",
+              "predicted": 517622.23419999966,
+              "low": 439978.8990699997,
+              "high": 595265.5693299995
+            },
+            {
+              "month": "2027-05",
+              "label": "May 2027",
+              "predicted": 536223.4281999998,
+              "low": 455789.9139699999,
+              "high": 616656.9424299998
+            },
+            {
+              "month": "2027-06",
+              "label": "Jun 2027",
+              "predicted": 558737.6137999995,
+              "low": 474926.9717299995,
+              "high": 642548.2558699993
+            }
+          ],
+          "model_key": "extreme_random_trees",
+          "is_recommended": false
+        },
+        "seasonal_average": {
+          "model_name": "SeasonalAverage",
+          "is_flat": false,
+          "accuracy_pct": 93.6583743751659,
+          "near_term_mape": 6.3416256248341,
+          "long_term_mape": 6.3416256248341,
+          "next_month": {
+            "month": "2026-09",
+            "projected_total": 511085.8025
+          },
+          "by_end_of_year": {
+            "year": 2026,
+            "actual_so_far": 3113992.85,
+            "current_month_estimate": 0.0,
+            "remaining_months_forecast": 2044343.21,
+            "total_estimate": 5158336.0600000005,
+            "low": 4851684.5785,
+            "high": 5464987.5415
+          },
+          "next_12_months": {
+            "months_covered": 11,
+            "total_estimate": 5110858.025,
+            "low": 4344229.32125,
+            "high": 5877486.72875
+          },
+          "growth": {
+            "last_month_actual": null,
+            "mtd_growth_pct": null,
+            "same_period_last_year_total": 3917343.91,
+            "ytd_growth_pct": -20.507544868584183,
+            "last_year_total": 5962197.78,
+            "full_year_growth_pct": -13.48264095995822
+          },
+          "full_forecast": [
+            {
+              "month": "2026-07",
+              "label": "Jul 2026",
+              "predicted": 511085.8025,
+              "low": 434422.932125,
+              "high": 587748.6728749999
+            },
+            {
+              "month": "2026-08",
+              "label": "Aug 2026",
+              "predicted": 511085.8025,
+              "low": 434422.932125,
+              "high": 587748.6728749999
+            },
+            {
+              "month": "2026-09",
+              "label": "Sep 2026",
+              "predicted": 511085.8025,
+              "low": 434422.932125,
+              "high": 587748.6728749999
+            },
+            {
+              "month": "2026-10",
+              "label": "Oct 2026",
+              "predicted": 511085.8025,
+              "low": 434422.932125,
+              "high": 587748.6728749999
+            },
+            {
+              "month": "2026-11",
+              "label": "Nov 2026",
+              "predicted": 511085.8025,
+              "low": 434422.932125,
+              "high": 587748.6728749999
+            },
+            {
+              "month": "2026-12",
+              "label": "Dec 2026",
+              "predicted": 511085.8025,
+              "low": 434422.932125,
+              "high": 587748.6728749999
+            },
+            {
+              "month": "2027-01",
+              "label": "Jan 2027",
+              "predicted": 511085.8025,
+              "low": 434422.932125,
+              "high": 587748.6728749999
+            },
+            {
+              "month": "2027-02",
+              "label": "Feb 2027",
+              "predicted": 511085.8025,
+              "low": 434422.932125,
+              "high": 587748.6728749999
+            },
+            {
+              "month": "2027-03",
+              "label": "Mar 2027",
+              "predicted": 511085.8025,
+              "low": 434422.932125,
+              "high": 587748.6728749999
+            },
+            {
+              "month": "2027-04",
+              "label": "Apr 2027",
+              "predicted": 511085.8025,
+              "low": 434422.932125,
+              "high": 587748.6728749999
+            },
+            {
+              "month": "2027-05",
+              "label": "May 2027",
+              "predicted": 511085.8025,
+              "low": 434422.932125,
+              "high": 587748.6728749999
+            },
+            {
+              "month": "2027-06",
+              "label": "Jun 2027",
+              "predicted": 511085.8025,
+              "low": 434422.932125,
+              "high": 587748.6728749999
+            }
+          ],
+          "model_key": "seasonal_average",
+          "is_recommended": false
+        },
+        "elastic_net": {
+          "model_name": "ElasticNet",
+          "is_flat": false,
+          "accuracy_pct": 93.46424543126977,
+          "near_term_mape": 6.535754568730232,
+          "long_term_mape": 6.535754568730232,
+          "next_month": {
+            "month": "2026-09",
+            "projected_total": 540701.5005350182
+          },
+          "by_end_of_year": {
+            "year": 2026,
+            "actual_so_far": 3113992.85,
+            "current_month_estimate": 0.0,
+            "remaining_months_forecast": 2192021.1634541275,
+            "total_estimate": 5306014.013454128,
+            "low": 4977210.8389360085,
+            "high": 5634817.187972246
+          },
+          "next_12_months": {
+            "months_covered": 11,
+            "total_estimate": 5590386.657418343,
+            "low": 4751828.658805591,
+            "high": 6428944.6560310945
+          },
+          "growth": {
+            "last_month_actual": null,
+            "mtd_growth_pct": null,
+            "same_period_last_year_total": 3917343.91,
+            "ytd_growth_pct": -20.507544868584183,
+            "last_year_total": 5962197.78,
+            "full_year_growth_pct": -11.005736320036538
+          },
+          "full_forecast": [
+            {
+              "month": "2026-07",
+              "label": "Jul 2026",
+              "predicted": 521812.67779595574,
+              "low": 443540.7761265624,
+              "high": 600084.5794653491
+            },
+            {
+              "month": "2026-08",
+              "label": "Aug 2026",
+              "predicted": 502559.62437272444,
+              "low": 427175.68071681575,
+              "high": 577943.568028633
+            },
+            {
+              "month": "2026-09",
+              "label": "Sep 2026",
+              "predicted": 540701.5005350182,
+              "low": 459596.2754547654,
+              "high": 621806.7256152708
+            },
+            {
+              "month": "2026-10",
+              "label": "Oct 2026",
+              "predicted": 547758.1335131618,
+              "low": 465594.4134861875,
+              "high": 629921.853540136
+            },
+            {
+              "month": "2026-11",
+              "label": "Nov 2026",
+              "predicted": 528505.0800899306,
+              "low": 449229.31807644095,
+              "high": 607780.8421034201
+            },
+            {
+              "month": "2026-12",
+              "label": "Dec 2026",
+              "predicted": 575056.4493160169,
+              "low": 488797.9819186143,
+              "high": 661314.9167134194
+            },
+            {
+              "month": "2027-01",
+              "label": "Jan 2027",
+              "predicted": 550488.5463131132,
+              "low": 467915.2643661462,
+              "high": 633061.8282600801
+            },
+            {
+              "month": "2027-02",
+              "label": "Feb 2027",
+              "predicted": 562652.1016824865,
+              "low": 478254.2864301135,
+              "high": 647049.9169348594
+            },
+            {
+              "month": "2027-03",
+              "label": "Mar 2027",
+              "predicted": 568627.5274506332,
+              "low": 483333.39833303826,
+              "high": 653921.6565682282
+            },
+            {
+              "month": "2027-04",
+              "label": "Apr 2027",
+              "predicted": 566714.1876915223,
+              "low": 481707.0595377939,
+              "high": 651721.3158452506
+            },
+            {
+              "month": "2027-05",
+              "label": "May 2027",
+              "predicted": 555870.6273320836,
+              "low": 472490.0332322711,
+              "high": 639251.2214318961
+            },
+            {
+              "month": "2027-06",
+              "label": "Jun 2027",
+              "predicted": 594012.5034943775,
+              "low": 504910.62797022087,
+              "high": 683114.3790185341
+            }
+          ],
+          "model_key": "elastic_net",
+          "is_recommended": false
+        },
+        "elastic_net_2": {
+          "model_name": "ElasticNet",
+          "is_flat": false,
+          "accuracy_pct": 93.44738862856374,
+          "near_term_mape": 6.552611371436258,
+          "long_term_mape": 6.552611371436258,
+          "next_month": {
+            "month": "2026-09",
+            "projected_total": 540680.468457764
+          },
+          "by_end_of_year": {
+            "year": 2026,
+            "actual_so_far": 3113992.85,
+            "current_month_estimate": 0.0,
+            "remaining_months_forecast": 2192660.782647157,
+            "total_estimate": 5306653.632647157,
+            "low": 4977754.515250084,
+            "high": 5635552.75004423
+          },
+          "next_12_months": {
+            "months_covered": 11,
+            "total_estimate": 5591191.556575259,
+            "low": 4752512.823088971,
+            "high": 6429870.290061547
+          },
+          "growth": {
+            "last_month_actual": null,
+            "mtd_growth_pct": null,
+            "same_period_last_year_total": 3917343.91,
+            "ytd_growth_pct": -20.507544868584183,
+            "last_year_total": 5962197.78,
+            "full_year_growth_pct": -10.99500841035239
+          },
+          "full_forecast": [
+            {
+              "month": "2026-07",
+              "label": "Jul 2026",
+              "predicted": 522201.6432519831,
+              "low": 443871.3967641856,
+              "high": 600531.8897397806
+            },
+            {
+              "month": "2026-08",
+              "label": "Aug 2026",
+              "predicted": 502720.5742431523,
+              "low": 427312.4881066794,
+              "high": 578128.660379625
+            },
+            {
+              "month": "2026-09",
+              "label": "Sep 2026",
+              "predicted": 540680.468457764,
+              "low": 459578.3981890994,
+              "high": 621782.5387264285
+            },
+            {
+              "month": "2026-10",
+              "label": "Oct 2026",
+              "predicted": 548083.1375121551,
+              "low": 465870.66688533186,
+              "high": 630295.6081389784
+            },
+            {
+              "month": "2026-11",
+              "label": "Nov 2026",
+              "predicted": 528602.0685033243,
+              "low": 449311.75822782563,
+              "high": 607892.3787788228
+            },
+            {
+              "month": "2026-12",
+              "label": "Dec 2026",
+              "predicted": 575295.108173914,
+              "low": 489000.8419478269,
+              "high": 661589.374400001
+            },
+            {
+              "month": "2027-01",
+              "label": "Jan 2027",
+              "predicted": 550108.4303766384,
+              "low": 467592.16582014266,
+              "high": 632624.6949331341
+            },
+            {
+              "month": "2027-02",
+              "label": "Feb 2027",
+              "predicted": 562530.6053099119,
+              "low": 478151.01451342506,
+              "high": 646910.1961063986
+            },
+            {
+              "month": "2027-03",
+              "label": "Mar 2027",
+              "predicted": 569248.9726690146,
+              "low": 483861.62676866236,
+              "high": 654636.3185693667
+            },
+            {
+              "month": "2027-04",
+              "label": "Apr 2027",
+              "predicted": 566726.2394878771,
+              "low": 481717.3035646955,
+              "high": 651735.1754110586
+            },
+            {
+              "month": "2027-05",
+              "label": "May 2027",
+              "predicted": 555978.3159350241,
+              "low": 472581.5685447704,
+              "high": 639375.0633252776
+            },
+            {
+              "month": "2027-06",
+              "label": "Jun 2027",
+              "predicted": 593938.2101496359,
+              "low": 504847.4786271905,
+              "high": 683028.9416720812
+            }
+          ],
+          "model_key": "elastic_net_2",
+          "is_recommended": false
+        }
+      },
+      "next_month": {
+        "month": "2026-09",
+        "projected_total": 517232.6408272672
+      },
+      "by_end_of_year": {
+        "year": 2026,
+        "actual_so_far": 3113992.85,
+        "current_month_estimate": 0.0,
+        "remaining_months_forecast": 2078150.9840384016,
+        "total_estimate": 5192143.834038402,
+        "low": 4880421.186432641,
+        "high": 5503866.481644162
+      },
+      "next_12_months": {
+        "months_covered": 11,
+        "total_estimate": 5265404.006673596,
+        "low": 4475593.405672556,
+        "high": 6055214.607674634
+      },
+      "growth": {
+        "last_month_actual": null,
+        "mtd_growth_pct": null,
+        "same_period_last_year_total": 3917343.91,
+        "ytd_growth_pct": -20.507544868584183,
+        "last_year_total": 5962197.78,
+        "full_year_growth_pct": -12.915605526282931
+      },
+      "full_forecast": [
+        {
+          "month": "2026-07",
+          "label": "Jul 2026",
+          "predicted": 501580.630705082,
+          "low": 426343.5360993197,
+          "high": 576817.7253108443
+        },
+        {
+          "month": "2026-08",
+          "label": "Aug 2026",
+          "predicted": 481092.1626145489,
+          "low": 408928.3382223666,
+          "high": 553255.9870067312
+        },
+        {
+          "month": "2026-09",
+          "label": "Sep 2026",
+          "predicted": 517232.6408272672,
+          "low": 439647.74470317713,
+          "high": 594817.5369513573
+        },
+        {
+          "month": "2026-10",
+          "label": "Oct 2026",
+          "predicted": 526019.4851842336,
+          "low": 447116.5624065986,
+          "high": 604922.4079618687
+        },
+        {
+          "month": "2026-11",
+          "label": "Nov 2026",
+          "predicted": 495527.82706703397,
+          "low": 421198.65300697886,
+          "high": 569857.001127089
+        },
+        {
+          "month": "2026-12",
+          "label": "Dec 2026",
+          "predicted": 539371.0309598667,
+          "low": 458465.3763158867,
+          "high": 620276.6856038467
+        },
+        {
+          "month": "2027-01",
+          "label": "Jan 2027",
+          "predicted": 507232.55313706986,
+          "low": 431147.67016650934,
+          "high": 583317.4361076303
+        },
+        {
+          "month": "2027-02",
+          "label": "Feb 2027",
+          "predicted": 518650.60741352016,
+          "low": 440853.0163014921,
+          "high": 596448.1985255481
+        },
+        {
+          "month": "2027-03",
+          "label": "Mar 2027",
+          "predicted": 533830.4440966636,
+          "low": 453755.87748216407,
+          "high": 613905.0107111632
+        },
+        {
+          "month": "2027-04",
+          "label": "Apr 2027",
+          "predicted": 534813.5046564642,
+          "low": 454591.47895799455,
+          "high": 615035.5303549338
+        },
+        {
+          "month": "2027-05",
+          "label": "May 2027",
+          "predicted": 531142.8367260456,
+          "low": 451471.41121713875,
+          "high": 610814.2622349524
+        },
+        {
+          "month": "2027-06",
+          "label": "Jun 2027",
+          "predicted": 561583.0766054306,
+          "low": 477345.615114616,
+          "high": 645820.5380962451
+        }
+      ],
+      "backtest": {
+        "voting_ensemble": {
+          "accuracy_pct": 95.93245108407002,
+          "weighted_score": 4.0675489159299705,
+          "near_term_mape": 4.0675489159299705,
+          "long_term_mape": 4.0675489159299705
+        },
+        "extreme_random_trees": {
+          "accuracy_pct": 93.5859908612023,
+          "weighted_score": 6.4140091387977,
+          "near_term_mape": 6.4140091387977,
+          "long_term_mape": 6.4140091387977
+        },
+        "seasonal_average": {
+          "accuracy_pct": 93.6583743751659,
+          "weighted_score": 6.3416256248341,
+          "near_term_mape": 6.3416256248341,
+          "long_term_mape": 6.3416256248341
+        },
+        "elastic_net": {
+          "accuracy_pct": 93.46424543126977,
+          "weighted_score": 6.535754568730232,
+          "near_term_mape": 6.535754568730232,
+          "long_term_mape": 6.535754568730232
+        },
+        "elastic_net_2": {
+          "accuracy_pct": 93.44738862856374,
+          "weighted_score": 6.552611371436258,
+          "near_term_mape": 6.552611371436258,
+          "long_term_mape": 6.552611371436258
+        },
+        "elastic_net_3": {
+          "accuracy_pct": 93.43456938113002,
+          "weighted_score": 6.565430618869987,
+          "near_term_mape": 6.565430618869987,
+          "long_term_mape": 6.565430618869987
+        },
+        "elastic_net_4": {
+          "accuracy_pct": 93.43177371312557,
+          "weighted_score": 6.568226286874439,
+          "near_term_mape": 6.568226286874439,
+          "long_term_mape": 6.568226286874439
+        },
+        "elastic_net_5": {
+          "accuracy_pct": 93.42942233503686,
+          "weighted_score": 6.570577664963132,
+          "near_term_mape": 6.570577664963132,
+          "long_term_mape": 6.570577664963132
+        },
+        "elastic_net_6": {
+          "accuracy_pct": 93.42812122984233,
+          "weighted_score": 6.571878770157669,
+          "near_term_mape": 6.571878770157669,
+          "long_term_mape": 6.571878770157669
+        },
+        "extreme_random_trees_2": {
+          "accuracy_pct": 93.19750398909868,
+          "weighted_score": 6.8024960109013195,
+          "near_term_mape": 6.8024960109013195,
+          "long_term_mape": 6.8024960109013195
+        },
+        "seasonal_naive": {
+          "accuracy_pct": 93.47346953867786,
+          "weighted_score": 6.5265304613221415,
+          "near_term_mape": 6.5265304613221415,
+          "long_term_mape": 6.5265304613221415
+        },
+        "random_forest": {
+          "accuracy_pct": 92.98162775655119,
+          "weighted_score": 7.0183722434488045,
+          "near_term_mape": 7.0183722434488045,
+          "long_term_mape": 7.0183722434488045
+        },
+        "extreme_random_trees_3": {
+          "accuracy_pct": 92.77000366090294,
+          "weighted_score": 7.229996339097053,
+          "near_term_mape": 7.229996339097053,
+          "long_term_mape": 7.229996339097053
+        },
+        "extreme_random_trees_4": {
+          "accuracy_pct": 93.03232765688692,
+          "weighted_score": 6.967672343113082,
+          "near_term_mape": 6.967672343113082,
+          "long_term_mape": 6.967672343113082
+        },
+        "random_forest_2": {
+          "accuracy_pct": 93.75798087760302,
+          "weighted_score": 6.242019122396981,
+          "near_term_mape": 6.242019122396981,
+          "long_term_mape": 6.242019122396981
+        },
+        "exponential_smoothing": {
+          "accuracy_pct": 92.53622100342042,
+          "weighted_score": 7.463778996579583,
+          "near_term_mape": 7.463778996579583,
+          "long_term_mape": 7.463778996579583
+        },
+        "xg_boost_regressor": {
+          "accuracy_pct": 92.89511881458871,
+          "weighted_score": 7.104881185411282,
+          "near_term_mape": 7.104881185411282,
+          "long_term_mape": 7.104881185411282
+        },
+        "elastic_net_7": {
+          "accuracy_pct": 91.32268245458916,
+          "weighted_score": 8.677317545410848,
+          "near_term_mape": 8.677317545410848,
+          "long_term_mape": 8.677317545410848
+        },
+        "elastic_net_8": {
+          "accuracy_pct": 91.32171165518776,
+          "weighted_score": 8.678288344812241,
+          "near_term_mape": 8.678288344812241,
+          "long_term_mape": 8.678288344812241
+        },
+        "naive": {
+          "accuracy_pct": 90.46361443141744,
+          "weighted_score": 9.536385568582556,
+          "near_term_mape": 9.536385568582556,
+          "long_term_mape": 9.536385568582556
+        },
+        "light_gbm": {
+          "accuracy_pct": 91.12930290702184,
+          "weighted_score": 8.870697092978155,
+          "near_term_mape": 8.870697092978155,
+          "long_term_mape": 8.870697092978155
+        },
+        "average": {
+          "accuracy_pct": 91.12930278409861,
+          "weighted_score": 8.870697215901393,
+          "near_term_mape": 8.870697215901393,
+          "long_term_mape": 8.870697215901393
+        },
+        "auto_arima": {
+          "accuracy_pct": 91.12399456157938,
+          "weighted_score": 8.87600543842062,
+          "near_term_mape": 8.87600543842062,
+          "long_term_mape": 8.87600543842062
+        },
+        "decision_tree": {
+          "accuracy_pct": 91.31945877388296,
+          "weighted_score": 8.680541226117041,
+          "near_term_mape": 8.680541226117041,
+          "long_term_mape": 8.680541226117041
+        },
+        "prophet_model": {
+          "accuracy_pct": 89.78458390103647,
+          "weighted_score": 10.215416098963525,
+          "near_term_mape": 10.215416098963525,
+          "long_term_mape": 10.215416098963525
+        }
+      }
+    },
+    "downloaded_models": [
+      {
+        "rank": 1,
+        "algorithm": "VotingEnsemble",
+        "run_id": "honest_diamond_07spjg1mk7_24",
+        "normalized_rmse": 0.08068359972274294,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\collections_honest_diamond_07spjg1mk7\\rank01_VotingEnsemble"
+      },
+      {
+        "rank": 2,
+        "algorithm": "ExtremeRandomTrees",
+        "run_id": "honest_diamond_07spjg1mk7_20",
+        "normalized_rmse": 0.1324046685280191,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\collections_honest_diamond_07spjg1mk7\\rank02_ExtremeRandomTrees"
+      },
+      {
+        "rank": 3,
+        "algorithm": "SeasonalAverage",
+        "run_id": "honest_diamond_07spjg1mk7_3",
+        "normalized_rmse": 0.13447158364943412,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\collections_honest_diamond_07spjg1mk7\\rank03_SeasonalAverage"
+      },
+      {
+        "rank": 4,
+        "algorithm": "ElasticNet",
+        "run_id": "honest_diamond_07spjg1mk7_11",
+        "normalized_rmse": 0.1373208458775883,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\collections_honest_diamond_07spjg1mk7\\rank04_ElasticNet"
+      },
+      {
+        "rank": 5,
+        "algorithm": "ElasticNet",
+        "run_id": "honest_diamond_07spjg1mk7_10",
+        "normalized_rmse": 0.13752728867035102,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\collections_honest_diamond_07spjg1mk7\\rank05_ElasticNet"
+      },
+      {
+        "rank": 6,
+        "algorithm": "ElasticNet",
+        "run_id": "honest_diamond_07spjg1mk7_17",
+        "normalized_rmse": 0.1378099840518477,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\collections_honest_diamond_07spjg1mk7\\rank06_ElasticNet"
+      },
+      {
+        "rank": 7,
+        "algorithm": "ElasticNet",
+        "run_id": "honest_diamond_07spjg1mk7_12",
+        "normalized_rmse": 0.1378845036832557,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\collections_honest_diamond_07spjg1mk7\\rank07_ElasticNet"
+      }
+    ]
+  },
+  "contact_lenses": {
+    "metric": "contact_lenses",
+    "job_name": "olive_queen_rmympv2qsn",
+    "status": "Completed",
+    "studio_url": "https://ml.azure.com/runs/olive_queen_rmympv2qsn?wsid=/subscriptions/26cadedf-7782-440a-9367-6d9c87a78aac/resourcegroups/prediction/workspaces/predictioncentralus",
+    "frequency": "month",
+    "leaderboard": [
+      {
+        "algorithm": "VotingEnsemble",
+        "iteration": 24,
+        "normalized_rmse": 0.12064616169987337,
+        "r2_score": -0.0159215542931588,
+        "mape": 16.531904294927024,
+        "accuracy_pct_equivalent": 83.46809570507298,
+        "run_id": "olive_queen_rmympv2qsn_24"
+      },
+      {
+        "algorithm": "Average",
+        "iteration": 2,
+        "normalized_rmse": 0.12134471642717023,
+        "r2_score": -0.033750887757519575,
+        "mape": 16.41842209607564,
+        "accuracy_pct_equivalent": 83.58157790392436,
+        "run_id": "olive_queen_rmympv2qsn_2"
+      },
+      {
+        "algorithm": "LightGBM",
+        "iteration": 7,
+        "normalized_rmse": 0.12134471642717023,
+        "r2_score": -0.033750887757519575,
+        "mape": 16.41842209607564,
+        "accuracy_pct_equivalent": 83.58157790392436,
+        "run_id": "olive_queen_rmympv2qsn_7"
+      },
+      {
+        "algorithm": "AutoArima",
+        "iteration": 5,
+        "normalized_rmse": 0.12185695843532876,
+        "r2_score": -0.03941426676454984,
+        "mape": 16.46117735552941,
+        "accuracy_pct_equivalent": 83.53882264447059,
+        "run_id": "olive_queen_rmympv2qsn_5"
+      },
+      {
+        "algorithm": "SeasonalAverage",
+        "iteration": 3,
+        "normalized_rmse": 0.12529718726982314,
+        "r2_score": -0.10436114043732495,
+        "mape": 17.504518395817612,
+        "accuracy_pct_equivalent": 82.49548160418239,
+        "run_id": "olive_queen_rmympv2qsn_3"
+      },
+      {
+        "algorithm": "ExponentialSmoothing",
+        "iteration": 4,
+        "normalized_rmse": 0.12776205863249646,
+        "r2_score": -0.16055077675289348,
+        "mape": 17.42055123658981,
+        "accuracy_pct_equivalent": 82.5794487634102,
+        "run_id": "olive_queen_rmympv2qsn_4"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 14,
+        "normalized_rmse": 0.12985792034556276,
+        "r2_score": -0.18377884339603137,
+        "mape": 18.08641953270392,
+        "accuracy_pct_equivalent": 81.91358046729607,
+        "run_id": "olive_queen_rmympv2qsn_14"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 9,
+        "normalized_rmse": 0.12989900955537434,
+        "r2_score": -0.18496453844087388,
+        "mape": 18.08040575230593,
+        "accuracy_pct_equivalent": 81.91959424769408,
+        "run_id": "olive_queen_rmympv2qsn_9"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 16,
+        "normalized_rmse": 0.1440045375792881,
+        "r2_score": -0.31744597761506427,
+        "mape": 20.386401261751935,
+        "accuracy_pct_equivalent": 79.61359873824807,
+        "run_id": "olive_queen_rmympv2qsn_16"
+      },
+      {
+        "algorithm": "ExtremeRandomTrees",
+        "iteration": 18,
+        "normalized_rmse": 0.14589791379737643,
+        "r2_score": -0.4686758959557177,
+        "mape": 19.168678176844605,
+        "accuracy_pct_equivalent": 80.83132182315539,
+        "run_id": "olive_queen_rmympv2qsn_18"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 11,
+        "normalized_rmse": 0.14605889467834696,
+        "r2_score": -0.33910479744236477,
+        "mape": 20.708441595455334,
+        "accuracy_pct_equivalent": 79.29155840454467,
+        "run_id": "olive_queen_rmympv2qsn_11"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 12,
+        "normalized_rmse": 0.1461286310134103,
+        "r2_score": -0.3396269631962192,
+        "mape": 20.721045671850703,
+        "accuracy_pct_equivalent": 79.2789543281493,
+        "run_id": "olive_queen_rmympv2qsn_12"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 15,
+        "normalized_rmse": 0.14613797931478856,
+        "r2_score": -0.3396387237869122,
+        "mape": 20.722558079273657,
+        "accuracy_pct_equivalent": 79.27744192072635,
+        "run_id": "olive_queen_rmympv2qsn_15"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 17,
+        "normalized_rmse": 0.14614273741642664,
+        "r2_score": -0.33998483263268564,
+        "mape": 20.720360332014675,
+        "accuracy_pct_equivalent": 79.27963966798532,
+        "run_id": "olive_queen_rmympv2qsn_17"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 10,
+        "normalized_rmse": 0.14615215550796337,
+        "r2_score": -0.34063930457261693,
+        "mape": 20.715405079277566,
+        "accuracy_pct_equivalent": 79.28459492072244,
+        "run_id": "olive_queen_rmympv2qsn_10"
+      },
+      {
+        "algorithm": "Naive",
+        "iteration": 0,
+        "normalized_rmse": 0.14726849693091923,
+        "r2_score": -0.4453352934144469,
+        "mape": 20.95613247164254,
+        "accuracy_pct_equivalent": 79.04386752835745,
+        "run_id": "olive_queen_rmympv2qsn_0"
+      },
+      {
+        "algorithm": "RandomForest",
+        "iteration": 13,
+        "normalized_rmse": 0.15488631647925125,
+        "r2_score": -0.6651843060973166,
+        "mape": 20.484294294305045,
+        "accuracy_pct_equivalent": 79.51570570569496,
+        "run_id": "olive_queen_rmympv2qsn_13"
+      },
+      {
+        "algorithm": "ExtremeRandomTrees",
+        "iteration": 21,
+        "normalized_rmse": 0.18108264936988078,
+        "r2_score": -0.9019465938378677,
+        "mape": 22.86564003749585,
+        "accuracy_pct_equivalent": 77.13435996250415,
+        "run_id": "olive_queen_rmympv2qsn_21"
+      },
+      {
+        "algorithm": "ExtremeRandomTrees",
+        "iteration": 20,
+        "normalized_rmse": 0.18936385149821539,
+        "r2_score": -0.8930644584179909,
+        "mape": 23.35116834191457,
+        "accuracy_pct_equivalent": 76.64883165808543,
+        "run_id": "olive_queen_rmympv2qsn_20"
+      },
+      {
+        "algorithm": "XGBoostRegressor",
+        "iteration": 8,
+        "normalized_rmse": 0.19260241825125873,
+        "r2_score": -0.9314804792404174,
+        "mape": 23.378042577517864,
+        "accuracy_pct_equivalent": 76.62195742248214,
+        "run_id": "olive_queen_rmympv2qsn_8"
+      },
+      {
+        "algorithm": "ProphetModel",
+        "iteration": 6,
+        "normalized_rmse": 0.19655779427492032,
+        "r2_score": -0.889163573799492,
+        "mape": 25.29518848054774,
+        "accuracy_pct_equivalent": 74.70481151945226,
+        "run_id": "olive_queen_rmympv2qsn_6"
+      },
+      {
+        "algorithm": "ExtremeRandomTrees",
+        "iteration": 22,
+        "normalized_rmse": 0.19799041655406616,
+        "r2_score": -0.9103322302176011,
+        "mape": 24.26101185598214,
+        "accuracy_pct_equivalent": 75.73898814401787,
+        "run_id": "olive_queen_rmympv2qsn_22"
+      },
+      {
+        "algorithm": "DecisionTree",
+        "iteration": 23,
+        "normalized_rmse": 0.20340129099686144,
+        "r2_score": -0.8148565370533698,
+        "mape": 23.885581525103465,
+        "accuracy_pct_equivalent": 76.11441847489654,
+        "run_id": "olive_queen_rmympv2qsn_23"
+      },
+      {
+        "algorithm": "RandomForest",
+        "iteration": 19,
+        "normalized_rmse": 0.20364312001314072,
+        "r2_score": -0.9213809448393571,
+        "mape": 24.37787753094789,
+        "accuracy_pct_equivalent": 75.6221224690521,
+        "run_id": "olive_queen_rmympv2qsn_19"
+      },
+      {
+        "algorithm": "SeasonalNaive",
+        "iteration": 1,
+        "normalized_rmse": 0.21429709677577163,
+        "r2_score": -0.9375487072477281,
+        "mape": 26.699890558513925,
+        "accuracy_pct_equivalent": 73.30010944148607,
+        "run_id": "olive_queen_rmympv2qsn_1"
+      }
+    ],
+    "forecast_detail": {
+      "metric": "contact_lenses",
+      "label": "Contact lenses sold (units)",
+      "frequency": "month",
+      "model_used": "average",
+      "best_model": "average",
+      "history_months": 47,
+      "horizon_months": 12,
+      "data_quality_notes": [
+        "contact lenses: excluded Jan 2022 (4) as a data anomaly (robust z-score outlier, likely a migration/import artifact rather than real activity)",
+        "contact lenses: excluded Feb 2022 (2) as a data anomaly (robust z-score outlier, likely a migration/import artifact rather than real activity)",
+        "contact lenses: excluded Mar 2022 (10) as a data anomaly (robust z-score outlier, likely a migration/import artifact rather than real activity)",
+        "contact lenses: excluded Apr 2022 (2) as a data anomaly (robust z-score outlier, likely a migration/import artifact rather than real activity)",
+        "contact lenses: excluded May 2022 (6) as a data anomaly (robust z-score outlier, likely a migration/import artifact rather than real activity)",
+        "contact lenses: excluded Jun 2022 (4) as a data anomaly (robust z-score outlier, likely a migration/import artifact rather than real activity)",
+        "contact lenses: excluded Jul 2022 (6) as a data anomaly (robust z-score outlier, likely a migration/import artifact rather than real activity)",
+        "contact lenses: excluded Aug 2022 (24) as a data anomaly (robust z-score outlier, likely a migration/import artifact rather than real activity)",
+        "contact_lenses: DB unreachable ((20009, b'DB-Lib error message 20009, severity 9:\\nUnable to connect: Adaptive Server is unavailable or does not exist (maximeyes-qa-centralus-sqlmi01.public.8f82eedeb3c9.database.windows.net)\\nNet-Lib error during Unknown error (10060)\\nDB-Lib error message 20009, severity 9:\\nUnable to connect: Adaptive Server is unavailable or does not exist (maximeyes-qa-centralus-sqlmi01.public.8f82eedeb3c9.database.windows.net)\\nNet-Lib error during Unknown error (10060)\\n')) \u2014 using locally cached data from 7 hour(s) ago"
+      ],
+      "history_full": [
+        {
+          "month": "2024-08",
+          "label": "Aug 2024",
+          "value": 1234.0
+        },
+        {
+          "month": "2024-09",
+          "label": "Sep 2024",
+          "value": 1087.0
+        },
+        {
+          "month": "2024-10",
+          "label": "Oct 2024",
+          "value": 991.0
+        },
+        {
+          "month": "2024-11",
+          "label": "Nov 2024",
+          "value": 871.0
+        },
+        {
+          "month": "2024-12",
+          "label": "Dec 2024",
+          "value": 646.0
+        },
+        {
+          "month": "2025-01",
+          "label": "Jan 2025",
+          "value": 851.0
+        },
+        {
+          "month": "2025-02",
+          "label": "Feb 2025",
+          "value": 839.0
+        },
+        {
+          "month": "2025-03",
+          "label": "Mar 2025",
+          "value": 794.0
+        },
+        {
+          "month": "2025-04",
+          "label": "Apr 2025",
+          "value": 904.0
+        },
+        {
+          "month": "2025-05",
+          "label": "May 2025",
+          "value": 939.0
+        },
+        {
+          "month": "2025-06",
+          "label": "Jun 2025",
+          "value": 796.0
+        },
+        {
+          "month": "2025-07",
+          "label": "Jul 2025",
+          "value": 1090.0
+        },
+        {
+          "month": "2025-08",
+          "label": "Aug 2025",
+          "value": 1099.0
+        },
+        {
+          "month": "2025-09",
+          "label": "Sep 2025",
+          "value": 933.0
+        },
+        {
+          "month": "2025-10",
+          "label": "Oct 2025",
+          "value": 1033.0
+        },
+        {
+          "month": "2025-11",
+          "label": "Nov 2025",
+          "value": 675.0
+        },
+        {
+          "month": "2025-12",
+          "label": "Dec 2025",
+          "value": 866.0
+        },
+        {
+          "month": "2026-01",
+          "label": "Jan 2026",
+          "value": 879.0
+        },
+        {
+          "month": "2026-02",
+          "label": "Feb 2026",
+          "value": 899.0
+        },
+        {
+          "month": "2026-03",
+          "label": "Mar 2026",
+          "value": 1005.0
+        },
+        {
+          "month": "2026-04",
+          "label": "Apr 2026",
+          "value": 927.0
+        },
+        {
+          "month": "2026-05",
+          "label": "May 2026",
+          "value": 838.0
+        },
+        {
+          "month": "2026-06",
+          "label": "Jun 2026",
+          "value": 999.0
+        },
+        {
+          "month": "2026-07",
+          "label": "Jul 2026",
+          "value": 211.0
+        }
+      ],
+      "yoy_history": [
+        {
+          "year": 2022,
+          "month": 9,
+          "value": 761.0
+        },
+        {
+          "year": 2022,
+          "month": 10,
+          "value": 956.0
+        },
+        {
+          "year": 2022,
+          "month": 11,
+          "value": 757.0
+        },
+        {
+          "year": 2022,
+          "month": 12,
+          "value": 889.0
+        },
+        {
+          "year": 2023,
+          "month": 1,
+          "value": 902.0
+        },
+        {
+          "year": 2023,
+          "month": 2,
+          "value": 891.0
+        },
+        {
+          "year": 2023,
+          "month": 3,
+          "value": 937.0
+        },
+        {
+          "year": 2023,
+          "month": 4,
+          "value": 687.0
+        },
+        {
+          "year": 2023,
+          "month": 5,
+          "value": 848.0
+        },
+        {
+          "year": 2023,
+          "month": 6,
+          "value": 951.0
+        },
+        {
+          "year": 2023,
+          "month": 7,
+          "value": 1031.0
+        },
+        {
+          "year": 2023,
+          "month": 8,
+          "value": 968.0
+        },
+        {
+          "year": 2023,
+          "month": 9,
+          "value": 929.0
+        },
+        {
+          "year": 2023,
+          "month": 10,
+          "value": 909.0
+        },
+        {
+          "year": 2023,
+          "month": 11,
+          "value": 820.0
+        },
+        {
+          "year": 2023,
+          "month": 12,
+          "value": 1007.0
+        },
+        {
+          "year": 2024,
+          "month": 1,
+          "value": 911.0
+        },
+        {
+          "year": 2024,
+          "month": 2,
+          "value": 849.0
+        },
+        {
+          "year": 2024,
+          "month": 3,
+          "value": 915.0
+        },
+        {
+          "year": 2024,
+          "month": 4,
+          "value": 858.0
+        },
+        {
+          "year": 2024,
+          "month": 5,
+          "value": 488.0
+        },
+        {
+          "year": 2024,
+          "month": 6,
+          "value": 1414.0
+        },
+        {
+          "year": 2024,
+          "month": 7,
+          "value": 917.0
+        },
+        {
+          "year": 2024,
+          "month": 8,
+          "value": 1234.0
+        },
+        {
+          "year": 2024,
+          "month": 9,
+          "value": 1087.0
+        },
+        {
+          "year": 2024,
+          "month": 10,
+          "value": 991.0
+        },
+        {
+          "year": 2024,
+          "month": 11,
+          "value": 871.0
+        },
+        {
+          "year": 2024,
+          "month": 12,
+          "value": 646.0
+        },
+        {
+          "year": 2025,
+          "month": 1,
+          "value": 851.0
+        },
+        {
+          "year": 2025,
+          "month": 2,
+          "value": 839.0
+        },
+        {
+          "year": 2025,
+          "month": 3,
+          "value": 794.0
+        },
+        {
+          "year": 2025,
+          "month": 4,
+          "value": 904.0
+        },
+        {
+          "year": 2025,
+          "month": 5,
+          "value": 939.0
+        },
+        {
+          "year": 2025,
+          "month": 6,
+          "value": 796.0
+        },
+        {
+          "year": 2025,
+          "month": 7,
+          "value": 1090.0
+        },
+        {
+          "year": 2025,
+          "month": 8,
+          "value": 1099.0
+        },
+        {
+          "year": 2025,
+          "month": 9,
+          "value": 933.0
+        },
+        {
+          "year": 2025,
+          "month": 10,
+          "value": 1033.0
+        },
+        {
+          "year": 2025,
+          "month": 11,
+          "value": 675.0
+        },
+        {
+          "year": 2025,
+          "month": 12,
+          "value": 866.0
+        },
+        {
+          "year": 2026,
+          "month": 1,
+          "value": 879.0
+        },
+        {
+          "year": 2026,
+          "month": 2,
+          "value": 899.0
+        },
+        {
+          "year": 2026,
+          "month": 3,
+          "value": 1005.0
+        },
+        {
+          "year": 2026,
+          "month": 4,
+          "value": 927.0
+        },
+        {
+          "year": 2026,
+          "month": 5,
+          "value": 838.0
+        },
+        {
+          "year": 2026,
+          "month": 6,
+          "value": 999.0
+        },
+        {
+          "year": 2026,
+          "month": 7,
+          "value": 211.0
+        }
+      ],
+      "this_month": {
+        "month": "2026-08",
+        "month_to_date_actual": 0.0,
+        "projected_total": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "as_of_day": 23,
+        "history_months_used": 0
+      },
+      "models": {
+        "average": {
+          "model_name": "Average",
+          "is_flat": false,
+          "accuracy_pct": 83.58157790392436,
+          "near_term_mape": 16.41842209607564,
+          "long_term_mape": 16.41842209607564,
+          "next_month": {
+            "month": "2026-09",
+            "projected_total": 893.6382978723404
+          },
+          "by_end_of_year": {
+            "year": 2026,
+            "actual_so_far": 5758.0,
+            "current_month_estimate": 0.0,
+            "remaining_months_forecast": 3574.553191489362,
+            "total_estimate": 9332.553191489362,
+            "low": 8796.370212765958,
+            "high": 9868.736170212766
+          },
+          "next_12_months": {
+            "months_covered": 12,
+            "total_estimate": 9830.021276595744,
+            "low": 8355.518085106383,
+            "high": 11304.524468085106
+          },
+          "growth": {
+            "last_month_actual": 211.0,
+            "mtd_growth_pct": -100.0,
+            "same_period_last_year_total": 7312.0,
+            "ytd_growth_pct": -21.252735229759303,
+            "last_year_total": 10819.0,
+            "full_year_growth_pct": -13.739225515395493
+          },
+          "full_forecast": [
+            {
+              "month": "2026-08",
+              "label": "Aug 2026",
+              "predicted": 893.6382978723404,
+              "low": 759.5925531914894,
+              "high": 1027.6840425531914
+            },
+            {
+              "month": "2026-09",
+              "label": "Sep 2026",
+              "predicted": 893.6382978723404,
+              "low": 759.5925531914894,
+              "high": 1027.6840425531914
+            },
+            {
+              "month": "2026-10",
+              "label": "Oct 2026",
+              "predicted": 893.6382978723404,
+              "low": 759.5925531914894,
+              "high": 1027.6840425531914
+            },
+            {
+              "month": "2026-11",
+              "label": "Nov 2026",
+              "predicted": 893.6382978723404,
+              "low": 759.5925531914894,
+              "high": 1027.6840425531914
+            },
+            {
+              "month": "2026-12",
+              "label": "Dec 2026",
+              "predicted": 893.6382978723404,
+              "low": 759.5925531914894,
+              "high": 1027.6840425531914
+            },
+            {
+              "month": "2027-01",
+              "label": "Jan 2027",
+              "predicted": 893.6382978723404,
+              "low": 759.5925531914894,
+              "high": 1027.6840425531914
+            },
+            {
+              "month": "2027-02",
+              "label": "Feb 2027",
+              "predicted": 893.6382978723404,
+              "low": 759.5925531914894,
+              "high": 1027.6840425531914
+            },
+            {
+              "month": "2027-03",
+              "label": "Mar 2027",
+              "predicted": 893.6382978723404,
+              "low": 759.5925531914894,
+              "high": 1027.6840425531914
+            },
+            {
+              "month": "2027-04",
+              "label": "Apr 2027",
+              "predicted": 893.6382978723404,
+              "low": 759.5925531914894,
+              "high": 1027.6840425531914
+            },
+            {
+              "month": "2027-05",
+              "label": "May 2027",
+              "predicted": 893.6382978723404,
+              "low": 759.5925531914894,
+              "high": 1027.6840425531914
+            },
+            {
+              "month": "2027-06",
+              "label": "Jun 2027",
+              "predicted": 893.6382978723404,
+              "low": 759.5925531914894,
+              "high": 1027.6840425531914
+            },
+            {
+              "month": "2027-07",
+              "label": "Jul 2027",
+              "predicted": 893.6382978723404,
+              "low": 759.5925531914894,
+              "high": 1027.6840425531914
+            }
+          ],
+          "model_key": "average",
+          "is_recommended": true
+        },
+        "auto_arima": {
+          "model_name": "AutoArima",
+          "is_flat": false,
+          "accuracy_pct": 83.53882264447059,
+          "near_term_mape": 16.46117735552941,
+          "long_term_mape": 16.46117735552941,
+          "next_month": {
+            "month": "2026-09",
+            "projected_total": 893.63829787234
+          },
+          "by_end_of_year": {
+            "year": 2026,
+            "actual_so_far": 5758.0,
+            "current_month_estimate": 0.0,
+            "remaining_months_forecast": 3574.55319148936,
+            "total_estimate": 9332.55319148936,
+            "low": 8796.370212765956,
+            "high": 9868.736170212764
+          },
+          "next_12_months": {
+            "months_covered": 12,
+            "total_estimate": 9830.021276595739,
+            "low": 8355.518085106378,
+            "high": 11304.524468085103
+          },
+          "growth": {
+            "last_month_actual": 211.0,
+            "mtd_growth_pct": -100.0,
+            "same_period_last_year_total": 7312.0,
+            "ytd_growth_pct": -21.252735229759303,
+            "last_year_total": 10819.0,
+            "full_year_growth_pct": -13.739225515395509
+          },
+          "full_forecast": [
+            {
+              "month": "2026-08",
+              "label": "Aug 2026",
+              "predicted": 893.63829787234,
+              "low": 759.592553191489,
+              "high": 1027.684042553191
+            },
+            {
+              "month": "2026-09",
+              "label": "Sep 2026",
+              "predicted": 893.63829787234,
+              "low": 759.592553191489,
+              "high": 1027.684042553191
+            },
+            {
+              "month": "2026-10",
+              "label": "Oct 2026",
+              "predicted": 893.63829787234,
+              "low": 759.592553191489,
+              "high": 1027.684042553191
+            },
+            {
+              "month": "2026-11",
+              "label": "Nov 2026",
+              "predicted": 893.63829787234,
+              "low": 759.592553191489,
+              "high": 1027.684042553191
+            },
+            {
+              "month": "2026-12",
+              "label": "Dec 2026",
+              "predicted": 893.63829787234,
+              "low": 759.592553191489,
+              "high": 1027.684042553191
+            },
+            {
+              "month": "2027-01",
+              "label": "Jan 2027",
+              "predicted": 893.63829787234,
+              "low": 759.592553191489,
+              "high": 1027.684042553191
+            },
+            {
+              "month": "2027-02",
+              "label": "Feb 2027",
+              "predicted": 893.63829787234,
+              "low": 759.592553191489,
+              "high": 1027.684042553191
+            },
+            {
+              "month": "2027-03",
+              "label": "Mar 2027",
+              "predicted": 893.63829787234,
+              "low": 759.592553191489,
+              "high": 1027.684042553191
+            },
+            {
+              "month": "2027-04",
+              "label": "Apr 2027",
+              "predicted": 893.63829787234,
+              "low": 759.592553191489,
+              "high": 1027.684042553191
+            },
+            {
+              "month": "2027-05",
+              "label": "May 2027",
+              "predicted": 893.63829787234,
+              "low": 759.592553191489,
+              "high": 1027.684042553191
+            },
+            {
+              "month": "2027-06",
+              "label": "Jun 2027",
+              "predicted": 893.63829787234,
+              "low": 759.592553191489,
+              "high": 1027.684042553191
+            },
+            {
+              "month": "2027-07",
+              "label": "Jul 2027",
+              "predicted": 893.63829787234,
+              "low": 759.592553191489,
+              "high": 1027.684042553191
+            }
+          ],
+          "model_key": "auto_arima",
+          "is_recommended": false
+        },
+        "seasonal_average": {
+          "model_name": "SeasonalAverage",
+          "is_flat": false,
+          "accuracy_pct": 82.49548160418239,
+          "near_term_mape": 17.504518395817612,
+          "long_term_mape": 17.504518395817612,
+          "next_month": {
+            "month": "2026-09",
+            "projected_total": 863.6666666666666
+          },
+          "by_end_of_year": {
+            "year": 2026,
+            "actual_so_far": 5758.0,
+            "current_month_estimate": 0.0,
+            "remaining_months_forecast": 3454.6666666666665,
+            "total_estimate": 9212.666666666666,
+            "low": 8694.466666666667,
+            "high": 9730.866666666667
+          },
+          "next_12_months": {
+            "months_covered": 12,
+            "total_estimate": 9500.333333333332,
+            "low": 8075.283333333333,
+            "high": 10925.383333333333
+          },
+          "growth": {
+            "last_month_actual": 211.0,
+            "mtd_growth_pct": -100.0,
+            "same_period_last_year_total": 7312.0,
+            "ytd_growth_pct": -21.252735229759303,
+            "last_year_total": 10819.0,
+            "full_year_growth_pct": -14.847336475952805
+          },
+          "full_forecast": [
+            {
+              "month": "2026-08",
+              "label": "Aug 2026",
+              "predicted": 863.6666666666666,
+              "low": 734.1166666666666,
+              "high": 993.2166666666666
+            },
+            {
+              "month": "2026-09",
+              "label": "Sep 2026",
+              "predicted": 863.6666666666666,
+              "low": 734.1166666666666,
+              "high": 993.2166666666666
+            },
+            {
+              "month": "2026-10",
+              "label": "Oct 2026",
+              "predicted": 863.6666666666666,
+              "low": 734.1166666666666,
+              "high": 993.2166666666666
+            },
+            {
+              "month": "2026-11",
+              "label": "Nov 2026",
+              "predicted": 863.6666666666666,
+              "low": 734.1166666666666,
+              "high": 993.2166666666666
+            },
+            {
+              "month": "2026-12",
+              "label": "Dec 2026",
+              "predicted": 863.6666666666666,
+              "low": 734.1166666666666,
+              "high": 993.2166666666666
+            },
+            {
+              "month": "2027-01",
+              "label": "Jan 2027",
+              "predicted": 863.6666666666666,
+              "low": 734.1166666666666,
+              "high": 993.2166666666666
+            },
+            {
+              "month": "2027-02",
+              "label": "Feb 2027",
+              "predicted": 863.6666666666666,
+              "low": 734.1166666666666,
+              "high": 993.2166666666666
+            },
+            {
+              "month": "2027-03",
+              "label": "Mar 2027",
+              "predicted": 863.6666666666666,
+              "low": 734.1166666666666,
+              "high": 993.2166666666666
+            },
+            {
+              "month": "2027-04",
+              "label": "Apr 2027",
+              "predicted": 863.6666666666666,
+              "low": 734.1166666666666,
+              "high": 993.2166666666666
+            },
+            {
+              "month": "2027-05",
+              "label": "May 2027",
+              "predicted": 863.6666666666666,
+              "low": 734.1166666666666,
+              "high": 993.2166666666666
+            },
+            {
+              "month": "2027-06",
+              "label": "Jun 2027",
+              "predicted": 863.6666666666666,
+              "low": 734.1166666666666,
+              "high": 993.2166666666666
+            },
+            {
+              "month": "2027-07",
+              "label": "Jul 2027",
+              "predicted": 863.6666666666666,
+              "low": 734.1166666666666,
+              "high": 993.2166666666666
+            }
+          ],
+          "model_key": "seasonal_average",
+          "is_recommended": false
+        },
+        "exponential_smoothing": {
+          "model_name": "ExponentialSmoothing",
+          "is_flat": false,
+          "accuracy_pct": 82.5794487634102,
+          "near_term_mape": 17.42055123658981,
+          "long_term_mape": 17.42055123658981,
+          "next_month": {
+            "month": "2026-09",
+            "projected_total": 801.6356318092701
+          },
+          "by_end_of_year": {
+            "year": 2026,
+            "actual_so_far": 5758.0,
+            "current_month_estimate": 0.0,
+            "remaining_months_forecast": 3206.5425272370803,
+            "total_estimate": 8964.542527237081,
+            "low": 8483.561148151519,
+            "high": 9445.523906322642
+          },
+          "next_12_months": {
+            "months_covered": 12,
+            "total_estimate": 8817.99194990197,
+            "low": 7495.293157416676,
+            "high": 10140.690742387265
+          },
+          "growth": {
+            "last_month_actual": 211.0,
+            "mtd_growth_pct": -100.0,
+            "same_period_last_year_total": 7312.0,
+            "ytd_growth_pct": -21.252735229759303,
+            "last_year_total": 10819.0,
+            "full_year_growth_pct": -17.140747506820585
+          },
+          "full_forecast": [
+            {
+              "month": "2026-08",
+              "label": "Aug 2026",
+              "predicted": 801.6356318092701,
+              "low": 681.3902870378796,
+              "high": 921.8809765806606
+            },
+            {
+              "month": "2026-09",
+              "label": "Sep 2026",
+              "predicted": 801.6356318092701,
+              "low": 681.3902870378796,
+              "high": 921.8809765806606
+            },
+            {
+              "month": "2026-10",
+              "label": "Oct 2026",
+              "predicted": 801.6356318092701,
+              "low": 681.3902870378796,
+              "high": 921.8809765806606
+            },
+            {
+              "month": "2026-11",
+              "label": "Nov 2026",
+              "predicted": 801.6356318092701,
+              "low": 681.3902870378796,
+              "high": 921.8809765806606
+            },
+            {
+              "month": "2026-12",
+              "label": "Dec 2026",
+              "predicted": 801.6356318092701,
+              "low": 681.3902870378796,
+              "high": 921.8809765806606
+            },
+            {
+              "month": "2027-01",
+              "label": "Jan 2027",
+              "predicted": 801.6356318092701,
+              "low": 681.3902870378796,
+              "high": 921.8809765806606
+            },
+            {
+              "month": "2027-02",
+              "label": "Feb 2027",
+              "predicted": 801.6356318092701,
+              "low": 681.3902870378796,
+              "high": 921.8809765806606
+            },
+            {
+              "month": "2027-03",
+              "label": "Mar 2027",
+              "predicted": 801.6356318092701,
+              "low": 681.3902870378796,
+              "high": 921.8809765806606
+            },
+            {
+              "month": "2027-04",
+              "label": "Apr 2027",
+              "predicted": 801.6356318092701,
+              "low": 681.3902870378796,
+              "high": 921.8809765806606
+            },
+            {
+              "month": "2027-05",
+              "label": "May 2027",
+              "predicted": 801.6356318092701,
+              "low": 681.3902870378796,
+              "high": 921.8809765806606
+            },
+            {
+              "month": "2027-06",
+              "label": "Jun 2027",
+              "predicted": 801.6356318092701,
+              "low": 681.3902870378796,
+              "high": 921.8809765806606
+            },
+            {
+              "month": "2027-07",
+              "label": "Jul 2027",
+              "predicted": 801.6356318092701,
+              "low": 681.3902870378796,
+              "high": 921.8809765806606
+            }
+          ],
+          "model_key": "exponential_smoothing",
+          "is_recommended": false
+        },
+        "elastic_net": {
+          "model_name": "ElasticNet",
+          "is_flat": false,
+          "accuracy_pct": 81.91358046729607,
+          "near_term_mape": 18.08641953270392,
+          "long_term_mape": 18.08641953270392,
+          "next_month": {
+            "month": "2026-09",
+            "projected_total": 940.8050403454296
+          },
+          "by_end_of_year": {
+            "year": 2026,
+            "actual_so_far": 5758.0,
+            "current_month_estimate": 0.0,
+            "remaining_months_forecast": 3595.2046453540474,
+            "total_estimate": 9353.204645354048,
+            "low": 8813.92394855094,
+            "high": 9892.485342157153
+          },
+          "next_12_months": {
+            "months_covered": 12,
+            "total_estimate": 9818.563646078279,
+            "low": 8345.779099166535,
+            "high": 11291.348192990019
+          },
+          "growth": {
+            "last_month_actual": 211.0,
+            "mtd_growth_pct": -100.0,
+            "same_period_last_year_total": 7312.0,
+            "ytd_growth_pct": -21.252735229759303,
+            "last_year_total": 10819.0,
+            "full_year_growth_pct": -13.548344159774029
+          },
+          "full_forecast": [
+            {
+              "month": "2026-08",
+              "label": "Aug 2026",
+              "predicted": 918.1712546169786,
+              "low": 780.4455664244317,
+              "high": 1055.8969428095252
+            },
+            {
+              "month": "2026-09",
+              "label": "Sep 2026",
+              "predicted": 940.8050403454296,
+              "low": 799.6842842936151,
+              "high": 1081.9257963972439
+            },
+            {
+              "month": "2026-10",
+              "label": "Oct 2026",
+              "predicted": 856.6244478788003,
+              "low": 728.1307806969802,
+              "high": 985.1181150606203
+            },
+            {
+              "month": "2026-11",
+              "label": "Nov 2026",
+              "predicted": 888.8537867357215,
+              "low": 755.5257187253633,
+              "high": 1022.1818547460797
+            },
+            {
+              "month": "2026-12",
+              "label": "Dec 2026",
+              "predicted": 908.9213703940962,
+              "low": 772.5831648349817,
+              "high": 1045.2595759532105
+            },
+            {
+              "month": "2027-01",
+              "label": "Jan 2027",
+              "predicted": 897.1011677462717,
+              "low": 762.5359925843309,
+              "high": 1031.6663429082123
+            },
+            {
+              "month": "2027-02",
+              "label": "Feb 2027",
+              "predicted": 899.4405272048574,
+              "low": 764.5244481241288,
+              "high": 1034.356606285586
+            },
+            {
+              "month": "2027-03",
+              "label": "Mar 2027",
+              "predicted": 923.9712598515496,
+              "low": 785.3755708738171,
+              "high": 1062.566948829282
+            },
+            {
+              "month": "2027-04",
+              "label": "Apr 2027",
+              "predicted": 844.6382830718136,
+              "low": 717.9425406110415,
+              "high": 971.3340255325855
+            },
+            {
+              "month": "2027-05",
+              "label": "May 2027",
+              "predicted": 874.3014198586584,
+              "low": 743.1562068798596,
+              "high": 1005.4466328374571
+            },
+            {
+              "month": "2027-06",
+              "label": "Jun 2027",
+              "predicted": 896.9352055871094,
+              "low": 762.394924749043,
+              "high": 1031.4754864251756
+            },
+            {
+              "month": "2027-07",
+              "label": "Jul 2027",
+              "predicted": 886.9711374039706,
+              "low": 753.925466793375,
+              "high": 1020.0168080145661
+            }
+          ],
+          "model_key": "elastic_net",
+          "is_recommended": false
+        }
+      },
+      "next_month": {
+        "month": "2026-09",
+        "projected_total": 893.6382978723404
+      },
+      "by_end_of_year": {
+        "year": 2026,
+        "actual_so_far": 5758.0,
+        "current_month_estimate": 0.0,
+        "remaining_months_forecast": 3574.553191489362,
+        "total_estimate": 9332.553191489362,
+        "low": 8796.370212765958,
+        "high": 9868.736170212766
+      },
+      "next_12_months": {
+        "months_covered": 12,
+        "total_estimate": 9830.021276595744,
+        "low": 8355.518085106383,
+        "high": 11304.524468085106
+      },
+      "growth": {
+        "last_month_actual": 211.0,
+        "mtd_growth_pct": -100.0,
+        "same_period_last_year_total": 7312.0,
+        "ytd_growth_pct": -21.252735229759303,
+        "last_year_total": 10819.0,
+        "full_year_growth_pct": -13.739225515395493
+      },
+      "full_forecast": [
+        {
+          "month": "2026-08",
+          "label": "Aug 2026",
+          "predicted": 893.6382978723404,
+          "low": 759.5925531914894,
+          "high": 1027.6840425531914
+        },
+        {
+          "month": "2026-09",
+          "label": "Sep 2026",
+          "predicted": 893.6382978723404,
+          "low": 759.5925531914894,
+          "high": 1027.6840425531914
+        },
+        {
+          "month": "2026-10",
+          "label": "Oct 2026",
+          "predicted": 893.6382978723404,
+          "low": 759.5925531914894,
+          "high": 1027.6840425531914
+        },
+        {
+          "month": "2026-11",
+          "label": "Nov 2026",
+          "predicted": 893.6382978723404,
+          "low": 759.5925531914894,
+          "high": 1027.6840425531914
+        },
+        {
+          "month": "2026-12",
+          "label": "Dec 2026",
+          "predicted": 893.6382978723404,
+          "low": 759.5925531914894,
+          "high": 1027.6840425531914
+        },
+        {
+          "month": "2027-01",
+          "label": "Jan 2027",
+          "predicted": 893.6382978723404,
+          "low": 759.5925531914894,
+          "high": 1027.6840425531914
+        },
+        {
+          "month": "2027-02",
+          "label": "Feb 2027",
+          "predicted": 893.6382978723404,
+          "low": 759.5925531914894,
+          "high": 1027.6840425531914
+        },
+        {
+          "month": "2027-03",
+          "label": "Mar 2027",
+          "predicted": 893.6382978723404,
+          "low": 759.5925531914894,
+          "high": 1027.6840425531914
+        },
+        {
+          "month": "2027-04",
+          "label": "Apr 2027",
+          "predicted": 893.6382978723404,
+          "low": 759.5925531914894,
+          "high": 1027.6840425531914
+        },
+        {
+          "month": "2027-05",
+          "label": "May 2027",
+          "predicted": 893.6382978723404,
+          "low": 759.5925531914894,
+          "high": 1027.6840425531914
+        },
+        {
+          "month": "2027-06",
+          "label": "Jun 2027",
+          "predicted": 893.6382978723404,
+          "low": 759.5925531914894,
+          "high": 1027.6840425531914
+        },
+        {
+          "month": "2027-07",
+          "label": "Jul 2027",
+          "predicted": 893.6382978723404,
+          "low": 759.5925531914894,
+          "high": 1027.6840425531914
+        }
+      ],
+      "backtest": {
+        "voting_ensemble": {
+          "accuracy_pct": 83.46809570507298,
+          "weighted_score": 16.531904294927024,
+          "near_term_mape": 16.531904294927024,
+          "long_term_mape": 16.531904294927024
+        },
+        "average": {
+          "accuracy_pct": 83.58157790392436,
+          "weighted_score": 16.41842209607564,
+          "near_term_mape": 16.41842209607564,
+          "long_term_mape": 16.41842209607564
+        },
+        "light_gbm": {
+          "accuracy_pct": 83.58157790392436,
+          "weighted_score": 16.41842209607564,
+          "near_term_mape": 16.41842209607564,
+          "long_term_mape": 16.41842209607564
+        },
+        "auto_arima": {
+          "accuracy_pct": 83.53882264447059,
+          "weighted_score": 16.46117735552941,
+          "near_term_mape": 16.46117735552941,
+          "long_term_mape": 16.46117735552941
+        },
+        "seasonal_average": {
+          "accuracy_pct": 82.49548160418239,
+          "weighted_score": 17.504518395817612,
+          "near_term_mape": 17.504518395817612,
+          "long_term_mape": 17.504518395817612
+        },
+        "exponential_smoothing": {
+          "accuracy_pct": 82.5794487634102,
+          "weighted_score": 17.42055123658981,
+          "near_term_mape": 17.42055123658981,
+          "long_term_mape": 17.42055123658981
+        },
+        "elastic_net": {
+          "accuracy_pct": 81.91358046729607,
+          "weighted_score": 18.08641953270392,
+          "near_term_mape": 18.08641953270392,
+          "long_term_mape": 18.08641953270392
+        },
+        "elastic_net_2": {
+          "accuracy_pct": 81.91959424769408,
+          "weighted_score": 18.08040575230593,
+          "near_term_mape": 18.08040575230593,
+          "long_term_mape": 18.08040575230593
+        },
+        "elastic_net_3": {
+          "accuracy_pct": 79.61359873824807,
+          "weighted_score": 20.386401261751935,
+          "near_term_mape": 20.386401261751935,
+          "long_term_mape": 20.386401261751935
+        },
+        "extreme_random_trees": {
+          "accuracy_pct": 80.83132182315539,
+          "weighted_score": 19.168678176844605,
+          "near_term_mape": 19.168678176844605,
+          "long_term_mape": 19.168678176844605
+        },
+        "elastic_net_4": {
+          "accuracy_pct": 79.29155840454467,
+          "weighted_score": 20.708441595455334,
+          "near_term_mape": 20.708441595455334,
+          "long_term_mape": 20.708441595455334
+        },
+        "elastic_net_5": {
+          "accuracy_pct": 79.2789543281493,
+          "weighted_score": 20.721045671850703,
+          "near_term_mape": 20.721045671850703,
+          "long_term_mape": 20.721045671850703
+        },
+        "elastic_net_6": {
+          "accuracy_pct": 79.27744192072635,
+          "weighted_score": 20.722558079273657,
+          "near_term_mape": 20.722558079273657,
+          "long_term_mape": 20.722558079273657
+        },
+        "elastic_net_7": {
+          "accuracy_pct": 79.27963966798532,
+          "weighted_score": 20.720360332014675,
+          "near_term_mape": 20.720360332014675,
+          "long_term_mape": 20.720360332014675
+        },
+        "elastic_net_8": {
+          "accuracy_pct": 79.28459492072244,
+          "weighted_score": 20.715405079277566,
+          "near_term_mape": 20.715405079277566,
+          "long_term_mape": 20.715405079277566
+        },
+        "naive": {
+          "accuracy_pct": 79.04386752835745,
+          "weighted_score": 20.95613247164254,
+          "near_term_mape": 20.95613247164254,
+          "long_term_mape": 20.95613247164254
+        },
+        "random_forest": {
+          "accuracy_pct": 79.51570570569496,
+          "weighted_score": 20.484294294305045,
+          "near_term_mape": 20.484294294305045,
+          "long_term_mape": 20.484294294305045
+        },
+        "extreme_random_trees_2": {
+          "accuracy_pct": 77.13435996250415,
+          "weighted_score": 22.86564003749585,
+          "near_term_mape": 22.86564003749585,
+          "long_term_mape": 22.86564003749585
+        },
+        "extreme_random_trees_3": {
+          "accuracy_pct": 76.64883165808543,
+          "weighted_score": 23.35116834191457,
+          "near_term_mape": 23.35116834191457,
+          "long_term_mape": 23.35116834191457
+        },
+        "xg_boost_regressor": {
+          "accuracy_pct": 76.62195742248214,
+          "weighted_score": 23.378042577517864,
+          "near_term_mape": 23.378042577517864,
+          "long_term_mape": 23.378042577517864
+        },
+        "prophet_model": {
+          "accuracy_pct": 74.70481151945226,
+          "weighted_score": 25.29518848054774,
+          "near_term_mape": 25.29518848054774,
+          "long_term_mape": 25.29518848054774
+        },
+        "extreme_random_trees_4": {
+          "accuracy_pct": 75.73898814401787,
+          "weighted_score": 24.26101185598214,
+          "near_term_mape": 24.26101185598214,
+          "long_term_mape": 24.26101185598214
+        },
+        "decision_tree": {
+          "accuracy_pct": 76.11441847489654,
+          "weighted_score": 23.885581525103465,
+          "near_term_mape": 23.885581525103465,
+          "long_term_mape": 23.885581525103465
+        },
+        "random_forest_2": {
+          "accuracy_pct": 75.6221224690521,
+          "weighted_score": 24.37787753094789,
+          "near_term_mape": 24.37787753094789,
+          "long_term_mape": 24.37787753094789
+        },
+        "seasonal_naive": {
+          "accuracy_pct": 73.30010944148607,
+          "weighted_score": 26.699890558513925,
+          "near_term_mape": 26.699890558513925,
+          "long_term_mape": 26.699890558513925
+        }
+      }
+    },
+    "downloaded_models": [
+      {
+        "rank": 1,
+        "algorithm": "VotingEnsemble",
+        "run_id": "olive_queen_rmympv2qsn_24",
+        "normalized_rmse": 0.12064616169987337,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\contact_lenses_olive_queen_rmympv2qsn\\rank01_VotingEnsemble"
+      },
+      {
+        "rank": 2,
+        "algorithm": "Average",
+        "run_id": "olive_queen_rmympv2qsn_2",
+        "normalized_rmse": 0.12134471642717023,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\contact_lenses_olive_queen_rmympv2qsn\\rank02_Average"
+      },
+      {
+        "rank": 3,
+        "algorithm": "LightGBM",
+        "run_id": "olive_queen_rmympv2qsn_7",
+        "normalized_rmse": 0.12134471642717023,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\contact_lenses_olive_queen_rmympv2qsn\\rank03_LightGBM"
+      },
+      {
+        "rank": 4,
+        "algorithm": "AutoArima",
+        "run_id": "olive_queen_rmympv2qsn_5",
+        "normalized_rmse": 0.12185695843532876,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\contact_lenses_olive_queen_rmympv2qsn\\rank04_AutoArima"
+      },
+      {
+        "rank": 5,
+        "algorithm": "SeasonalAverage",
+        "run_id": "olive_queen_rmympv2qsn_3",
+        "normalized_rmse": 0.12529718726982314,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\contact_lenses_olive_queen_rmympv2qsn\\rank05_SeasonalAverage"
+      },
+      {
+        "rank": 6,
+        "algorithm": "ExponentialSmoothing",
+        "run_id": "olive_queen_rmympv2qsn_4",
+        "normalized_rmse": 0.12776205863249646,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\contact_lenses_olive_queen_rmympv2qsn\\rank06_ExponentialSmoothing"
+      },
+      {
+        "rank": 7,
+        "algorithm": "ElasticNet",
+        "run_id": "olive_queen_rmympv2qsn_14",
+        "normalized_rmse": 0.12985792034556276,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\contact_lenses_olive_queen_rmympv2qsn\\rank07_ElasticNet"
+      }
+    ]
+  },
+  "patients": {
+    "metric": "patients",
+    "job_name": "sad_apple_2b5mqm5c9g",
+    "status": "Completed",
+    "studio_url": "https://ml.azure.com/runs/sad_apple_2b5mqm5c9g?wsid=/subscriptions/26cadedf-7782-440a-9367-6d9c87a78aac/resourcegroups/prediction/workspaces/predictioncentralus",
+    "frequency": "month",
+    "leaderboard": [
+      {
+        "algorithm": "VotingEnsemble",
+        "iteration": 24,
+        "normalized_rmse": 0.1472196698393506,
+        "r2_score": 0.05571675170292063,
+        "mape": 27.71512974888057,
+        "accuracy_pct_equivalent": 72.28487025111943,
+        "run_id": "sad_apple_2b5mqm5c9g_24"
+      },
+      {
+        "algorithm": "ExtremeRandomTrees",
+        "iteration": 18,
+        "normalized_rmse": 0.1526760301439125,
+        "r2_score": 0.015295820270870841,
+        "mape": 28.46015932134501,
+        "accuracy_pct_equivalent": 71.539840678655,
+        "run_id": "sad_apple_2b5mqm5c9g_18"
+      },
+      {
+        "algorithm": "ExtremeRandomTrees",
+        "iteration": 22,
+        "normalized_rmse": 0.15423109016722297,
+        "r2_score": -0.04492019703866099,
+        "mape": 27.876109180871065,
+        "accuracy_pct_equivalent": 72.12389081912893,
+        "run_id": "sad_apple_2b5mqm5c9g_22"
+      },
+      {
+        "algorithm": "RandomForest",
+        "iteration": 13,
+        "normalized_rmse": 0.1554329079634944,
+        "r2_score": -0.01124159545833563,
+        "mape": 28.94340315266685,
+        "accuracy_pct_equivalent": 71.05659684733315,
+        "run_id": "sad_apple_2b5mqm5c9g_13"
+      },
+      {
+        "algorithm": "XGBoostRegressor",
+        "iteration": 8,
+        "normalized_rmse": 0.15807519745582604,
+        "r2_score": -0.07587610483169556,
+        "mape": 28.571778961013393,
+        "accuracy_pct_equivalent": 71.4282210389866,
+        "run_id": "sad_apple_2b5mqm5c9g_8"
+      },
+      {
+        "algorithm": "ExtremeRandomTrees",
+        "iteration": 21,
+        "normalized_rmse": 0.15924384511551692,
+        "r2_score": -0.0885928943195757,
+        "mape": 29.130317787173066,
+        "accuracy_pct_equivalent": 70.86968221282693,
+        "run_id": "sad_apple_2b5mqm5c9g_21"
+      },
+      {
+        "algorithm": "ExtremeRandomTrees",
+        "iteration": 20,
+        "normalized_rmse": 0.159931995903657,
+        "r2_score": -0.10288039460605344,
+        "mape": 29.063758865802043,
+        "accuracy_pct_equivalent": 70.93624113419796,
+        "run_id": "sad_apple_2b5mqm5c9g_20"
+      },
+      {
+        "algorithm": "SeasonalNaive",
+        "iteration": 1,
+        "normalized_rmse": 0.1602904917367886,
+        "r2_score": -0.12274739754740553,
+        "mape": 28.953005736780007,
+        "accuracy_pct_equivalent": 71.04699426322,
+        "run_id": "sad_apple_2b5mqm5c9g_1"
+      },
+      {
+        "algorithm": "ProphetModel",
+        "iteration": 6,
+        "normalized_rmse": 0.16296347034393807,
+        "r2_score": -0.13802285121576835,
+        "mape": 29.017321058991335,
+        "accuracy_pct_equivalent": 70.98267894100866,
+        "run_id": "sad_apple_2b5mqm5c9g_6"
+      },
+      {
+        "algorithm": "RandomForest",
+        "iteration": 19,
+        "normalized_rmse": 0.16616675005841258,
+        "r2_score": -0.1930793887374105,
+        "mape": 29.647947800856333,
+        "accuracy_pct_equivalent": 70.35205219914367,
+        "run_id": "sad_apple_2b5mqm5c9g_19"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 9,
+        "normalized_rmse": 0.17074522780166398,
+        "r2_score": -0.26222875503434917,
+        "mape": 31.05024829831229,
+        "accuracy_pct_equivalent": 68.94975170168772,
+        "run_id": "sad_apple_2b5mqm5c9g_9"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 14,
+        "normalized_rmse": 0.17086918870516263,
+        "r2_score": -0.2635284867778527,
+        "mape": 31.0448366355205,
+        "accuracy_pct_equivalent": 68.9551633644795,
+        "run_id": "sad_apple_2b5mqm5c9g_14"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 16,
+        "normalized_rmse": 0.17134242791562113,
+        "r2_score": -0.2662782693513196,
+        "mape": 31.114556989532637,
+        "accuracy_pct_equivalent": 68.88544301046736,
+        "run_id": "sad_apple_2b5mqm5c9g_16"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 10,
+        "normalized_rmse": 0.17580966416585767,
+        "r2_score": -0.29240847789677615,
+        "mape": 32.1570272246296,
+        "accuracy_pct_equivalent": 67.8429727753704,
+        "run_id": "sad_apple_2b5mqm5c9g_10"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 17,
+        "normalized_rmse": 0.1758360098926902,
+        "r2_score": -0.2923928007944937,
+        "mape": 32.14678088672658,
+        "accuracy_pct_equivalent": 67.85321911327341,
+        "run_id": "sad_apple_2b5mqm5c9g_17"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 12,
+        "normalized_rmse": 0.1758423148205504,
+        "r2_score": -0.29232564813248824,
+        "mape": 32.14204121010688,
+        "accuracy_pct_equivalent": 67.85795878989312,
+        "run_id": "sad_apple_2b5mqm5c9g_12"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 11,
+        "normalized_rmse": 0.17585040189931292,
+        "r2_score": -0.2926542529086288,
+        "mape": 32.1463235960188,
+        "accuracy_pct_equivalent": 67.8536764039812,
+        "run_id": "sad_apple_2b5mqm5c9g_11"
+      },
+      {
+        "algorithm": "ElasticNet",
+        "iteration": 15,
+        "normalized_rmse": 0.17585391321600716,
+        "r2_score": -0.2924388954563729,
+        "mape": 32.14382277860788,
+        "accuracy_pct_equivalent": 67.85617722139213,
+        "run_id": "sad_apple_2b5mqm5c9g_15"
+      },
+      {
+        "algorithm": "ExponentialSmoothing",
+        "iteration": 4,
+        "normalized_rmse": 0.17731919737731294,
+        "r2_score": -0.4171987411934829,
+        "mape": 31.407928877024823,
+        "accuracy_pct_equivalent": 68.59207112297517,
+        "run_id": "sad_apple_2b5mqm5c9g_4"
+      },
+      {
+        "algorithm": "Average",
+        "iteration": 2,
+        "normalized_rmse": 0.17739122072584962,
+        "r2_score": -0.41783039983330283,
+        "mape": 31.42286457942985,
+        "accuracy_pct_equivalent": 68.57713542057016,
+        "run_id": "sad_apple_2b5mqm5c9g_2"
+      },
+      {
+        "algorithm": "LightGBM",
+        "iteration": 7,
+        "normalized_rmse": 0.17739122072584962,
+        "r2_score": -0.41783039983330283,
+        "mape": 31.42286457942985,
+        "accuracy_pct_equivalent": 68.57713542057016,
+        "run_id": "sad_apple_2b5mqm5c9g_7"
+      },
+      {
+        "algorithm": "AutoArima",
+        "iteration": 5,
+        "normalized_rmse": 0.17782577092922547,
+        "r2_score": -0.42058220868602403,
+        "mape": 31.526314988256285,
+        "accuracy_pct_equivalent": 68.47368501174371,
+        "run_id": "sad_apple_2b5mqm5c9g_5"
+      },
+      {
+        "algorithm": "SeasonalAverage",
+        "iteration": 3,
+        "normalized_rmse": 0.18120943930696187,
+        "r2_score": -0.47723393168056616,
+        "mape": 32.081213334446645,
+        "accuracy_pct_equivalent": 67.91878666555336,
+        "run_id": "sad_apple_2b5mqm5c9g_3"
+      },
+      {
+        "algorithm": "DecisionTree",
+        "iteration": 23,
+        "normalized_rmse": 0.18431453950055227,
+        "r2_score": -0.3568964954959015,
+        "mape": 33.15832133185296,
+        "accuracy_pct_equivalent": 66.84167866814704,
+        "run_id": "sad_apple_2b5mqm5c9g_23"
+      },
+      {
+        "algorithm": "Naive",
+        "iteration": 0,
+        "normalized_rmse": 0.21852408064601714,
+        "r2_score": -0.5451600905034305,
+        "mape": 39.06993150907207,
+        "accuracy_pct_equivalent": 60.93006849092793,
+        "run_id": "sad_apple_2b5mqm5c9g_0"
+      }
+    ],
+    "forecast_detail": {
+      "metric": "patients",
+      "label": "New patient registrations",
+      "frequency": "month",
+      "model_used": "extreme_random_trees",
+      "best_model": "extreme_random_trees",
+      "history_months": 46,
+      "horizon_months": 12,
+      "data_quality_notes": [
+        "patients: excluded Sep 2022 (82,060) as a data anomaly (robust z-score outlier, likely a migration/import artifact rather than real activity)"
+      ],
+      "history_full": [
+        {
+          "month": "2024-08",
+          "label": "Aug 2024",
+          "value": 290.0
+        },
+        {
+          "month": "2024-09",
+          "label": "Sep 2024",
+          "value": 255.0
+        },
+        {
+          "month": "2024-10",
+          "label": "Oct 2024",
+          "value": 280.0
+        },
+        {
+          "month": "2024-11",
+          "label": "Nov 2024",
+          "value": 186.0
+        },
+        {
+          "month": "2024-12",
+          "label": "Dec 2024",
+          "value": 186.0
+        },
+        {
+          "month": "2025-01",
+          "label": "Jan 2025",
+          "value": 255.0
+        },
+        {
+          "month": "2025-02",
+          "label": "Feb 2025",
+          "value": 219.0
+        },
+        {
+          "month": "2025-03",
+          "label": "Mar 2025",
+          "value": 243.0
+        },
+        {
+          "month": "2025-04",
+          "label": "Apr 2025",
+          "value": 249.0
+        },
+        {
+          "month": "2025-05",
+          "label": "May 2025",
+          "value": 215.0
+        },
+        {
+          "month": "2025-06",
+          "label": "Jun 2025",
+          "value": 257.0
+        },
+        {
+          "month": "2025-07",
+          "label": "Jul 2025",
+          "value": 308.0
+        },
+        {
+          "month": "2025-08",
+          "label": "Aug 2025",
+          "value": 279.0
+        },
+        {
+          "month": "2025-09",
+          "label": "Sep 2025",
+          "value": 217.0
+        },
+        {
+          "month": "2025-10",
+          "label": "Oct 2025",
+          "value": 192.0
+        },
+        {
+          "month": "2025-11",
+          "label": "Nov 2025",
+          "value": 163.0
+        },
+        {
+          "month": "2025-12",
+          "label": "Dec 2025",
+          "value": 135.0
+        },
+        {
+          "month": "2026-01",
+          "label": "Jan 2026",
+          "value": 226.0
+        },
+        {
+          "month": "2026-02",
+          "label": "Feb 2026",
+          "value": 190.0
+        },
+        {
+          "month": "2026-03",
+          "label": "Mar 2026",
+          "value": 185.0
+        },
+        {
+          "month": "2026-04",
+          "label": "Apr 2026",
+          "value": 186.0
+        },
+        {
+          "month": "2026-05",
+          "label": "May 2026",
+          "value": 156.0
+        },
+        {
+          "month": "2026-06",
+          "label": "Jun 2026",
+          "value": 202.0
+        },
+        {
+          "month": "2026-07",
+          "label": "Jul 2026",
+          "value": 46.0
+        }
+      ],
+      "yoy_history": [
+        {
+          "year": 2022,
+          "month": 10,
+          "value": 241.0
+        },
+        {
+          "year": 2022,
+          "month": 11,
+          "value": 201.0
+        },
+        {
+          "year": 2022,
+          "month": 12,
+          "value": 153.0
+        },
+        {
+          "year": 2023,
+          "month": 1,
+          "value": 234.0
+        },
+        {
+          "year": 2023,
+          "month": 2,
+          "value": 255.0
+        },
+        {
+          "year": 2023,
+          "month": 3,
+          "value": 271.0
+        },
+        {
+          "year": 2023,
+          "month": 4,
+          "value": 213.0
+        },
+        {
+          "year": 2023,
+          "month": 5,
+          "value": 267.0
+        },
+        {
+          "year": 2023,
+          "month": 6,
+          "value": 263.0
+        },
+        {
+          "year": 2023,
+          "month": 7,
+          "value": 372.0
+        },
+        {
+          "year": 2023,
+          "month": 8,
+          "value": 281.0
+        },
+        {
+          "year": 2023,
+          "month": 9,
+          "value": 251.0
+        },
+        {
+          "year": 2023,
+          "month": 10,
+          "value": 244.0
+        },
+        {
+          "year": 2023,
+          "month": 11,
+          "value": 238.0
+        },
+        {
+          "year": 2023,
+          "month": 12,
+          "value": 199.0
+        },
+        {
+          "year": 2024,
+          "month": 1,
+          "value": 183.0
+        },
+        {
+          "year": 2024,
+          "month": 2,
+          "value": 242.0
+        },
+        {
+          "year": 2024,
+          "month": 3,
+          "value": 193.0
+        },
+        {
+          "year": 2024,
+          "month": 4,
+          "value": 276.0
+        },
+        {
+          "year": 2024,
+          "month": 5,
+          "value": 236.0
+        },
+        {
+          "year": 2024,
+          "month": 6,
+          "value": 231.0
+        },
+        {
+          "year": 2024,
+          "month": 7,
+          "value": 345.0
+        },
+        {
+          "year": 2024,
+          "month": 8,
+          "value": 290.0
+        },
+        {
+          "year": 2024,
+          "month": 9,
+          "value": 255.0
+        },
+        {
+          "year": 2024,
+          "month": 10,
+          "value": 280.0
+        },
+        {
+          "year": 2024,
+          "month": 11,
+          "value": 186.0
+        },
+        {
+          "year": 2024,
+          "month": 12,
+          "value": 186.0
+        },
+        {
+          "year": 2025,
+          "month": 1,
+          "value": 255.0
+        },
+        {
+          "year": 2025,
+          "month": 2,
+          "value": 219.0
+        },
+        {
+          "year": 2025,
+          "month": 3,
+          "value": 243.0
+        },
+        {
+          "year": 2025,
+          "month": 4,
+          "value": 249.0
+        },
+        {
+          "year": 2025,
+          "month": 5,
+          "value": 215.0
+        },
+        {
+          "year": 2025,
+          "month": 6,
+          "value": 257.0
+        },
+        {
+          "year": 2025,
+          "month": 7,
+          "value": 308.0
+        },
+        {
+          "year": 2025,
+          "month": 8,
+          "value": 279.0
+        },
+        {
+          "year": 2025,
+          "month": 9,
+          "value": 217.0
+        },
+        {
+          "year": 2025,
+          "month": 10,
+          "value": 192.0
+        },
+        {
+          "year": 2025,
+          "month": 11,
+          "value": 163.0
+        },
+        {
+          "year": 2025,
+          "month": 12,
+          "value": 135.0
+        },
+        {
+          "year": 2026,
+          "month": 1,
+          "value": 226.0
+        },
+        {
+          "year": 2026,
+          "month": 2,
+          "value": 190.0
+        },
+        {
+          "year": 2026,
+          "month": 3,
+          "value": 185.0
+        },
+        {
+          "year": 2026,
+          "month": 4,
+          "value": 186.0
+        },
+        {
+          "year": 2026,
+          "month": 5,
+          "value": 156.0
+        },
+        {
+          "year": 2026,
+          "month": 6,
+          "value": 202.0
+        },
+        {
+          "year": 2026,
+          "month": 7,
+          "value": 46.0
+        }
+      ],
+      "this_month": {
+        "month": "2026-08",
+        "month_to_date_actual": 0.0,
+        "projected_total": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "as_of_day": 23,
+        "history_months_used": 0
+      },
+      "models": {
+        "extreme_random_trees": {
+          "model_name": "ExtremeRandomTrees",
+          "is_flat": false,
+          "accuracy_pct": 71.539840678655,
+          "near_term_mape": 28.46015932134501,
+          "long_term_mape": 28.46015932134501,
+          "next_month": {
+            "month": "2026-09",
+            "projected_total": 154.30333000000002
+          },
+          "by_end_of_year": {
+            "year": 2026,
+            "actual_so_far": 1191.0,
+            "current_month_estimate": 0.0,
+            "remaining_months_forecast": 567.8133200000001,
+            "total_estimate": 1758.8133200000002,
+            "low": 1673.641322,
+            "high": 1843.985318
+          },
+          "next_12_months": {
+            "months_covered": 12,
+            "total_estimate": 1797.6166300000002,
+            "low": 1527.9741354999999,
+            "high": 2067.2591245
+          },
+          "growth": {
+            "last_month_actual": 46.0,
+            "mtd_growth_pct": -100.0,
+            "same_period_last_year_total": 2025.0,
+            "ytd_growth_pct": -41.18518518518518,
+            "last_year_total": 2732.0,
+            "full_year_growth_pct": -35.621767203513905
+          },
+          "full_forecast": [
+            {
+              "month": "2026-08",
+              "label": "Aug 2026",
+              "predicted": 177.78333,
+              "low": 151.11583050000002,
+              "high": 204.4508295
+            },
+            {
+              "month": "2026-09",
+              "label": "Sep 2026",
+              "predicted": 154.30333000000002,
+              "low": 131.15783050000002,
+              "high": 177.44882950000002
+            },
+            {
+              "month": "2026-10",
+              "label": "Oct 2026",
+              "predicted": 143.54333,
+              "low": 122.01183049999999,
+              "high": 165.0748295
+            },
+            {
+              "month": "2026-11",
+              "label": "Nov 2026",
+              "predicted": 146.58333000000002,
+              "low": 124.5958305,
+              "high": 168.5708295
+            },
+            {
+              "month": "2026-12",
+              "label": "Dec 2026",
+              "predicted": 123.38332999999999,
+              "low": 104.87583049999999,
+              "high": 141.89082949999997
+            },
+            {
+              "month": "2027-01",
+              "label": "Jan 2027",
+              "predicted": 172.98333000000002,
+              "low": 147.0358305,
+              "high": 198.93082950000002
+            },
+            {
+              "month": "2027-02",
+              "label": "Feb 2027",
+              "predicted": 185.50333,
+              "low": 157.6778305,
+              "high": 213.32882949999998
+            },
+            {
+              "month": "2027-03",
+              "label": "Mar 2027",
+              "predicted": 186.38333,
+              "low": 158.4258305,
+              "high": 214.34082949999998
+            },
+            {
+              "month": "2027-04",
+              "label": "Apr 2027",
+              "predicted": 184.42333000000002,
+              "low": 156.75983050000002,
+              "high": 212.08682950000002
+            },
+            {
+              "month": "2027-05",
+              "label": "May 2027",
+              "predicted": 171.38333,
+              "low": 145.6758305,
+              "high": 197.09082949999998
+            },
+            {
+              "month": "2027-06",
+              "label": "Jun 2027",
+              "predicted": 193.66333,
+              "low": 164.6138305,
+              "high": 222.7128295
+            },
+            {
+              "month": "2027-07",
+              "label": "Jul 2027",
+              "predicted": 135.46333,
+              "low": 115.1438305,
+              "high": 155.7828295
+            }
+          ],
+          "model_key": "extreme_random_trees",
+          "is_recommended": true
+        },
+        "extreme_random_trees_2": {
+          "model_name": "ExtremeRandomTrees",
+          "is_flat": false,
+          "accuracy_pct": 72.12389081912893,
+          "near_term_mape": 27.876109180871065,
+          "long_term_mape": 27.876109180871065,
+          "next_month": {
+            "month": "2026-09",
+            "projected_total": 94.3
+          },
+          "by_end_of_year": {
+            "year": 2026,
+            "actual_so_far": 1191.0,
+            "current_month_estimate": 0.0,
+            "remaining_months_forecast": 348.8,
+            "total_estimate": 1539.8,
+            "low": 1487.48,
+            "high": 1592.12
+          },
+          "next_12_months": {
+            "months_covered": 12,
+            "total_estimate": 1518.8,
+            "low": 1290.9799999999998,
+            "high": 1746.62
+          },
+          "growth": {
+            "last_month_actual": 46.0,
+            "mtd_growth_pct": -100.0,
+            "same_period_last_year_total": 2025.0,
+            "ytd_growth_pct": -41.18518518518518,
+            "last_year_total": 2732.0,
+            "full_year_growth_pct": -43.63836017569546
+          },
+          "full_forecast": [
+            {
+              "month": "2026-08",
+              "label": "Aug 2026",
+              "predicted": 72.6,
+              "low": 61.709999999999994,
+              "high": 83.48999999999998
+            },
+            {
+              "month": "2026-09",
+              "label": "Sep 2026",
+              "predicted": 94.3,
+              "low": 80.155,
+              "high": 108.445
+            },
+            {
+              "month": "2026-10",
+              "label": "Oct 2026",
+              "predicted": 60.6,
+              "low": 51.51,
+              "high": 69.69
+            },
+            {
+              "month": "2026-11",
+              "label": "Nov 2026",
+              "predicted": 98.9,
+              "low": 84.065,
+              "high": 113.735
+            },
+            {
+              "month": "2026-12",
+              "label": "Dec 2026",
+              "predicted": 95.0,
+              "low": 80.75,
+              "high": 109.24999999999999
+            },
+            {
+              "month": "2027-01",
+              "label": "Jan 2027",
+              "predicted": 194.5,
+              "low": 165.325,
+              "high": 223.67499999999998
+            },
+            {
+              "month": "2027-02",
+              "label": "Feb 2027",
+              "predicted": 196.0,
+              "low": 166.6,
+              "high": 225.39999999999998
+            },
+            {
+              "month": "2027-03",
+              "label": "Mar 2027",
+              "predicted": 194.3,
+              "low": 165.155,
+              "high": 223.445
+            },
+            {
+              "month": "2027-04",
+              "label": "Apr 2027",
+              "predicted": 180.0,
+              "low": 153.0,
+              "high": 206.99999999999997
+            },
+            {
+              "month": "2027-05",
+              "label": "May 2027",
+              "predicted": 161.8,
+              "low": 137.53,
+              "high": 186.07
+            },
+            {
+              "month": "2027-06",
+              "label": "Jun 2027",
+              "predicted": 197.4,
+              "low": 167.79,
+              "high": 227.01
+            },
+            {
+              "month": "2027-07",
+              "label": "Jul 2027",
+              "predicted": 46.0,
+              "low": 39.1,
+              "high": 52.9
+            }
+          ],
+          "model_key": "extreme_random_trees_2",
+          "is_recommended": false
+        },
+        "random_forest": {
+          "model_name": "RandomForest",
+          "is_flat": false,
+          "accuracy_pct": 71.05659684733315,
+          "near_term_mape": 28.94340315266685,
+          "long_term_mape": 28.94340315266685,
+          "next_month": {
+            "month": "2026-09",
+            "projected_total": 171.04666999999998
+          },
+          "by_end_of_year": {
+            "year": 2026,
+            "actual_so_far": 1191.0,
+            "current_month_estimate": 0.0,
+            "remaining_months_forecast": 569.86668,
+            "total_estimate": 1760.86668,
+            "low": 1675.3866779999998,
+            "high": 1846.3466819999999
+          },
+          "next_12_months": {
+            "months_covered": 12,
+            "total_estimate": 1834.0733699999998,
+            "low": 1558.9623645,
+            "high": 2109.1843755
+          },
+          "growth": {
+            "last_month_actual": 46.0,
+            "mtd_growth_pct": -100.0,
+            "same_period_last_year_total": 2025.0,
+            "ytd_growth_pct": -41.18518518518518,
+            "last_year_total": 2732.0,
+            "full_year_growth_pct": -35.54660761346998
+          },
+          "full_forecast": [
+            {
+              "month": "2026-08",
+              "label": "Aug 2026",
+              "predicted": 173.80667,
+              "low": 147.7356695,
+              "high": 199.8776705
+            },
+            {
+              "month": "2026-09",
+              "label": "Sep 2026",
+              "predicted": 171.04666999999998,
+              "low": 145.38966949999997,
+              "high": 196.70367049999996
+            },
+            {
+              "month": "2026-10",
+              "label": "Oct 2026",
+              "predicted": 133.76666999999998,
+              "low": 113.70166949999998,
+              "high": 153.83167049999997
+            },
+            {
+              "month": "2026-11",
+              "label": "Nov 2026",
+              "predicted": 136.08667,
+              "low": 115.67366949999999,
+              "high": 156.49967049999998
+            },
+            {
+              "month": "2026-12",
+              "label": "Dec 2026",
+              "predicted": 128.96667,
+              "low": 109.6216695,
+              "high": 148.3116705
+            },
+            {
+              "month": "2027-01",
+              "label": "Jan 2027",
+              "predicted": 168.96667,
+              "low": 143.6216695,
+              "high": 194.3116705
+            },
+            {
+              "month": "2027-02",
+              "label": "Feb 2027",
+              "predicted": 196.16666999999998,
+              "low": 166.74166949999997,
+              "high": 225.59167049999996
+            },
+            {
+              "month": "2027-03",
+              "label": "Mar 2027",
+              "predicted": 204.28667,
+              "low": 173.6436695,
+              "high": 234.92967049999996
+            },
+            {
+              "month": "2027-04",
+              "label": "Apr 2027",
+              "predicted": 171.24667,
+              "low": 145.55966949999998,
+              "high": 196.93367049999998
+            },
+            {
+              "month": "2027-05",
+              "label": "May 2027",
+              "predicted": 164.92667,
+              "low": 140.1876695,
+              "high": 189.66567049999998
+            },
+            {
+              "month": "2027-06",
+              "label": "Jun 2027",
+              "predicted": 189.00666999999999,
+              "low": 160.6556695,
+              "high": 217.35767049999995
+            },
+            {
+              "month": "2027-07",
+              "label": "Jul 2027",
+              "predicted": 169.60666999999998,
+              "low": 144.16566949999998,
+              "high": 195.04767049999995
+            }
+          ],
+          "model_key": "random_forest",
+          "is_recommended": false
+        },
+        "xg_boost_regressor": {
+          "model_name": "XGBoostRegressor",
+          "is_flat": false,
+          "accuracy_pct": 71.4282210389866,
+          "near_term_mape": 28.571778961013393,
+          "long_term_mape": 28.571778961013393,
+          "next_month": {
+            "month": "2026-09",
+            "projected_total": 80.43134544921875
+          },
+          "by_end_of_year": {
+            "year": 2026,
+            "actual_so_far": 1191.0,
+            "current_month_estimate": 0.0,
+            "remaining_months_forecast": 288.25812715820314,
+            "total_estimate": 1479.258127158203,
+            "low": 1436.0194080844726,
+            "high": 1522.4968462319337
+          },
+          "next_12_months": {
+            "months_covered": 12,
+            "total_estimate": 1510.8826402124023,
+            "low": 1284.250244180542,
+            "high": 1737.5150362442625
+          },
+          "growth": {
+            "last_month_actual": 46.0,
+            "mtd_growth_pct": -100.0,
+            "same_period_last_year_total": 2025.0,
+            "ytd_growth_pct": -41.18518518518518,
+            "last_year_total": 2732.0,
+            "full_year_growth_pct": -45.8543877321302
+          },
+          "full_forecast": [
+            {
+              "month": "2026-08",
+              "label": "Aug 2026",
+              "predicted": 89.14546440673828,
+              "low": 75.77364474572754,
+              "high": 102.51728406774902
+            },
+            {
+              "month": "2026-09",
+              "label": "Sep 2026",
+              "predicted": 80.43134544921875,
+              "low": 68.36664363183594,
+              "high": 92.49604726660156
+            },
+            {
+              "month": "2026-10",
+              "label": "Oct 2026",
+              "predicted": 52.3841652734375,
+              "low": 44.52654048242188,
+              "high": 60.24179006445313
+            },
+            {
+              "month": "2026-11",
+              "label": "Nov 2026",
+              "predicted": 79.68568657470703,
+              "low": 67.73283358850098,
+              "high": 91.63853956091309
+            },
+            {
+              "month": "2026-12",
+              "label": "Dec 2026",
+              "predicted": 75.75692986083985,
+              "low": 64.39339038171387,
+              "high": 87.12046933996582
+            },
+            {
+              "month": "2027-01",
+              "label": "Jan 2027",
+              "predicted": 186.5810646875,
+              "low": 158.593904984375,
+              "high": 214.56822439062498
+            },
+            {
+              "month": "2027-02",
+              "label": "Feb 2027",
+              "predicted": 190.73786400390625,
+              "low": 162.1271844033203,
+              "high": 219.34854360449216
+            },
+            {
+              "month": "2027-03",
+              "label": "Mar 2027",
+              "predicted": 194.83100365234375,
+              "low": 165.60635310449217,
+              "high": 224.0556542001953
+            },
+            {
+              "month": "2027-04",
+              "label": "Apr 2027",
+              "predicted": 199.74706505371094,
+              "low": 169.7850052956543,
+              "high": 229.70912481176757
+            },
+            {
+              "month": "2027-05",
+              "label": "May 2027",
+              "predicted": 154.41562889648438,
+              "low": 131.25328456201171,
+              "high": 177.577973230957
+            },
+            {
+              "month": "2027-06",
+              "label": "Jun 2027",
+              "predicted": 199.70163963867188,
+              "low": 169.7463936928711,
+              "high": 229.65688558447263
+            },
+            {
+              "month": "2027-07",
+              "label": "Jul 2027",
+              "predicted": 96.61024712158203,
+              "low": 82.11871005334473,
+              "high": 111.10178418981933
+            }
+          ],
+          "model_key": "xg_boost_regressor",
+          "is_recommended": false
+        },
+        "extreme_random_trees_3": {
+          "model_name": "ExtremeRandomTrees",
+          "is_flat": false,
+          "accuracy_pct": 70.86968221282693,
+          "near_term_mape": 29.130317787173066,
+          "long_term_mape": 29.130317787173066,
+          "next_month": {
+            "month": "2026-09",
+            "projected_total": 168.28
+          },
+          "by_end_of_year": {
+            "year": 2026,
+            "actual_so_far": 1191.0,
+            "current_month_estimate": 0.0,
+            "remaining_months_forecast": 615.72,
+            "total_estimate": 1806.72,
+            "low": 1714.362,
+            "high": 1899.078
+          },
+          "next_12_months": {
+            "months_covered": 12,
+            "total_estimate": 1908.9199999999998,
+            "low": 1622.5819999999999,
+            "high": 2195.258
+          },
+          "growth": {
+            "last_month_actual": 46.0,
+            "mtd_growth_pct": -100.0,
+            "same_period_last_year_total": 2025.0,
+            "ytd_growth_pct": -41.18518518518518,
+            "last_year_total": 2732.0,
+            "full_year_growth_pct": -33.86822840409956
+          },
+          "full_forecast": [
+            {
+              "month": "2026-08",
+              "label": "Aug 2026",
+              "predicted": 179.24,
+              "low": 152.354,
+              "high": 206.126
+            },
+            {
+              "month": "2026-09",
+              "label": "Sep 2026",
+              "predicted": 168.28,
+              "low": 143.038,
+              "high": 193.522
+            },
+            {
+              "month": "2026-10",
+              "label": "Oct 2026",
+              "predicted": 155.2,
+              "low": 131.92,
+              "high": 178.47999999999996
+            },
+            {
+              "month": "2026-11",
+              "label": "Nov 2026",
+              "predicted": 147.2,
+              "low": 125.11999999999999,
+              "high": 169.27999999999997
+            },
+            {
+              "month": "2026-12",
+              "label": "Dec 2026",
+              "predicted": 145.04,
+              "low": 123.28399999999999,
+              "high": 166.79599999999996
+            },
+            {
+              "month": "2027-01",
+              "label": "Jan 2027",
+              "predicted": 201.68,
+              "low": 171.428,
+              "high": 231.932
+            },
+            {
+              "month": "2027-02",
+              "label": "Feb 2027",
+              "predicted": 215.44,
+              "low": 183.124,
+              "high": 247.75599999999997
+            },
+            {
+              "month": "2027-03",
+              "label": "Mar 2027",
+              "predicted": 211.48,
+              "low": 179.75799999999998,
+              "high": 243.20199999999997
+            },
+            {
+              "month": "2027-04",
+              "label": "Apr 2027",
+              "predicted": 191.6,
+              "low": 162.85999999999999,
+              "high": 220.33999999999997
+            },
+            {
+              "month": "2027-05",
+              "label": "May 2027",
+              "predicted": 164.64,
+              "low": 139.944,
+              "high": 189.33599999999996
+            },
+            {
+              "month": "2027-06",
+              "label": "Jun 2027",
+              "predicted": 217.64,
+              "low": 184.99399999999997,
+              "high": 250.28599999999997
+            },
+            {
+              "month": "2027-07",
+              "label": "Jul 2027",
+              "predicted": 90.72,
+              "low": 77.112,
+              "high": 104.32799999999999
+            }
+          ],
+          "model_key": "extreme_random_trees_3",
+          "is_recommended": false
+        }
+      },
+      "next_month": {
+        "month": "2026-09",
+        "projected_total": 154.30333000000002
+      },
+      "by_end_of_year": {
+        "year": 2026,
+        "actual_so_far": 1191.0,
+        "current_month_estimate": 0.0,
+        "remaining_months_forecast": 567.8133200000001,
+        "total_estimate": 1758.8133200000002,
+        "low": 1673.641322,
+        "high": 1843.985318
+      },
+      "next_12_months": {
+        "months_covered": 12,
+        "total_estimate": 1797.6166300000002,
+        "low": 1527.9741354999999,
+        "high": 2067.2591245
+      },
+      "growth": {
+        "last_month_actual": 46.0,
+        "mtd_growth_pct": -100.0,
+        "same_period_last_year_total": 2025.0,
+        "ytd_growth_pct": -41.18518518518518,
+        "last_year_total": 2732.0,
+        "full_year_growth_pct": -35.621767203513905
+      },
+      "full_forecast": [
+        {
+          "month": "2026-08",
+          "label": "Aug 2026",
+          "predicted": 177.78333,
+          "low": 151.11583050000002,
+          "high": 204.4508295
+        },
+        {
+          "month": "2026-09",
+          "label": "Sep 2026",
+          "predicted": 154.30333000000002,
+          "low": 131.15783050000002,
+          "high": 177.44882950000002
+        },
+        {
+          "month": "2026-10",
+          "label": "Oct 2026",
+          "predicted": 143.54333,
+          "low": 122.01183049999999,
+          "high": 165.0748295
+        },
+        {
+          "month": "2026-11",
+          "label": "Nov 2026",
+          "predicted": 146.58333000000002,
+          "low": 124.5958305,
+          "high": 168.5708295
+        },
+        {
+          "month": "2026-12",
+          "label": "Dec 2026",
+          "predicted": 123.38332999999999,
+          "low": 104.87583049999999,
+          "high": 141.89082949999997
+        },
+        {
+          "month": "2027-01",
+          "label": "Jan 2027",
+          "predicted": 172.98333000000002,
+          "low": 147.0358305,
+          "high": 198.93082950000002
+        },
+        {
+          "month": "2027-02",
+          "label": "Feb 2027",
+          "predicted": 185.50333,
+          "low": 157.6778305,
+          "high": 213.32882949999998
+        },
+        {
+          "month": "2027-03",
+          "label": "Mar 2027",
+          "predicted": 186.38333,
+          "low": 158.4258305,
+          "high": 214.34082949999998
+        },
+        {
+          "month": "2027-04",
+          "label": "Apr 2027",
+          "predicted": 184.42333000000002,
+          "low": 156.75983050000002,
+          "high": 212.08682950000002
+        },
+        {
+          "month": "2027-05",
+          "label": "May 2027",
+          "predicted": 171.38333,
+          "low": 145.6758305,
+          "high": 197.09082949999998
+        },
+        {
+          "month": "2027-06",
+          "label": "Jun 2027",
+          "predicted": 193.66333,
+          "low": 164.6138305,
+          "high": 222.7128295
+        },
+        {
+          "month": "2027-07",
+          "label": "Jul 2027",
+          "predicted": 135.46333,
+          "low": 115.1438305,
+          "high": 155.7828295
+        }
+      ],
+      "backtest": {
+        "voting_ensemble": {
+          "accuracy_pct": 72.28487025111943,
+          "weighted_score": 27.71512974888057,
+          "near_term_mape": 27.71512974888057,
+          "long_term_mape": 27.71512974888057
+        },
+        "extreme_random_trees": {
+          "accuracy_pct": 71.539840678655,
+          "weighted_score": 28.46015932134501,
+          "near_term_mape": 28.46015932134501,
+          "long_term_mape": 28.46015932134501
+        },
+        "extreme_random_trees_2": {
+          "accuracy_pct": 72.12389081912893,
+          "weighted_score": 27.876109180871065,
+          "near_term_mape": 27.876109180871065,
+          "long_term_mape": 27.876109180871065
+        },
+        "random_forest": {
+          "accuracy_pct": 71.05659684733315,
+          "weighted_score": 28.94340315266685,
+          "near_term_mape": 28.94340315266685,
+          "long_term_mape": 28.94340315266685
+        },
+        "xg_boost_regressor": {
+          "accuracy_pct": 71.4282210389866,
+          "weighted_score": 28.571778961013393,
+          "near_term_mape": 28.571778961013393,
+          "long_term_mape": 28.571778961013393
+        },
+        "extreme_random_trees_3": {
+          "accuracy_pct": 70.86968221282693,
+          "weighted_score": 29.130317787173066,
+          "near_term_mape": 29.130317787173066,
+          "long_term_mape": 29.130317787173066
+        },
+        "extreme_random_trees_4": {
+          "accuracy_pct": 70.93624113419796,
+          "weighted_score": 29.063758865802043,
+          "near_term_mape": 29.063758865802043,
+          "long_term_mape": 29.063758865802043
+        },
+        "seasonal_naive": {
+          "accuracy_pct": 71.04699426322,
+          "weighted_score": 28.953005736780007,
+          "near_term_mape": 28.953005736780007,
+          "long_term_mape": 28.953005736780007
+        },
+        "prophet_model": {
+          "accuracy_pct": 70.98267894100866,
+          "weighted_score": 29.017321058991335,
+          "near_term_mape": 29.017321058991335,
+          "long_term_mape": 29.017321058991335
+        },
+        "random_forest_2": {
+          "accuracy_pct": 70.35205219914367,
+          "weighted_score": 29.647947800856333,
+          "near_term_mape": 29.647947800856333,
+          "long_term_mape": 29.647947800856333
+        },
+        "elastic_net": {
+          "accuracy_pct": 68.94975170168772,
+          "weighted_score": 31.05024829831229,
+          "near_term_mape": 31.05024829831229,
+          "long_term_mape": 31.05024829831229
+        },
+        "elastic_net_2": {
+          "accuracy_pct": 68.9551633644795,
+          "weighted_score": 31.0448366355205,
+          "near_term_mape": 31.0448366355205,
+          "long_term_mape": 31.0448366355205
+        },
+        "elastic_net_3": {
+          "accuracy_pct": 68.88544301046736,
+          "weighted_score": 31.114556989532637,
+          "near_term_mape": 31.114556989532637,
+          "long_term_mape": 31.114556989532637
+        },
+        "elastic_net_4": {
+          "accuracy_pct": 67.8429727753704,
+          "weighted_score": 32.1570272246296,
+          "near_term_mape": 32.1570272246296,
+          "long_term_mape": 32.1570272246296
+        },
+        "elastic_net_5": {
+          "accuracy_pct": 67.85321911327341,
+          "weighted_score": 32.14678088672658,
+          "near_term_mape": 32.14678088672658,
+          "long_term_mape": 32.14678088672658
+        },
+        "elastic_net_6": {
+          "accuracy_pct": 67.85795878989312,
+          "weighted_score": 32.14204121010688,
+          "near_term_mape": 32.14204121010688,
+          "long_term_mape": 32.14204121010688
+        },
+        "elastic_net_7": {
+          "accuracy_pct": 67.8536764039812,
+          "weighted_score": 32.1463235960188,
+          "near_term_mape": 32.1463235960188,
+          "long_term_mape": 32.1463235960188
+        },
+        "elastic_net_8": {
+          "accuracy_pct": 67.85617722139213,
+          "weighted_score": 32.14382277860788,
+          "near_term_mape": 32.14382277860788,
+          "long_term_mape": 32.14382277860788
+        },
+        "exponential_smoothing": {
+          "accuracy_pct": 68.59207112297517,
+          "weighted_score": 31.407928877024823,
+          "near_term_mape": 31.407928877024823,
+          "long_term_mape": 31.407928877024823
+        },
+        "average": {
+          "accuracy_pct": 68.57713542057016,
+          "weighted_score": 31.42286457942985,
+          "near_term_mape": 31.42286457942985,
+          "long_term_mape": 31.42286457942985
+        },
+        "light_gbm": {
+          "accuracy_pct": 68.57713542057016,
+          "weighted_score": 31.42286457942985,
+          "near_term_mape": 31.42286457942985,
+          "long_term_mape": 31.42286457942985
+        },
+        "auto_arima": {
+          "accuracy_pct": 68.47368501174371,
+          "weighted_score": 31.526314988256285,
+          "near_term_mape": 31.526314988256285,
+          "long_term_mape": 31.526314988256285
+        },
+        "seasonal_average": {
+          "accuracy_pct": 67.91878666555336,
+          "weighted_score": 32.081213334446645,
+          "near_term_mape": 32.081213334446645,
+          "long_term_mape": 32.081213334446645
+        },
+        "decision_tree": {
+          "accuracy_pct": 66.84167866814704,
+          "weighted_score": 33.15832133185296,
+          "near_term_mape": 33.15832133185296,
+          "long_term_mape": 33.15832133185296
+        },
+        "naive": {
+          "accuracy_pct": 60.93006849092793,
+          "weighted_score": 39.06993150907207,
+          "near_term_mape": 39.06993150907207,
+          "long_term_mape": 39.06993150907207
+        }
+      }
+    },
+    "downloaded_models": [
+      {
+        "rank": 1,
+        "algorithm": "VotingEnsemble",
+        "run_id": "sad_apple_2b5mqm5c9g_24",
+        "normalized_rmse": 0.1472196698393506,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\patients_sad_apple_2b5mqm5c9g\\rank01_VotingEnsemble"
+      },
+      {
+        "rank": 2,
+        "algorithm": "ExtremeRandomTrees",
+        "run_id": "sad_apple_2b5mqm5c9g_18",
+        "normalized_rmse": 0.1526760301439125,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\patients_sad_apple_2b5mqm5c9g\\rank02_ExtremeRandomTrees"
+      },
+      {
+        "rank": 3,
+        "algorithm": "ExtremeRandomTrees",
+        "run_id": "sad_apple_2b5mqm5c9g_22",
+        "normalized_rmse": 0.15423109016722297,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\patients_sad_apple_2b5mqm5c9g\\rank03_ExtremeRandomTrees"
+      },
+      {
+        "rank": 4,
+        "algorithm": "RandomForest",
+        "run_id": "sad_apple_2b5mqm5c9g_13",
+        "normalized_rmse": 0.1554329079634944,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\patients_sad_apple_2b5mqm5c9g\\rank04_RandomForest"
+      },
+      {
+        "rank": 5,
+        "algorithm": "XGBoostRegressor",
+        "run_id": "sad_apple_2b5mqm5c9g_8",
+        "normalized_rmse": 0.15807519745582604,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\patients_sad_apple_2b5mqm5c9g\\rank05_XGBoostRegressor"
+      },
+      {
+        "rank": 6,
+        "algorithm": "ExtremeRandomTrees",
+        "run_id": "sad_apple_2b5mqm5c9g_21",
+        "normalized_rmse": 0.15924384511551692,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\patients_sad_apple_2b5mqm5c9g\\rank06_ExtremeRandomTrees"
+      },
+      {
+        "rank": 7,
+        "algorithm": "ExtremeRandomTrees",
+        "run_id": "sad_apple_2b5mqm5c9g_20",
+        "normalized_rmse": 0.159931995903657,
+        "local_path": "D:\\1-First Insight\\prediction\\prophet\\v1\\models\\azure_downloads\\patients_sad_apple_2b5mqm5c9g\\rank07_ExtremeRandomTrees"
+      }
+    ]
+  }
+}

@@ -494,4 +494,6 @@ if __name__ == "__main__":
     )
     parser.add_argument("--start-year", type=int, default=DEFAULT_START_YEAR)
     parser.add_argument("--country", default=HOLIDAY_COUNTRY)
+    from utils.logging_setup import install_stdio_tee
+    install_stdio_tee("predict")
     run(parser.parse_args())
