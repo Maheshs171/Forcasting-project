@@ -68,6 +68,18 @@ WEEK_OUTLIER_MAD_THRESHOLD  = float(os.getenv("WEEK_OUTLIER_MAD_THRESHOLD", "20.
 # larger value, and therefore a far larger z-score, than a quiet holiday).
 DAY_OUTLIER_MAD_THRESHOLD   = float(os.getenv("DAY_OUTLIER_MAD_THRESHOLD", "30.0"))
 
+# ── Predictions storage (MySQL) ────────────────────────────────────────────
+# Where forecast/prediction REPORTS get written instead of outputs/*.json —
+# see db/predictions_store.py for why (Render's filesystem is ephemeral;
+# a real DB survives restarts/redeploys). Does not replace SQL_SERVER above
+# — that's still the SOURCE business data (patients/encounters/payments);
+# this is the DESTINATION for computed forecast results.
+PREDICTIONS_DB_HOST     = os.getenv("PREDICTIONS_DB_HOST")
+PREDICTIONS_DB_PORT     = int(os.getenv("PREDICTIONS_DB_PORT", "3306"))
+PREDICTIONS_DB_NAME     = os.getenv("PREDICTIONS_DB_NAME")
+PREDICTIONS_DB_USER     = os.getenv("PREDICTIONS_DB_USER")
+PREDICTIONS_DB_PASSWORD = os.getenv("PREDICTIONS_DB_PASSWORD")
+
 # ── Azure ML (AutoML forecasting comparison) ───────────────────────────────
 # Only needed if you run azure_automl.py — the local pipeline never requires these.
 AML_SUBSCRIPTION_ID = os.getenv("AML_SUBSCRIPTION_ID")

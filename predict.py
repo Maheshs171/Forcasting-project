@@ -391,6 +391,19 @@ def run_metric(metric: str, args, ts: str, all_data: dict = None) -> dict:
     with open(json_path, "w") as f:
         json.dump(summary, f, indent=2, default=str)
 
+    # Also persist to the predictions DB (see db/predictions_store.py) —
+    # the durable copy the backend actually reads from when configured, so
+    # results survive a redeploy on a platform with an ephemeral filesystem
+    # (e.g. Render). The local JSON file above is kept regardless, for
+    # local debugging/standalone-chart-viewing — this is additive, not a
+    # replacement, and a DB hiccup here must never fail the whole forecast.
+    try:
+        from db import predictions_store
+        if predictions_store.is_configured():
+            predictions_store.save_report("local", metric, freq, datetime.now().isoformat(), summary)
+    except Exception as e:
+        print(f"  (Could not save to predictions DB: {e})")
+
     chart_path = f"outputs/{metric}{suffix}_{ts}.html"
     save_chart(
         fit_results[recommended], chart_path, f"{METRIC_LABELS[metric]} forecast", is_money=is_money, pacing=pacing,

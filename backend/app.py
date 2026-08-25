@@ -21,7 +21,7 @@ from typing import Optional
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
 from pydantic import BaseModel
 
 from utils.logging_setup import install_stdio_tee, setup_logging
@@ -220,6 +220,23 @@ def config_defaults():
 
 
 # ── Latest outputs ────────────────────────────────────────────────────────
+#
+# Every lookup below tries the predictions DB first (see db/predictions_store.py)
+# when it's configured, and falls back to the local outputs/*.json glob
+# otherwise — this is what lets the same code run unchanged whether it's on
+# a machine with a persistent filesystem (local dev) or a platform with an
+# ephemeral one (Render), and lets local dev keep working with zero DB setup.
+
+def _db_report(source: str, metric: str, frequency: str) -> Optional[dict]:
+    try:
+        from db import predictions_store
+        if not predictions_store.is_configured():
+            return None
+        return predictions_store.load_report(source, metric, frequency)
+    except Exception as e:
+        logger.warning(f"predictions DB read failed for {source}/{metric}/{frequency}: {e}")
+        return None
+
 
 @app.get("/api/forecast/{metric}")
 def latest_forecast(metric: str, frequency: str = "month"):
@@ -227,6 +244,11 @@ def latest_forecast(metric: str, frequency: str = "month"):
         raise HTTPException(404, f"Unknown metric '{metric}'")
     if frequency not in FETCHERS_BY_FREQUENCY:
         raise HTTPException(400, f"Unknown frequency '{frequency}'. Valid: {list(FETCHERS_BY_FREQUENCY.keys())}")
+
+    data = _db_report("local", metric, frequency)
+    if data is not None:
+        return data
+
     # "month" files are "{metric}_{ts}.json" (timestamp starts with a digit);
     # "week" files are "{metric}_week_{ts}.json" — the digit-anchored glob
     # keeps a monthly lookup from matching a weekly file whose ts substring
@@ -280,11 +302,14 @@ def backtest_report(frequency: str = "month"):
     combined = {}
     newest_mtime = 0.0
     for m in FETCHERS.keys():
-        path = _latest_file(f"{stem_for(m)}.json")
-        data = _load_json(path)
+        data = _db_report("local", m, frequency)
+        path = None
+        if data is None:
+            path = _latest_file(f"{stem_for(m)}.json")
+            data = _load_json(path)
         if data and "backtest" in data:
             combined[m] = {"candidates": data["backtest"], "best_model": data.get("best_model", data.get("model_used"))}
-            newest_mtime = max(newest_mtime, os.path.getmtime(path))
+            newest_mtime = max(newest_mtime, os.path.getmtime(path) if path else time.time())
 
     fallback_path = os.path.join(OUTPUTS_DIR, "backtest_report.json" if frequency == "month" else f"backtest_report_{frequency}.json")
     fallback = _load_json(fallback_path)
@@ -337,18 +362,35 @@ def azure_automl_latest(frequency: str = "month"):
     """
     if frequency not in FETCHERS_BY_FREQUENCY:
         raise HTTPException(400, f"Unknown frequency '{frequency}'. Valid: {list(FETCHERS_BY_FREQUENCY.keys())}")
-    stem = "azure_automl_[0-9]*" if frequency == "month" else f"azure_automl_{frequency}_*"
-    path = _latest_file(f"{stem}.json")
-    data = _load_json(path)
-    if data is None:
+
+    generated_at = None
+    try:
+        from db import predictions_store
+        data = predictions_store.load_all_reports("azure", frequency) if predictions_store.is_configured() else {}
+        if data:
+            generated_at = predictions_store.latest_generated_at("azure", frequency)
+    except Exception as e:
+        logger.warning(f"predictions DB read failed for azure/{frequency}: {e}")
+        data = {}
+
+    path = None
+    if not data:
+        stem = "azure_automl_[0-9]*" if frequency == "month" else f"azure_automl_{frequency}_*"
+        path = _latest_file(f"{stem}.json")
+        data = _load_json(path)
+    if not data:
         adverb = {"month": "monthly", "week": "weekly", "day": "daily"}.get(frequency, frequency)
         raise HTTPException(404, f"No {adverb} Azure AutoML report yet. Run azure_automl.py first.")
+    if generated_at is None and path:
+        generated_at = datetime.fromtimestamp(os.path.getmtime(path)).isoformat()
 
     local_stem = lambda m: f"{m}_[0-9]*" if frequency == "month" else f"{m}_{frequency}_*"
     enriched = {}
     for metric, result in data.items():
-        local_path = _latest_file(f"{local_stem(metric)}.json")
-        local = _load_json(local_path)
+        local = _db_report("local", metric, frequency)
+        if local is None:
+            local_path = _latest_file(f"{local_stem(metric)}.json")
+            local = _load_json(local_path)
         local_model = local.get("model_used") if local else None
         local_accuracy = local.get("models", {}).get(local_model, {}).get("accuracy_pct") if local else None
 
@@ -379,7 +421,7 @@ def azure_automl_latest(frequency: str = "month"):
             "downloaded_models": result.get("downloaded_models", []),
         }
 
-    return {"data": enriched, "generated_at": datetime.fromtimestamp(os.path.getmtime(path)).isoformat()}
+    return {"data": enriched, "generated_at": generated_at}
 
 
 @app.get("/api/data-quality/{metric}")
@@ -605,3 +647,25 @@ def get_job_logs(job_id: str, since: int = 0):
         "next": len(job.logs),
         "error": job.error,
     }
+
+
+# ── Serve the built frontend (production only) ──────────────────────────
+#
+# Local dev runs two servers (Vite on 5173 proxying /api to this one on
+# 8000 — see frontend/vite.config.ts); a single Render web service needs
+# one process serving both, so this mounts frontend/dist's built assets
+# and falls back to index.html for any route React Router owns client-side
+# (e.g. /forecast/patients). Registered LAST so it never shadows an /api
+# or /charts route above — FastAPI matches routes in registration order,
+# and this is a catch-all. A no-op locally: frontend/dist only exists
+# after `npm run build`, which local dev never runs.
+_FRONTEND_DIST = os.path.join(os.path.dirname(__file__), "..", "frontend", "dist")
+if os.path.isdir(_FRONTEND_DIST):
+    app.mount("/assets", StaticFiles(directory=os.path.join(_FRONTEND_DIST, "assets")), name="frontend-assets")
+
+    @app.get("/{full_path:path}")
+    def serve_frontend(full_path: str):
+        candidate = os.path.join(_FRONTEND_DIST, full_path)
+        if full_path and os.path.isfile(candidate):
+            return FileResponse(candidate)
+        return FileResponse(os.path.join(_FRONTEND_DIST, "index.html"))

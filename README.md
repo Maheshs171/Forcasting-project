@@ -71,6 +71,48 @@ metric depends on the actual data and will likely differ from QA.
 
 ---
 
+## Predictions storage (MySQL) — required for Render / any ephemeral filesystem
+
+By default, forecast reports are written to `outputs/*.json` on local disk.
+That's fine on a machine you run yourself, but breaks on a platform whose
+filesystem resets on every redeploy (Render, most container platforms) —
+the dashboard would come up empty after every deploy. Setting the
+`PREDICTIONS_DB_*` vars in `.env` switches report storage to a real MySQL
+database instead, so results survive restarts/redeploys.
+
+```
+PREDICTIONS_DB_HOST=your-mysql-server.mysql.database.azure.com
+PREDICTIONS_DB_PORT=3306
+PREDICTIONS_DB_NAME=predictions_db
+PREDICTIONS_DB_USER=your_mysql_user
+PREDICTIONS_DB_PASSWORD=your_mysql_password
+```
+
+This is **separate** from `SQL_SERVER`/`SQL_DATABASE` above — those are the
+SOURCE business data (patients/encounters/payments) the pipeline reads
+FROM; `PREDICTIONS_DB_*` is the DESTINATION for computed forecast results,
+and can be (and normally is) a completely different server/engine.
+
+What's covered: `predict.py`'s per-metric summary and `azure_automl.py`'s
+per-metric result (leaderboard + `forecast_detail`) — the exact JSON
+`backend/app.py` already served from local files. The table
+(`forecast_reports`, auto-created on first use — see
+`db/predictions_store.py`) keeps only the latest report per
+(source, metric, frequency), same "always shows the newest run" behavior
+the file-glob lookup already had.
+
+What's **not** covered: the downloaded Azure model binaries
+(`models/azure_downloads/*.pkl` etc.) — those are multi-megabyte files
+better suited to object storage than a MySQL TEXT column, and are
+committed to this repo directly instead (see "Run forecast from
+downloaded models" above) so they're present in any fresh deploy from git
+without needing separate infrastructure.
+
+Leaving `PREDICTIONS_DB_*` unset keeps the exact previous behavior (local
+files only) — nothing about local dev changes if you don't set these.
+
+---
+
 ## Azure AutoML setup
 
 `azure_automl.py` submits AutoML forecasting jobs to Azure ML and — once

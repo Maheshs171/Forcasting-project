@@ -1,0 +1,58 @@
+services:
+  - type: web
+    name: forecast-ops
+    runtime: python
+    plan: starter
+    # Builds the React frontend into frontend/dist, then installs the
+    # Python backend's deps — backend/app.py serves both from one process
+    # (see its "Serve the built frontend" section), so this is ONE Render
+    # service, not two.
+    buildCommand: "cd frontend && npm install && npm run build && cd .. && pip install -r requirements.txt"
+    startCommand: "uvicorn backend.app:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      # Source business data (SQL Server) — required for the app to fetch
+      # anything at all. Set these in the Render dashboard, not here —
+      # this file is committed to git, real credentials never should be.
+      - key: SQL_SERVER
+        sync: false
+      - key: SQL_DATABASE
+        sync: false
+      - key: SQL_USERNAME
+        sync: false
+      - key: SQL_PASSWORD
+        sync: false
+      - key: SQL_PORT
+        value: "3342"
+
+      # Predictions storage (MySQL) — required on Render specifically,
+      # since its filesystem is ephemeral (see README's "Predictions
+      # storage" section). Without these set, the app still runs but
+      # every report disappears on the next deploy/restart.
+      - key: PREDICTIONS_DB_HOST
+        sync: false
+      - key: PREDICTIONS_DB_PORT
+        value: "3306"
+      - key: PREDICTIONS_DB_NAME
+        sync: false
+      - key: PREDICTIONS_DB_USER
+        sync: false
+      - key: PREDICTIONS_DB_PASSWORD
+        sync: false
+
+      # Azure ML (only needed if using the Azure Ops / "Train on Azure"
+      # page) — omit entirely if you're not using that feature.
+      - key: AML_SUBSCRIPTION_ID
+        sync: false
+      - key: AML_RESOURCE_GROUP
+        sync: false
+      - key: AML_WORKSPACE_NAME
+        sync: false
+      - key: AML_COMPUTE_NAME
+        sync: false
+
+      - key: HOLIDAY_COUNTRY
+        value: US
+      - key: DEFAULT_FORECAST_MONTHS
+        value: "12"
+      - key: DEFAULT_START_YEAR
+        value: "2019"

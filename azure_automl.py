@@ -764,6 +764,22 @@ def run(args, progress_cb=None) -> dict:
         json.dump(results, f, indent=2, default=str)
     print(f"\nFull report saved to {out_path}")
 
+    # Also persist each metric's result to the predictions DB (see
+    # db/predictions_store.py) — same rationale as predict.py's own save:
+    # the durable copy the backend reads from when configured, so results
+    # survive an ephemeral filesystem redeploy. Skips metrics with no real
+    # result (e.g. "insufficient history"); a DB hiccup here is logged, not
+    # fatal — the local JSON file above already has everything either way.
+    try:
+        from db import predictions_store
+        if predictions_store.is_configured():
+            now_iso = datetime.now().isoformat()
+            for m, result in results.items():
+                if isinstance(result, dict) and "leaderboard" in result:
+                    predictions_store.save_report("azure", m, freq, now_iso, result)
+    except Exception as e:
+        print(f"  (Could not save to predictions DB: {e})")
+
     return {"ts": ts, "results": results, "output_path": out_path}
 
 
@@ -787,19 +803,28 @@ def build_forecast_from_downloads(metric: str, freq: str, horizon: int, start_ye
     originally ran the training, which is very unlikely to be the same
     absolute path here.
     """
-    stem = "azure_automl_[0-9]*" if freq == "month" else f"azure_automl_{freq}_*"
-    files = sorted(glob.glob(os.path.join(OUTPUTS_DIR, f"{stem}.json")), key=os.path.getmtime, reverse=True)
-    if not files:
-        raise RuntimeError(
-            f"No saved Azure report found for frequency '{freq}' in {OUTPUTS_DIR} — train on Azure at least "
-            f"once first, or copy over an outputs/azure_automl*.json + models/azure_downloads/ from someone who has."
-        )
+    saved = None
+    try:
+        from db import predictions_store
+        if predictions_store.is_configured():
+            saved = predictions_store.load_report("azure", metric, freq)
+    except Exception as e:
+        print(f"  (predictions DB read failed, falling back to local file: {e})")
 
-    with open(files[0]) as f:
-        all_results = json.load(f)
-    saved = all_results.get(metric)
+    if saved is None:
+        stem = "azure_automl_[0-9]*" if freq == "month" else f"azure_automl_{freq}_*"
+        files = sorted(glob.glob(os.path.join(OUTPUTS_DIR, f"{stem}.json")), key=os.path.getmtime, reverse=True)
+        if not files:
+            raise RuntimeError(
+                f"No saved Azure report found for frequency '{freq}' (checked predictions DB and {OUTPUTS_DIR}) — "
+                f"train on Azure at least once first, or copy over an outputs/azure_automl*.json + "
+                f"models/azure_downloads/ from someone who has."
+            )
+        with open(files[0]) as f:
+            all_results = json.load(f)
+        saved = all_results.get(metric)
     if not saved:
-        raise RuntimeError(f"No saved Azure result for metric '{metric}' in {os.path.basename(files[0])}.")
+        raise RuntimeError(f"No saved Azure result for metric '{metric}' at frequency '{freq}'.")
 
     leaderboard = saved.get("leaderboard") or []
     saved_downloads = saved.get("downloaded_models") or []
@@ -850,15 +875,29 @@ def run_from_downloads(args, progress_cb=None) -> dict:
     start_year = getattr(args, "start_year", DEFAULT_START_YEAR)
     horizon = getattr(args, "horizon", DEFAULT_FORECAST_MONTHS)
 
-    stem = "azure_automl_[0-9]*" if freq == "month" else f"azure_automl_{freq}_*"
-    files = sorted(glob.glob(os.path.join(OUTPUTS_DIR, f"{stem}.json")), key=os.path.getmtime, reverse=True)
-    if not files:
-        raise RuntimeError(f"No saved Azure report found for frequency '{freq}'. Train on Azure at least once first.")
-    out_path = files[0]
-    with open(out_path) as f:
-        all_results = json.load(f)
+    db_source = None
+    try:
+        from db import predictions_store
+        if predictions_store.is_configured():
+            db_source = predictions_store
+    except Exception as e:
+        print(f"  (predictions DB unavailable, will use local files only: {e})")
+
+    all_results = {}
+    out_path = None
+    if db_source:
+        all_results = db_source.load_all_reports("azure", freq)
+    if not all_results:
+        stem = "azure_automl_[0-9]*" if freq == "month" else f"azure_automl_{freq}_*"
+        files = sorted(glob.glob(os.path.join(OUTPUTS_DIR, f"{stem}.json")), key=os.path.getmtime, reverse=True)
+        if not files:
+            raise RuntimeError(f"No saved Azure report found for frequency '{freq}'. Train on Azure at least once first.")
+        out_path = files[0]
+        with open(out_path) as f:
+            all_results = json.load(f)
 
     rebuilt = {}
+    now_iso = datetime.now().isoformat()
     for i, m in enumerate(metrics):
         if progress_cb:
             progress_cb(i, len(metrics), m)
@@ -866,6 +905,8 @@ def run_from_downloads(args, progress_cb=None) -> dict:
             forecast_detail = build_forecast_from_downloads(m, freq, horizon, start_year)
             if m in all_results:
                 all_results[m]["forecast_detail"] = forecast_detail
+                if db_source:
+                    db_source.save_report("azure", m, freq, now_iso, all_results[m])
             rebuilt[m] = f"ok — {len(forecast_detail['models'])} model(s)"
             print(f"  '{m}': rebuilt forecast from {len(forecast_detail['models'])} downloaded model(s).")
         except Exception as e:
@@ -875,9 +916,12 @@ def run_from_downloads(args, progress_cb=None) -> dict:
     if progress_cb:
         progress_cb(len(metrics), len(metrics), None)
 
-    with open(out_path, "w") as f:
-        json.dump(all_results, f, indent=2, default=str)
-    print(f"\nUpdated {out_path}")
+    if out_path:
+        with open(out_path, "w") as f:
+            json.dump(all_results, f, indent=2, default=str)
+        print(f"\nUpdated {out_path}")
+    else:
+        print("\nUpdated predictions DB.")
 
     return {"output_path": out_path, "rebuilt": rebuilt}
 
