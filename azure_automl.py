@@ -280,14 +280,16 @@ def wait_and_report(ml_client, job_name: str, metric: str, data: dict = None, ho
         except Exception as e:
             print(f"  (Could not download models locally: {e})")
 
-    # Forecast detail is built from the LOCAL copies just downloaded above,
-    # not a live Azure connection — see build_forecast_detail's docstring
-    # for why (keeps this step working even without azureml-training-tabular
-    # installed in this process, via a subprocess in an isolated venv).
+    # Forecast detail is computed by a SEPARATE Azure ML job running on
+    # Azure's own compute, in Azure's own curated AutoML environment (see
+    # run_scoring_job / azure_score_job.py) — not locally. That environment
+    # is what trained these models in the first place, so it's guaranteed
+    # to be able to load them back; this machine never needs
+    # azureml-training-tabular or any of its old-pinned dependencies at all.
     forecast_detail = None
-    if downloaded_models and data is not None:
+    if leaderboard and data is not None:
         try:
-            forecast_detail = build_forecast_detail(leaderboard, downloaded_models, metric, data, horizon, freq=freq)
+            forecast_detail = run_scoring_job(ml_client, leaderboard, metric, data, horizon, freq)
         except Exception as e:
             print(f"  (Could not generate a future forecast from Azure's models: {e})")
 
@@ -300,6 +302,85 @@ def wait_and_report(ml_client, job_name: str, metric: str, data: dict = None, ho
         "downloaded_models": downloaded_models,
     }
     return result
+
+
+SCORE_JOB_ENVIRONMENT = "azureml://registries/azureml/environments/ai-ml-automl/labels/latest"
+SCORE_JOB_TOP_N = 5
+
+
+def run_scoring_job(ml_client, leaderboard: list, metric: str, data: dict, horizon: int, freq: str,
+                     top_n: int = SCORE_JOB_TOP_N) -> dict:
+    """
+    Submits azure_score_job.py as an Azure ML command job, running on this
+    project's own compute (AML_COMPUTE_NAME) in Azure's curated AutoML
+    environment — the exact environment that trained these models, so it
+    already has azureml-training-tabular and every dependency needed to
+    load them back. Waits for it to finish, downloads its small JSON
+    output, and returns the parsed MetricForecast-shaped dict.
+
+    This replaces the older approach (download model binaries locally,
+    load them via a hand-built venv_azure/ Python 3.11 environment) — that
+    worked, but needed real trial-and-error to get azureml-training-
+    tabular's old-pinned dependency tree installed anywhere. Running the
+    load-and-forecast step where the model was trained avoids the problem
+    entirely: nothing about this machine's own Python environment matters.
+    """
+    import tempfile, shutil
+    from azure.ai.ml import command, Output
+
+    ensure_compute_running(ml_client)
+
+    history = data["history"]
+    current_month_row = data["current_month"]
+    notes = data.get("notes", [])
+    mtd_actual = float(current_month_row["y"].iloc[0]) if not current_month_row.empty else 0.0
+
+    tmp_dir = tempfile.mkdtemp(prefix=f"score_{metric}_")
+    try:
+        shutil.copy(os.path.join(os.path.dirname(__file__), "azure_score_job.py"), tmp_dir)
+        vendor_src = os.path.join(os.path.dirname(__file__), "azure_score_vendor", "pkg_resources")
+        shutil.copytree(vendor_src, os.path.join(tmp_dir, "pkg_resources_vendor", "pkg_resources"))
+        history[["ds", "y"]].to_csv(os.path.join(tmp_dir, "history.csv"), index=False)
+        with open(os.path.join(tmp_dir, "notes.json"), "w") as f:
+            json.dump(notes, f, default=str)
+        with open(os.path.join(tmp_dir, "leaderboard.json"), "w") as f:
+            json.dump(leaderboard, f, default=str)
+
+        job = command(
+            display_name=f"score-{metric}-{freq}",
+            experiment_name=f"forecast-{metric}-score",
+            code=tmp_dir,
+            command=(
+                f"python azure_score_job.py --metric {metric} --label \"{METRIC_LABELS.get(metric, metric)}\" "
+                f"--freq {freq} --horizon {horizon} --top-n {top_n} --history-csv history.csv "
+                f"--current-period-actual {mtd_actual} --notes-json notes.json "
+                f"--leaderboard-json leaderboard.json --output-dir ${{{{outputs.forecast_output}}}}"
+            ),
+            environment=SCORE_JOB_ENVIRONMENT,
+            compute=AML_COMPUTE_NAME,
+            outputs={"forecast_output": Output(type="uri_folder")},
+        )
+        returned_job = ml_client.jobs.create_or_update(job)
+        print(f"  Submitted scoring job '{returned_job.name}' for {metric} ({freq}) — "
+              f"computing forecast on Azure's own compute...")
+        ml_client.jobs.stream(returned_job.name)
+
+        download_dir = tempfile.mkdtemp(prefix=f"score_dl_{metric}_")
+        try:
+            ml_client.jobs.download(name=returned_job.name, download_path=download_dir, output_name="forecast_output")
+            result_path = None
+            for root, _, files in os.walk(download_dir):
+                if "forecast_detail.json" in files:
+                    result_path = os.path.join(root, "forecast_detail.json")
+                    break
+            if not result_path:
+                raise RuntimeError(f"Scoring job '{returned_job.name}' completed but produced no forecast_detail.json")
+            with open(result_path) as f:
+                return json.load(f)
+        finally:
+            shutil.rmtree(download_dir, ignore_errors=True)
+    finally:
+        shutil.rmtree(tmp_dir, ignore_errors=True)
 
 
 MODEL_DOWNLOAD_DIR = os.path.join(os.path.dirname(__file__), "models", "azure_downloads")
@@ -764,12 +845,21 @@ def run(args, progress_cb=None) -> dict:
         json.dump(results, f, indent=2, default=str)
     print(f"\nFull report saved to {out_path}")
 
-    # Also persist each metric's result to the predictions DB (see
-    # db/predictions_store.py) — same rationale as predict.py's own save:
-    # the durable copy the backend reads from when configured, so results
-    # survive an ephemeral filesystem redeploy. Skips metrics with no real
-    # result (e.g. "insufficient history"); a DB hiccup here is logged, not
-    # fatal — the local JSON file above already has everything either way.
+    _save_results_to_predictions_db(results, freq)
+
+    return {"ts": ts, "results": results, "output_path": out_path}
+
+
+def _save_results_to_predictions_db(results: dict, freq: str) -> None:
+    """Persists each metric's result to the predictions DB (see
+    db/predictions_store.py) — same rationale as predict.py's own save:
+    the durable copy the backend reads from when configured, so results
+    survive an ephemeral filesystem redeploy. Skips metrics with no real
+    result (e.g. "insufficient history"); a DB hiccup here is logged, not
+    fatal — the local JSON file the caller already wrote has everything
+    either way. Shared by both run() (the in-process entrypoint the
+    backend uses) and main()'s CLI default mode, so a manual
+    `python azure_automl.py` run stays consistent with what the app does."""
     try:
         from db import predictions_store
         if predictions_store.is_configured():
@@ -779,8 +869,6 @@ def run(args, progress_cb=None) -> dict:
                     predictions_store.save_report("azure", m, freq, now_iso, result)
     except Exception as e:
         print(f"  (Could not save to predictions DB: {e})")
-
-    return {"ts": ts, "results": results, "output_path": out_path}
 
 
 def build_forecast_from_downloads(metric: str, freq: str, horizon: int, start_year: int) -> dict:
@@ -1029,6 +1117,8 @@ def main():
     with open(out_path, "w") as f:
         json.dump(results, f, indent=2, default=str)
     print(f"\nFull report saved to {out_path}")
+
+    _save_results_to_predictions_db(results, args.freq)
 
 
 if __name__ == "__main__":

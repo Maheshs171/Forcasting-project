@@ -40,7 +40,11 @@ services:
         sync: false
 
       # Azure ML (only needed if using the Azure Ops / "Train on Azure"
-      # page) — omit entirely if you're not using that feature.
+      # page) — omit entirely if you're not using that feature. The full
+      # flow (training + the rich multi-model dashboard) works from
+      # Render with no extra setup — model loading/scoring runs as its
+      # own job on Azure's own compute (see README's "Azure AutoML
+      # setup"), not on this machine, so venv_azure/ is never needed here.
       - key: AML_SUBSCRIPTION_ID
         sync: false
       - key: AML_RESOURCE_GROUP
@@ -48,6 +52,16 @@ services:
       - key: AML_WORKSPACE_NAME
         sync: false
       - key: AML_COMPUTE_NAME
+        sync: false
+      # DefaultAzureCredential needs a service principal here — Render is
+      # headless, so it can't do an interactive `az login` the way a dev
+      # machine does. Create one via `az ad sp create-for-rbac` with
+      # Contributor access to the ML workspace, then set these three.
+      - key: AZURE_CLIENT_ID
+        sync: false
+      - key: AZURE_CLIENT_SECRET
+        sync: false
+      - key: AZURE_TENANT_ID
         sync: false
 
       - key: HOLIDAY_COUNTRY

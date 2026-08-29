@@ -116,18 +116,50 @@ files only) — nothing about local dev changes if you don't set these.
 ## Azure AutoML setup
 
 `azure_automl.py` submits AutoML forecasting jobs to Azure ML and — once
-a job finishes — loads its top trials back as real models to generate a
-full multi-model forecast report (same shape as the local dashboard).
-That last step needs `azureml-training-tabular`, which pins old,
-narrow-range dependency versions (numpy<=1.23.5, scikit-learn<=1.6,
-scipy<1.11) that would conflict with this project's own newer
-Prophet/XGBoost stack if installed into the same environment. It runs
-instead in a **separate virtual environment**, `venv_azure/`, invoked as
-a subprocess (see `azure_model_infer.py`) — the main backend never needs
-those old versions itself.
+a job finishes — needs to load its top trials back as real models to
+generate a full multi-model forecast report (same shape as the local
+dashboard: model cards, donuts, comparison table, backtest table).
 
-One-time setup (`venv_azure/` needs **Python 3.11** specifically —
-`azureml-training-tabular` doesn't support 3.12/3.13):
+That model-loading step needs `azureml-training-tabular`, which pins
+old, narrow-range dependency versions (numpy<=1.23.5, scikit-learn<=1.6)
+that would conflict with this project's own newer Prophet/XGBoost stack
+if installed locally. **The fix: that step now runs as its own Azure ML
+job, on Azure's own compute, in Azure's own curated `ai-ml-automl`
+environment** — see `run_scoring_job()` in `azure_automl.py` and its
+job script `azure_score_job.py`. That environment is, by construction,
+already able to load the models it just trained, so nothing needs
+installing anywhere — not on this machine, not on Render, nowhere. The
+main app process only ever submits the job, waits, and downloads back
+a small JSON result.
+
+Two real bugs surfaced building this, both worth knowing about if
+`run_scoring_job()` ever needs touching again:
+- The curated environment's own `pip` is broken for any install (a
+  version mismatch in its vendored `pkg_resources` shim) — so nothing
+  can be `pip install`ed from inside the job. `pkg_resources` itself
+  (needed by `mlflow.sklearn.load_model`) is instead vendored directly
+  into the job's code upload from `azure_score_vendor/` (a pure-Python
+  copy pulled from an older setuptools that still ships it).
+- Azure's own `ForecastingPipelineWrapper.forecast()` internally checks
+  a request's grain against a `forecast_origin` dict keyed by a plain
+  string — but pandas 2.0 changed `groupby([single_column])` to yield
+  tuple keys instead of scalar ones, so that internal check now always
+  fails for single-series models trained without an explicit grain
+  column (a real regression in Azure's own runtime under newer pandas,
+  not anything about this project's data). `_forecast_one_model()`
+  works around it by aliasing `forecast_origin`'s keys under both
+  shapes before calling `.forecast()`.
+
+**`venv_azure/`** (Python 3.11 + a hand-pinned `azureml-training-tabular`
+environment) still exists for one narrower purpose: the **"Run forecast
+from downloaded models"** feature (`build_forecast_detail()` /
+`run_from_downloads()`), which regenerates a report purely from
+already-downloaded local model artifacts with **no Azure connection at
+all** — for someone who was handed a `models/azure_downloads/` folder
+without their own Azure ML access. If you only care about the live
+"Train on Azure" flow (the common case, and what Render uses), you
+don't need to set this up. If you do want the offline fallback too,
+one-time setup (needs **Python 3.11** specifically):
 
 ```powershell
 py -3.11 -m venv venv_azure
@@ -136,23 +168,11 @@ venv_azure\Scripts\python.exe -m pip install -r venv_azure_requirements.txt
 
 If `py -3.11` isn't found, install it first: `winget install --id Python.Python.3.11`
 (this adds Python 3.11 alongside whatever version you already use — it
-doesn't replace anything).
-
-Without `venv_azure/` set up, Azure training jobs still run and the
-leaderboard still populates — you just won't get the full forecast
-report (model cards, donuts, backtest table) for Azure runs, only for
-local ones. The Azure Ops page's "Full forecast dashboard" section will
-show a placeholder instead in that case.
-
-Two known gaps in `venv_azure`'s model coverage (both fail gracefully —
-that model is skipped and the rest of the top trials still populate the
-report):
-- **VotingEnsemble** trials that embed a Prophet sub-model fail to
-  unpickle (a `cmdstanpy` internal representation mismatch between
-  Azure's training-time version and what's installable now).
-- Anything requiring MSVC Build Tools to compile from source (only
-  matters if `venv_azure_requirements.txt`'s pinned wheels stop being
-  available for a given Python version).
+doesn't replace anything). Two known gaps in this offline path's model
+coverage (both fail gracefully — that model is skipped and the rest of
+the top trials still populate the report): **VotingEnsemble** trials
+embedding a Prophet sub-model fail to unpickle (a `cmdstanpy` version
+mismatch), and anything needing MSVC Build Tools to compile from source.
 
 ---
 
