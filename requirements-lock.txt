@@ -1,0 +1,188 @@
+# Full pinned dependency closure (every transitive package too), captured
+# from a fresh Python 3.12 venv after running the exact install sequence
+# in requirements.txt + README's "Setup" section, then verified with a
+# real smoke test (project module imports + a live Azure ML MLflow
+# tracking call). Use this instead of requirements.txt when you want a
+# byte-for-byte reproducible environment on a new VM — a single
+# `pip install -r requirements-lock.txt` reconstructs the whole verified
+# environment in one command, without needing the separate --no-deps
+# azureml-mlflow step (that's already baked into this file's exact pins).
+#
+# requirements.txt stays the source of truth for WHAT this project
+# directly depends on and WHY (see its comments) — this file is a derived
+# artifact, regenerate it after intentionally changing requirements.txt:
+#
+#   python -m venv fresh && fresh\Scripts\pip install -r requirements.txt
+#   fresh\Scripts\pip install --no-deps azureml-mlflow==1.62.0.post5
+#   fresh\Scripts\pip install azure-common jsonpickle
+#   fresh\Scripts\pip freeze > requirements-lock.txt
+#
+# Generated on Windows — the one Windows-only entry (pywin32, pulled in
+# by mlflow's optional docker-serving feature, never used here) is marked
+# with a sys_platform guard below so this file installs cleanly on a
+# Linux VM too, without needing any other changes.
+
+aiohappyeyeballs==2.7.1
+aiohttp==3.14.3
+aiosignal==1.4.0
+alembic==1.19.1
+annotated-doc==0.0.5
+annotated-types==0.8.0
+anyio==4.14.2
+asgiref==3.12.1
+attrs==26.1.0
+autots==1.0.3
+azure-ai-ml==1.34.1
+azure-common==1.1.28
+azure-core==1.41.0
+azure-core-tracing-opentelemetry==1.0.0b13
+azure-identity==1.17.0
+azure-mgmt-core==1.6.0
+azure-monitor-opentelemetry==1.8.2
+azure-monitor-opentelemetry-exporter==1.0.0b45
+azure-storage-blob==12.30.1
+azure-storage-file-datalake==12.25.0
+azure-storage-file-share==12.26.0
+azureml-dataprep==5.4.5
+azureml-dataprep-native==42.1.2
+azureml-dataprep-rslex==2.25.7
+azureml-mlflow==1.62.0.post5
+blinker==1.9.0
+cachetools==7.1.8
+certifi==2026.7.22
+cffi==2.1.1
+charset-normalizer==3.5.1
+click==8.5.0
+cloudpickle==2.2.1
+cmdstanpy==1.3.0
+colorama==0.4.6
+colorlog==6.12.0
+contourpy==1.3.3
+coreforecast==0.0.18
+cryptography==48.0.1
+cycler==0.12.1
+Cython==3.3.0
+databricks-sdk==0.133.0
+docker==7.2.0
+fastapi==0.139.2
+Flask==3.1.3
+flask-cors==6.0.5
+fonttools==4.64.0
+frozenlist==1.8.0
+fsspec==2026.7.0
+gitdb==4.0.12
+GitPython==3.1.61
+google-auth==2.57.0
+graphene==3.4.3
+graphql-core==3.2.12
+graphql-relay==3.2.0
+greenlet==3.5.5
+h11==0.16.0
+holidays==0.100
+httptools==0.8.0
+huey==3.3.4
+idna==3.19
+importlib_metadata==9.0.1
+importlib_resources==7.1.0
+isodate==0.7.2
+itsdangerous==2.2.0
+Jinja2==3.1.6
+joblib==1.5.3
+jsonpickle==4.1.2
+jsonschema==4.26.0
+jsonschema-specifications==2025.9.1
+kiwisolver==1.5.1
+lightgbm==4.7.0
+Mako==1.4.1
+MarkupSafe==3.0.3
+marshmallow==3.26.2
+matplotlib==3.11.1
+mlflow==3.14.0
+mlflow-skinny==3.14.0
+mlflow-tracing==3.14.0
+mlforecast==1.1.0
+mltable==1.6.3
+msal==1.38.0
+msal-extensions==1.3.1
+msrest==0.7.1
+multidict==6.7.1
+narwhals==2.25.0
+numpy==2.5.1
+oauthlib==3.3.1
+opentelemetry-api==1.44.0
+opentelemetry-instrumentation==0.65b0
+opentelemetry-instrumentation-asgi==0.65b0
+opentelemetry-instrumentation-dbapi==0.65b0
+opentelemetry-instrumentation-django==0.65b0
+opentelemetry-instrumentation-fastapi==0.65b0
+opentelemetry-instrumentation-flask==0.65b0
+opentelemetry-instrumentation-psycopg2==0.65b0
+opentelemetry-instrumentation-requests==0.65b0
+opentelemetry-instrumentation-urllib==0.65b0
+opentelemetry-instrumentation-urllib3==0.65b0
+opentelemetry-instrumentation-wsgi==0.65b0
+opentelemetry-proto==1.44.0
+opentelemetry-resource-detector-azure==0.2.0
+opentelemetry-sdk==1.44.0
+opentelemetry-semantic-conventions==0.65b0
+opentelemetry-util-http==0.65b0
+optuna==4.9.0
+packaging==26.3
+pandas==2.3.3
+patsy==1.0.3
+pillow==12.3.0
+pmdarima==2.1.1
+prettytable==3.18.0
+propcache==0.5.2
+prophet==1.3.0
+protobuf==6.33.6
+psutil==7.2.2
+pyarrow==24.0.0
+pyasn1==0.6.4
+pyasn1_modules==0.4.2
+pycparser==3.0
+pydantic==2.13.5
+pydantic_core==2.46.5
+pydash==8.1.0
+PyJWT==2.13.0
+pymssql==2.3.13
+PyMySQL==1.2.0
+pyparsing==3.3.2
+python-dateutil==2.9.0.post0
+python-dotenv==1.2.2
+pytz==2026.3.post1
+pywin32==312; sys_platform == "win32"
+PyYAML==6.0.3
+referencing==0.37.0
+requests==2.34.2
+requests-oauthlib==2.0.0
+rpds-py==2026.6.3
+scikit-learn==1.9.0
+scipy==1.18.1
+setuptools==84.0.0
+six==1.17.0
+skops==0.14.0
+smmap==5.0.3
+SQLAlchemy==2.0.52
+sqlparse==0.6.0
+stanio==0.5.1
+starlette==1.6.0
+statsmodels==0.14.6
+strictyaml==1.7.3
+threadpoolctl==3.6.0
+tqdm==4.70.0
+typing-inspection==0.4.4
+typing_extensions==4.16.0
+tzdata==2026.3
+urllib3==2.7.0
+utilsforecast==0.2.16
+uvicorn==0.51.0
+waitress==3.0.2
+watchfiles==1.2.0
+wcwidth==0.8.3
+websockets==17.1
+Werkzeug==3.1.8
+wrapt==2.4.0
+xgboost==3.4.0
+yarl==1.24.5
+zipp==4.1.0

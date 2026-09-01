@@ -6,8 +6,12 @@ services:
     # Builds the React frontend into frontend/dist, then installs the
     # Python backend's deps — backend/app.py serves both from one process
     # (see its "Serve the built frontend" section), so this is ONE Render
-    # service, not two.
-    buildCommand: "cd frontend && npm install && npm run build && cd .. && pip install -r requirements.txt"
+    # service, not two. azureml-mlflow is a deliberate second pip call, not
+    # merged into requirements.txt — see that file's comment on it for why
+    # (its own declared version pins conflict with mlflow's, so it must be
+    # installed with --no-deps after everything else, not resolved
+    # alongside it in one pass).
+    buildCommand: "cd frontend && npm install && npm run build && cd .. && pip install -r requirements.txt && pip install --no-deps azureml-mlflow==1.62.0.post5 && pip install azure-common jsonpickle"
     startCommand: "uvicorn backend.app:app --host 0.0.0.0 --port $PORT"
     envVars:
       # Source business data (SQL Server) — required for the app to fetch

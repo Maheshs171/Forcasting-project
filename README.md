@@ -57,11 +57,25 @@ outputs/                   JSON + HTML forecasts, backtest report
 
 ## Setup
 
+Needs **Python 3.12** (pin also in `runtime.txt`, for Render). Every
+version in `requirements.txt` is exact-pinned and verified to install
+cleanly on a fresh Python 3.12 venv — no loose `>=` ranges to drift on a
+different machine.
+
 ```powershell
 pip install -r requirements.txt
+pip install --no-deps azureml-mlflow==1.62.0.post5
+pip install azure-common jsonpickle
 copy .env.example .env
 notepad .env    # fill in DB credentials
 ```
+
+The second and third lines are not optional if you'll use the Azure Ops
+page — see `requirements.txt`'s comment on `azureml-mlflow` for why it's
+a separate step (its own declared version pins conflict with mlflow's;
+pip's resolver can't install both in one pass, but the newer versions
+work together fine in practice — this exact two-step sequence is tested,
+not a guess). Skip it if you only need the local forecasting pipeline.
 
 Currently configured against the **QA** database
 (`maximeyes-qa-centralus...`). To point at production, just change the
