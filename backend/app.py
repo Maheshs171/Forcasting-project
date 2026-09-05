@@ -49,10 +49,18 @@ OUTPUTS_DIR = os.path.join(os.path.dirname(__file__), "..", "outputs")
 
 app = FastAPI(title="Clinical Forecasting API")
 
+# Hardcoding the dev-server origin here (as this used to) only works when
+# the frontend is served from exactly http://localhost:5173 — it silently
+# breaks on every real deployment (Render, a VM behind IIS/nginx, a
+# different port, https instead of http, ...), each needing its own
+# origin added by hand. This app has no cookie-based auth (nothing sets
+# withCredentials on the frontend's axios client), so there's no CSRF
+# surface a wildcard origin would expose — allowing any origin is safe
+# here and never needs touching again as deployments change.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
